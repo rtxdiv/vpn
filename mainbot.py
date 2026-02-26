@@ -1,22 +1,25 @@
 from aiogram import Bot, Dispatcher, F
-from aiogram.filters import Command
+from aiogram.filters import Command, CommandObject
 from aiogram.types import Message as Ctx, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from aiogram.enums import ParseMode
 from xui import XUIClient
 from datetime import datetime
+from exceptions import ForeseenException
+import os
 
 
 class MainBot:
-    def __init__(self, token: str, host: str, login: str, password: str, sub_host: str):
-        self._bot = Bot(token=token)
+    def __init__(self):
+        self._bot = Bot(token=str(os.environ['MAIN_BOT_TOKEN']))
+        self._xui = XUIClient()
+
         self._dp = Dispatcher()
         self._dp.message.register(self.cmd_start, Command('start'))
         self._dp.message.register(self.cmd_add, Command('add'))
+        self._dp.message.register(self.cmd_reset, Command('update'))
         self._dp.callback_query.register(self.cb_tariff, F.data == 'cb_tariff')
         self._dp.callback_query.register(self.cb_help, F.data == 'cb_help')
         self._dp.callback_query.register(self.cb_already_bought, F.data == 'cb_already_bought')
-        self._xui = XUIClient(host, login, password)
-        self._sub_host = sub_host
         
     async def run(self):
         await self._xui.login()
@@ -73,8 +76,26 @@ class MainBot:
 
 
     async def cmd_add(self, ctx: Ctx):
-        await self._xui.create_client(ctx.from_user.id, 5, 0)
-        await ctx.answer('Created')
+        try:
+            await self._xui.create_client(ctx.from_user.id, 5, 0)
+            await ctx.answer('Подписка зарегистрирована')
+
+        except ForeseenException as e:
+            await ctx.answer(str(e))
+        except Exception as e:
+            await ctx.answer('Произошла непредвиденная ошибка')
+            print(e)
+
+    async def cmd_reset(self, ctx: Ctx, command: CommandObject):
+        try:
+            await self._xui.reset_sub_id(command.args)
+            await ctx.answer('Подписка обновлена')
+
+        except ForeseenException as e:
+            await ctx.answer(str(e))
+        except Exception as e:
+            await ctx.answer('Произошла непредвиденная ошибка')
+            print(e)
 
 
     def format_date(self, timestamp):
