@@ -38,7 +38,7 @@ async def main():
     
     await asyncio.gather(
         server.serve(),
-        asyncio.create_task(mainbot.run()),
+        # asyncio.create_task(mainbot.run()),
         return_exceptions=True
     )
 
