@@ -2,15 +2,15 @@ from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command, CommandObject
 from aiogram.types import Message as Ctx, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from aiogram.enums import ParseMode
-from src.xui import XUIClient
+from xui import XUIClient
 from datetime import datetime
-from src.exceptions import ForeseenException
+from exceptions import ForeseenException
 import os
 
 
 class MainBot:
-    def __init__(self):
-        self._bot = Bot(token=str(os.environ['MAIN_BOT_TOKEN']))
+    def __init__(self, token: str):
+        self._bot = Bot(token)
         self._xui = XUIClient()
 
         self._dp = Dispatcher()
