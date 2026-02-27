@@ -1,10 +1,10 @@
-from flask import Flask, send_from_directory
+from flask import Flask, send_file
 
 app = Flask(__name__)
 
 @app.get('/')
 def getRoot():
-    return send_from_directory('static', 'index.html')
+    return send_file('../static/index.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8443)
