@@ -3,7 +3,6 @@ import asyncio
 from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from contextvars import ContextVar
 from auth import Validation, auth_guard
 import os
 import uvicorn
@@ -12,18 +11,18 @@ from dotenv import load_dotenv
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent
-PUBLIC_DIR = BASE_DIR.parent / "public"
+PUBLIC_DIR = BASE_DIR.parent / 'public'
 
 app = FastAPI()
 
-app.mount('/', StaticFiles(directory=PUBLIC_DIR, html=True), name="public")
+app.mount('/public', StaticFiles(directory=PUBLIC_DIR, html=True), name='public')
 validation = Validation(os.environ['MAIN_BOT_TOKEN'])
 
 @app.get('/')
 async def get_root():
-    return FileResponse('../public/index.html')
+    return FileResponse(PUBLIC_DIR / 'index.html')
 
-@app.get("/user")
+@app.get('/user')
 @auth_guard(validation)
 async def get_user(request: Request):
     return {
