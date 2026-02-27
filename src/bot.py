@@ -54,11 +54,11 @@ class MainBot:
 
         if client:
             message = f'⭐️ <b>Ваш тариф</b>'
-            message += f'\n\nКоличество устройств: <b>{client.limit_ip if client.limit_ip != '0' else '♾️'}</b>'
+            message += f'\n\nКоличество устройств: <b>{client.limit_ip if client.limit_ip != '0' else 'Бесконечно'}</b>'
             message += f'\n\n<b>Трафик:</b>'
             message += f'\n├ up: {self.to_gb(client.up)} Gb'
             message += f'\n├ down: {self.to_gb(client.down)} Gb'
-            message += f'\n└ <b>общий: {self.to_gb(client.up + client.down)} Gb / ♾️</b>'
+            message += f'\n└ <b>общий: {self.to_gb(client.up + client.down)} Gb / Безлимит</b>'
             message += f'\n\nПодписка действует до: <b>{self.format_date(client.expiry_time)}</b>'
 
             keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text='Конфигурация VPN', url=f'{self._sub_host}/{client.sub_id}')]])
@@ -99,7 +99,7 @@ class MainBot:
 
 
     def format_date(self, timestamp):
-        if timestamp <= 0: return '♾️'
+        if timestamp <= 0: return 'Бессрочно'
         dt = datetime.fromtimestamp(timestamp / 1000)
         return dt.strftime('%d.%m.%Y')
     
