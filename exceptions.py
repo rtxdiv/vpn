@@ -1,2 +1,0 @@
-class ForeseenException(Exception):
-    pass
