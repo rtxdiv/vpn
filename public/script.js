@@ -46,7 +46,6 @@ function drawSub(user, error = false) {
         subDate.innerHTML = `Действует до: ${ localDate }`
 
         subConf.addEventListener('click', function(event) {
-            event.target.innerHTML = location.hostname
             telegram.openLink('https://' + location.hostname + ':8080/sub/' + user['subId'])
         })
         
