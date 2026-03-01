@@ -5,6 +5,9 @@ body {
     align-items: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: rgb(239, 239, 239);
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
 }
 .container {
     width: 90%;
@@ -45,13 +48,14 @@ body {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 15px;
+            margin-top: 17px;
             height: 40px;
             padding: 0 15px;
             box-sizing: border-box;
             border: white 1px solid;
             color: white;
             border-radius: 5px;
+            cursor: pointer;
         }
     }
 }
