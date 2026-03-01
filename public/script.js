@@ -44,7 +44,10 @@ function drawSub(user, error = false) {
             localDate = date.toLocaleDateString('ru-RU')
         } else localDate = 'бессрочно'
         subDate.innerHTML = `Действует до: ${ localDate }`
-        subConf.href = 'https://' + location.hostname + ':8080/sub/' + user['subId']
+
+        subConf.addEventListener('click', () => {
+            telegram.openLink(location.hostname + ':8080/sub/' + user['subId'])
+        })
         
     } else {
         subBlock.innerHTML = '<a>У вас ещё нет подписки</a>'
