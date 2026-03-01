@@ -29,7 +29,7 @@ async def get_root():
 @app.get('/user')
 async def get_user(request: Request, _=Depends(auth_guard)):
     user = await xui.get_by_tgid(request.state.telegram_user['id'])
-    return user
+    return { user: user }
     
 
 
