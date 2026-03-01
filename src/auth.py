@@ -21,14 +21,12 @@ def create_auth_guard(validation: Validation):
         request: Request,
         authorization: Optional[str] = Header(None)
     ):
-        print(authorization)
         if not authorization:
             raise HTTPException(status_code=401, detail='Missing Authorization header')
         if not authorization.startswith('Telegram '):
             raise HTTPException(status_code=401, detail='Invalid Authorization format. Use: Telegram <init_data>')
         
         init_data = authorization[9:]
-        print(init_data)
         try:
             user = validation.validate(init_data)
             request.state.telegram_user = user
