@@ -5,7 +5,6 @@ from aiogram.enums import ParseMode
 from xui import XUIClient
 from datetime import datetime
 from exceptions import ForeseenException
-import os
 
 
 class MainBot:

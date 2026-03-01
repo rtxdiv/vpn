@@ -1,6 +1,5 @@
-from bot import MainBot
+# from bot import MainBot
 from xui import XUIClient
-from exceptions import ForeseenException
 import asyncio
 from fastapi import FastAPI, Request, Depends
 from fastapi.responses import FileResponse
@@ -35,7 +34,7 @@ async def get_user(request: Request, _=Depends(auth_guard)):
 
 
 async def main():
-    mainbot = MainBot(os.environ['MAIN_BOT_TOKEN'])
+    # mainbot = MainBot(os.environ['MAIN_BOT_TOKEN'])
     
     config = uvicorn.Config(app, host='0.0.0.0', port=8443)
     server = uvicorn.Server(config)
