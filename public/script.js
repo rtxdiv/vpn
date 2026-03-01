@@ -4,6 +4,7 @@ const subStatus = document.querySelector('#sub .status')
 const subName = document.querySelector('#sub .name')
 const subDevices = document.querySelector('#sub .devices')
 const subDate = document.querySelector('#sub .date')
+const subConf = document.querySelector('#sub .conf')
 
 const telegram = window.Telegram.WebApp
 telegram.expand()
@@ -43,6 +44,7 @@ function drawSub(user, error = false) {
             localDate = date.toLocaleDateString('ru-RU')
         } else localDate = 'бессрочно'
         subDate.innerHTML = `Действует до: ${ localDate }`
+        subConf.href = location.hostname + ':8080/sub/' + user['subId']
         
     } else {
         subBlock.innerHTML = '<a>У вас ещё нет подписки</a>'
