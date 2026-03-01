@@ -47,7 +47,8 @@ function drawSub(user, error = false) {
 
         subConf.addEventListener('click', function(event) {
             event.target.style.color = 'red'
-            telegram.openLink(location.hostname + ':8080/sub/' + user['subId'])
+            telegram.openLink('https://google.com')
+            // location.hostname + ':8080/sub/' + user['subId']
         })
         
     } else {
