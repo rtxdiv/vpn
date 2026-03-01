@@ -1,4 +1,51 @@
 body {
-    background: white;
-    color: black;
+    background: rgb(44, 47, 49);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(239, 239, 239);
+}
+.container {
+    width: 90%;
+    max-width: 800px;
+
+    .block {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        padding: 25px;
+        margin: 15px 0;
+        border-radius: 10px;
+        background: linear-gradient(45deg, #6a85b64f, #bac8e049);
+        color: rgb(228, 228, 228);
+    }
+
+    .errblock {
+        background: linear-gradient(45deg, #ff6b6b6f, #e29f9f49) !important;
+    }
+
+    #sub {
+        .status {
+            font-size: 17px;
+        }
+        .name {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin: 4px 0 10px 0;
+            color: white;
+        }
+        .devices, .date {
+            font-size: 17px;
+            margin: 2px 0;
+        }
+    }
+}
+
+red {
+    color: rgb(225, 67, 67);
+}
+green {
+    color: rgb(74, 225, 74);
 }
