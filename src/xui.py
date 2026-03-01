@@ -32,7 +32,7 @@ class XUIClient:
         if not id: raise ForeseenException('Не передан Tg-ID')
         inbound = await self.get_inbound()
         client = [item for item in inbound.settings.clients if item.email == str(id)]
-        if not client: raise ForeseenException('Клиент не найден')
+        if not client: return None
         return client[0]
 
 

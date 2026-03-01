@@ -1,4 +1,6 @@
 from bot import MainBot
+from xui import XUIClient
+from exceptions import ForeseenException
 import asyncio
 from fastapi import FastAPI, Request, Depends
 from fastapi.responses import FileResponse
@@ -14,6 +16,8 @@ BASE_DIR = Path(__file__).resolve().parent
 PUBLIC_DIR = BASE_DIR.parent / 'public'
 
 app = FastAPI()
+xui = XUIClient()
+xui.login()
 
 app.mount('/public', StaticFiles(directory=PUBLIC_DIR, html=True), name='public')
 validation = Validation(os.environ['MAIN_BOT_TOKEN'])
@@ -25,8 +29,9 @@ async def get_root():
 
 @app.get('/user')
 async def get_user(request: Request, _=Depends(auth_guard)):
-    print(request.state)
-    return request.state.telegram_user
+    user = await xui.get_by_tgid(request.state.telegram_user.id)
+    return { user }
+    
 
 
 async def main():
@@ -36,6 +41,7 @@ async def main():
     server = uvicorn.Server(config)
     
     await asyncio.gather(
+        await xui.login(),
         server.serve(),
         # asyncio.create_task(mainbot.run()),
         return_exceptions=True
