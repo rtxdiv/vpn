@@ -18,7 +18,7 @@ body {
         margin: 15px 0;
         border-radius: 10px;
         background: linear-gradient(45deg, #6a85b64f, #bac8e049);
-        color: #e4e4e4;
+        color: #dddddd;
     }
 
     .errblock {
@@ -45,7 +45,7 @@ body {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 10px;
+            margin-top: 15px;
             height: 40px;
             padding: 0 15px;
             box-sizing: border-box;
