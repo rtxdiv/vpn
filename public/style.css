@@ -4,7 +4,7 @@ body {
     flex-direction: column;
     align-items: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: rgb(239, 239, 239);
+    color: #c1c1c1;
     user-select: none;
     -webkit-user-select: none;
     cursor: default;
@@ -21,7 +21,7 @@ body {
         margin: 15px 0;
         border-radius: 10px;
         background: linear-gradient(45deg, #161E31, #242f47);
-        color: #d1d1d1;
+        color: #c1c1c1;
     }
 
     .errblock {
@@ -37,7 +37,7 @@ body {
             font-weight: 900;
             letter-spacing: 1px;
             margin: 4px 0 15px 0;
-            color: #ebebeb;
+            color: #e6e6e6;
         }
         .devices, .date {
             font-size: 17px;
@@ -52,7 +52,7 @@ body {
             height: 40px;
             padding: 0 15px;
             box-sizing: border-box;
-            border: #d1d1d1 1px solid;
+            border: #c1c1c1 1px solid;
             border-radius: 5px;
             cursor: pointer;
         }
