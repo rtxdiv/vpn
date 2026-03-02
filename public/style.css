@@ -57,6 +57,19 @@ body {
             cursor: pointer;
         }
     }
+
+    #about, #titorial, #support {
+        display: none;
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+
+        > img {
+            width: 40px;
+            aspect-ratio: 1/1;
+            margin-right: 10px;
+        }
+    }
 }
 
 red {
