@@ -29,6 +29,7 @@ def create_auth_guard(validation: Validation):
         init_data = authorization[9:]
         try:
             user = validation.validate(init_data)
+            print(f'Auth passed: {user['id']}')
             request.state.telegram_user = user
         except TelegramAuthError as e:
             raise HTTPException(status_code=403, detail=str(e))
