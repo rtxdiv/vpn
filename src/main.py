@@ -16,7 +16,6 @@ PUBLIC_DIR = BASE_DIR.parent / 'public'
 
 app = FastAPI()
 xui = XUIClient()
-xui.login()
 
 app.mount('/public', StaticFiles(directory=PUBLIC_DIR, html=True), name='public')
 validation = Validation(os.environ['MAIN_BOT_TOKEN'])
