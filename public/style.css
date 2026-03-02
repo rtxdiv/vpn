@@ -58,7 +58,7 @@ body {
         }
     }
 
-    #about, #titorial, #support {
+    #about, #tutorial, #support {
         display: none;
         flex-direction: row;
         align-items: center;
