@@ -23,9 +23,9 @@ const main = async () => {
     }
     drawSub(false, true)
 }
-// main()
+main()
 
-let user = {"email":"5019916197","enable":true,"id":"3657bbfc-6f79-454b-a3e5-87442c5df7a5","password":"","inboundId":null,"up":0,"down":0,"expiryTime":1774461052796,"total":0,"reset":0,"flow":"","method":"","limitIp":3,"subId":"3657bbfc-6f79-454b-a3e5-87442c5df7a5","comment":"SOLO","tgId":"","totalGB":0,"uuid":null}
+// let user = {"email":"5019916197","enable":true,"id":"3657bbfc-6f79-454b-a3e5-87442c5df7a5","password":"","inboundId":null,"up":0,"down":0,"expiryTime":1774461052796,"total":0,"reset":0,"flow":"","method":"","limitIp":3,"subId":"3657bbfc-6f79-454b-a3e5-87442c5df7a5","comment":"SOLO","tgId":"","totalGB":0,"uuid":null}
 function drawSub(user, error = false) {
     if (error) {
         subBlock.classList.add('errblock')
@@ -53,4 +53,4 @@ function drawSub(user, error = false) {
         subBlock.innerHTML = '<a>У вас ещё нет подписки</a>'
     }
 }
-drawSub(user)
+// drawSub(user)
