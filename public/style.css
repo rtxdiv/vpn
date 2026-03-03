@@ -63,12 +63,12 @@ body {
         flex-direction: row;
         align-items: center;
         justify-content: start;
-        padding: 10px 15px;
+        padding: 10px 25px;
 
         > img {
             width: 30px;
             aspect-ratio: 1/1;
-            margin-right: 15px;
+            margin-right: 8px;
             filter: invert(1);
             opacity: 0.3;
         }
