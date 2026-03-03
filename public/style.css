@@ -1,10 +1,13 @@
+:root {
+    --def-text-color: #cdcdcd
+}
 body {
     background: #0A1121;
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #efefef;
+    color: var(--def-text-color);
     user-select: none;
     -webkit-user-select: none;
     cursor: default;
@@ -21,7 +24,7 @@ body {
         margin: 15px 0;
         border-radius: 10px;
         background: linear-gradient(45deg, #161E31, #242f47);
-        color: #d1d1d1;
+        color: var(--def-text-color);
     }
 
     .errblock {
@@ -52,7 +55,7 @@ body {
             height: 40px;
             padding: 0 15px;
             box-sizing: border-box;
-            border: #d1d1d1 1px solid;
+            border: var(--def-text-color) 1px solid;
             border-radius: 5px;
             cursor: pointer;
         }
@@ -63,12 +66,12 @@ body {
         flex-direction: row;
         align-items: center;
         justify-content: start;
-        padding: 10px 25px;
+        padding: 10px;
 
         > img {
-            width: 30px;
+            width: 35px;
             aspect-ratio: 1/1;
-            margin-right: 8px;
+            margin-right: 10px;
             filter: invert(1);
             opacity: 0.3;
         }
