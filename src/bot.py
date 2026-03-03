@@ -120,7 +120,7 @@ class MainBot:
                 new_client = await self._xui.create_client(ctx.from_user.id, 1, expiry, 'PROMO-30')
                 sub_url = f'{self._sub_host}/{new_client.sub_id}'
             else:
-                message = f'*У вас уже есть подписка!*\n'
+                message = f'*У вас уже есть подписка!*'
                 sub_url = f'{self._sub_host}/{client.sub_id}'
 
             keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text='Подписка', url=sub_url)]])
