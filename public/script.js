@@ -22,7 +22,7 @@ const main = async () => {
     })
     if (resp.ok) {
         const body = await resp.json()
-        drawSub({ user: body.user })
+        drawSub({ user: body.user, subHost: body.subHost })
         
     } else if (resp.status == 401) {
         drawSub({ authorization: false })
@@ -34,7 +34,7 @@ const main = async () => {
 main()
 
 
-function drawSub({ user = false, error = false, authorization = true }) {
+function drawSub({ user = false, error = false, authorization = true, subHost = false }) {
     if (error) {
         subBlock.classList.add('errblock')
         subBlock.innerHTML = '<a>Ошибка при загрузке подписки</a>'
@@ -61,7 +61,7 @@ function drawSub({ user = false, error = false, authorization = true }) {
             localDate = date.toLocaleDateString('ru-RU')
         } else localDate = 'бессрочно'
         subDate.innerHTML = `Действует до: ${ localDate }`
-        addButton(subConf, location.hostname + ':8080/sub/' + user['subId'])
+        addButton(subConf, `${subHost}/${user['subId']}`)
 
         addButton(tutorialBlock)
         addButton(supportBlock)
@@ -77,6 +77,7 @@ function drawSub({ user = false, error = false, authorization = true }) {
 function addButton(elem, link = false) {
     elem.style.display = 'flex'
     elem.addEventListener('click', function(event) {
-        telegram.openLink(link ?? elem.dataset.url)
+        alert(link)
+        telegram.openLink(link)
     })
 }
