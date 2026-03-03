@@ -24,4 +24,4 @@ async def get_root():
 async def get_user(request: Request, _=Depends(auth_guard)):
     user = await xui.get_by_tgid(request.state.telegram_user['id'])
     print(f'Sub: { not(user == None) }')
-    return { 'user': user }
+    return { 'user': user, 'subHost': os.environ['SUB_HOST'] }

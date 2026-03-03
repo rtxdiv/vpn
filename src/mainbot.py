@@ -9,7 +9,7 @@ from aiogram.enums import ParseMode
 from xui_client import xui
 
 TOKEN = os.environ['MAIN_BOT_TOKEN']
-SUB_HOST = os.environ['PANEL_SUB_HOST']
+SUB_HOST = os.environ['SUB_HOST']
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
