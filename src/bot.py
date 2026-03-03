@@ -6,12 +6,14 @@ from xui import XUIClient
 from datetime import datetime
 from exceptions import ForeseenException
 import time
+import os
 
 
 class MainBot:
     def __init__(self, token: str):
         self._bot = Bot(token)
         self._xui = XUIClient()
+        self._sub_host = os.environ['PANEL_SUB_HOST']
 
         self._dp = Dispatcher()
         # self._dp.message.register(self.cmd_start, Command('start'))
@@ -101,17 +103,37 @@ class MainBot:
     # IN DEVELOPMENT
     async def cmd_bonus(self, ctx: Ctx, command: CommandObject):
         if (command.args != 'PROMO-30'): return
+
+        days = 30
+        message = f'*Вы получили бесплатную подписку на {days} дней!*\n\n'
+        message += f'*Как активировать?*\n'
+        message += f'1. Откройте подписку и нажмите на QR-код, чтобы скопировать ссылку на конфигурацию\n'
+        message += f'2. Скачайте любой VPN клиент (v2RayRun на Android)\n'
+        message += f'3. В приложении найдите кнопку добавления конфигурации\n'
+        message += f'4. Добавьте скопированную ссылку или отсканируйте QR-код (пункт 1)'
+        sub_url = None
+
         try:
-            days = 30
-            expiry = int(time.time() * 1000) + (days * 24 * 60 * 60 * 1000)
-            await self._xui.create_client(ctx.from_user.id, 1, expiry, 'PROMO-30')
-            await ctx.answer('Подписка обновлена')
+            client = await self._xui.get_by_tgid(ctx.from_user.id)
+            if (not client): 
+                expiry = int(time.time() * 1000) + (days * 24 * 60 * 60 * 1000)
+                new_client = await self._xui.create_client(ctx.from_user.id, 1, expiry, 'PROMO-30')
+                sub_url = f'{self._sub_host}/{new_client.sub_id}'
+            else:
+                message = f'*У вас уже есть подписка!*\n'
+                sub_url = f'{self._sub_host}/{client.sub_id}'
+
+            keyboard = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text='Подписка', url=sub_url)]])
+            message += f'\n\n💚 *По всем вопросам: @rtxdiv*'
+            
+            await ctx.answer(message, reply_markup=keyboard, parse_mode=ParseMode.MARKDOWN)
 
         except ForeseenException as e:
             await ctx.answer(str(e))
         except Exception as e:
             await ctx.answer('Произошла непредвиденная ошибка')
             print(e)
+
 
     def format_date(self, timestamp):
         if timestamp <= 0: return 'Бессрочно'
