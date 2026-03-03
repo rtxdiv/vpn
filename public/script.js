@@ -23,15 +23,12 @@ const main = async () => {
     if (resp.ok) {
         const body = await resp.json()
         drawSub({ user: body.user })
-        console.log('resp.ok')
         
     } else if (resp.status == 401) {
         drawSub({ authorization: false })
-        console.log('resp.status == 401')
 
     } else {
         drawSub({ error: true })
-        console.log('resp.ok == false')
     }
 }
 main()
@@ -41,14 +38,14 @@ function drawSub({ user = false, error = false, authorization = true }) {
         subBlock.classList.add('errblock')
         subBlock.innerHTML = '<a>Ошибка при загрузке подписки</a>'
 
-        aboutBlock.style.display = 'flex'
-        addLink(aboutBlock, location.hostname)
-        supportBlock.style.display = 'flex'
-        addLink(supportBlock, location.hostname)
+        addButton(aboutBlock, location.hostname)
+        addButton(supportBlock, location.hostname)
         return
     }
     if (!authorization) {
         subBlock.innerHTML = '<a>Запустите приложение через Telegram, чтобы получить информацию о подписке</a>'
+        addButton(aboutBlock, location.hostname)
+        addButton(supportBlock, location.hostname)
         return
     }
     if (user) {
@@ -63,24 +60,21 @@ function drawSub({ user = false, error = false, authorization = true }) {
             localDate = date.toLocaleDateString('ru-RU')
         } else localDate = 'бессрочно'
         subDate.innerHTML = `Действует до: ${ localDate }`
-        addLink(subConf, location.hostname + ':8080/sub/' + user['subId'])
+        addButton(subConf, location.hostname + ':8080/sub/' + user['subId'])
 
-        tutorialBlock.style.display = 'flex'
-        addLink(tutorialBlock, location.hostname)
-        supportBlock.style.display = 'flex'
-        addLink(supportBlock, location.hostname)
+        addButton(tutorialBlock, location.hostname)
+        addButton(supportBlock, location.hostname)
         
     } else {
         subBlock.innerHTML = '<a>У вас ещё нет подписки</a>'
         
-        aboutBlock.style.display = 'flex'
-        addLink(aboutBlock, location.hostname)
-        supportBlock.style.display = 'flex'
-        addLink(supportBlock, location.hostname)
+        addButton(aboutBlock, location.hostname)
+        addButton(supportBlock, location.hostname)
     }
 }
 
-function addLink(elem, link) {
+function addButton(elem, link) {
+    elem.style.display = 'flex'
     elem.addEventListener('click', function(event) {
         telegram.openLink('https://' + link)
     })
