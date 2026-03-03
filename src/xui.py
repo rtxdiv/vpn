@@ -1,14 +1,13 @@
 from exceptions import ForeseenException
 import py3xui
 import uuid
-import os
 
 class XUIClient:
-    def __init__(self):
-        self._host = os.environ['PANEL_HOST'] + '/' + os.environ['PANEL_PATH']
-        self._login = os.environ['PANEL_LOGIN']
-        self._password = os.environ['PANEL_PASSWORD']
-        self._protocol = os.environ['INBOUND_PROTOCOL']
+    def __init__(self, host, login, password, protocol):
+        self._host = host
+        self._login = login
+        self._password = password
+        self._protocol = protocol
         self._api = None
         self._inbound_id = None
 
