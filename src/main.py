@@ -36,7 +36,7 @@ async def get_user(request: Request, _=Depends(auth_guard)):
 async def main():
     mainbot = MainBot(os.environ['MAIN_BOT_TOKEN'])
     
-    config = uvicorn.Config(app, host='0.0.0.0', port=8443)
+    config = uvicorn.Config(app, host='localhost', port=8000)
     server = uvicorn.Server(config)
     await xui.login()
     
