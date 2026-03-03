@@ -14,7 +14,7 @@ telegram.expand()
 
 
 const main = async () => {
-    const resp = await fetch('/user', {
+    const resp = await fetch('/sub', {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Telegram ${telegram.initData}`

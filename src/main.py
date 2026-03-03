@@ -25,7 +25,7 @@ auth_guard = create_auth_guard(validation)
 async def get_root():
     return FileResponse(PUBLIC_DIR / 'index.html')
 
-@app.get('/user')
+@app.get('/sub')
 async def get_user(request: Request, _=Depends(auth_guard)):
     user = await xui.get_by_tgid(request.state.telegram_user['id'])
     print(f'Sub: { not(user == None) }')
