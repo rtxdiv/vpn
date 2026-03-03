@@ -33,6 +33,7 @@ const main = async () => {
 }
 main()
 
+
 function drawSub({ user = false, error = false, authorization = true }) {
     if (error) {
         subBlock.classList.add('errblock')
