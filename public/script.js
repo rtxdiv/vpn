@@ -61,7 +61,7 @@ function drawSub({ user = false, error = false, authorization = true }) {
             localDate = date.toLocaleDateString('ru-RU')
         } else localDate = 'бессрочно'
         subDate.innerHTML = `Действует до: ${ localDate }`
-        addButton(subConf, 'rtxdiv.ru:8080/sub/' + user['subId'])
+        addButton(subConf, location.hostname + ':8080/sub/' + user['subId'])
 
         addButton(tutorialBlock)
         addButton(supportBlock)
