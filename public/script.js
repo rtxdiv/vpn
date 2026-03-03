@@ -22,14 +22,18 @@ const main = async () => {
     })
     if (resp.ok) {
         const body = await resp.json()
-        return drawSub(body.user)
+        drawSub({ user: body.user })
+        
+    } else if (resp.status == 401) {
+        drawSub({ authorization: false })
+
+    } else {
+        drawSub({ error: true })
     }
-    drawSub(false, true)
 }
 main()
 
-// let user = {"email":"5019916197","enable":true,"id":"3657bbfc-6f79-454b-a3e5-87442c5df7a5","password":"","inboundId":null,"up":0,"down":0,"expiryTime":1774461052796,"total":0,"reset":0,"flow":"","method":"","limitIp":3,"subId":"3657bbfc-6f79-454b-a3e5-87442c5df7a5","comment":"SOLO","tgId":"","totalGB":0,"uuid":null}
-function drawSub(user, error = false) {
+function drawSub({ user = false, error = false, authorization = true }) {
     if (error) {
         subBlock.classList.add('errblock')
         subBlock.innerHTML = '<a>Ошибка при загрузке подписки</a>'
@@ -39,6 +43,9 @@ function drawSub(user, error = false) {
         supportBlock.style.display = 'flex'
         addLink(supportBlock, location.hostname)
         return
+    }
+    if (!authorization) {
+        subBlock.innerHTML = '<a>Запустите приложение через Telegram, чтобы получить информацию о подписке</a>'
     }
     if (user) {
         subStatus.innerHTML = user['enable']? '<green>Активна</green>' : '<red>Неактивна</red>'
@@ -68,7 +75,6 @@ function drawSub(user, error = false) {
         addLink(supportBlock, location.hostname)
     }
 }
-// drawSub(user)
 
 function addLink(elem, link) {
     elem.addEventListener('click', function(event) {
