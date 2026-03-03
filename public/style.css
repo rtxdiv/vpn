@@ -70,10 +70,9 @@ body {
         padding: 10px;
 
         > img {
-            width: 32px;
+            width: 28px;
             aspect-ratio: 1/1;
             margin-right: 10px;
-            filter: invert(1);
             opacity: 0.2;
         }
     }
