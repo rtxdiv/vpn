@@ -69,11 +69,11 @@ body {
         padding: 10px;
 
         > img {
-            width: 35px;
+            width: 32px;
             aspect-ratio: 1/1;
             margin-right: 10px;
             filter: invert(1);
-            opacity: 0.3;
+            opacity: 0.2;
         }
     }
 }
