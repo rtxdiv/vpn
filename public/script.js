@@ -39,19 +39,19 @@ function drawSub({ user = false, error = false, authorization = true }) {
         subBlock.classList.add('errblock')
         subBlock.innerHTML = '<a>Ошибка при загрузке подписки</a>'
 
-        addButton(aboutBlock, location.hostname)
-        addButton(supportBlock, location.hostname)
+        addButton(aboutBlock)
+        addButton(supportBlock)
         return
     }
     if (!authorization) {
         subBlock.innerHTML = '<a>Запустите приложение через Telegram, чтобы получить информацию о подписке</a>'
-        addButton(aboutBlock, location.hostname)
-        addButton(supportBlock, location.hostname)
+        addButton(aboutBlock)
+        addButton(supportBlock)
         return
     }
     if (user) {
         subStatus.innerHTML = user['enable']? '<green>Активна</green>' : '<red>Неактивна</red>'
-        subName.innerHTML = `«${ user["comment"] || 'Подписка' }»`
+        subName.innerHTML = `<def>«</def>${ user["comment"] || 'Подписка' }<def>»</def>`
         subDevices.innerHTML = `Устройства: ${ user['limitIp'] == 0? 'бесконечно' : user['limitIp'] }`
 
         const expiry = user['expiryTime']
@@ -63,20 +63,20 @@ function drawSub({ user = false, error = false, authorization = true }) {
         subDate.innerHTML = `Действует до: ${ localDate }`
         addButton(subConf, location.hostname + ':8080/sub/' + user['subId'])
 
-        addButton(tutorialBlock, location.hostname)
-        addButton(supportBlock, location.hostname)
+        addButton(tutorialBlock)
+        addButton(supportBlock)
         
     } else {
         subBlock.innerHTML = '<a>У вас ещё нет подписки</a>'
         
-        addButton(aboutBlock, location.hostname)
-        addButton(supportBlock, location.hostname)
+        addButton(aboutBlock)
+        addButton(supportBlock)
     }
 }
 
-function addButton(elem, link) {
+function addButton(elem) {
     elem.style.display = 'flex'
     elem.addEventListener('click', function(event) {
-        telegram.openLink('https://' + link)
+        telegram.openLink('https://' + elem.dataset.url)
     })
 }

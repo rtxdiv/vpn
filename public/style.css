@@ -84,3 +84,6 @@ red {
 green {
     color: rgb(74, 225, 74);
 }
+def {
+    color: var(--def-text-color);
+}
