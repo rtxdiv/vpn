@@ -14,7 +14,7 @@ SUB_HOST = os.environ['SUB_HOST']
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
-@dp.message(Command('bonus'))
+@dp.message(Command('activate'))
 async def cmd_bonus(ctx: Message, command: CommandObject):
     if command.args != 'PROMO-30': return
 
