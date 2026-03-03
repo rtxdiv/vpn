@@ -77,6 +77,8 @@ function drawSub({ user = false, error = false, authorization = true }) {
 function addButton(elem, link = false) {
     elem.style.display = 'flex'
     elem.addEventListener('click', function(event) {
-        telegram.openLink('https://' + link? link : elem.dataset.url)
+        link = 'https://' + link? link : elem.dataset.url
+        elem.innerHTML = link
+        telegram.openLink(link)
     })
 }
