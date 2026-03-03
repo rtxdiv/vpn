@@ -23,12 +23,15 @@ const main = async () => {
     if (resp.ok) {
         const body = await resp.json()
         drawSub({ user: body.user })
+        console.log('resp.ok')
         
     } else if (resp.status == 401) {
         drawSub({ authorization: false })
+        console.log('resp.status == 401')
 
     } else {
         drawSub({ error: true })
+        console.log('resp.ok == false')
     }
 }
 main()
@@ -46,6 +49,7 @@ function drawSub({ user = false, error = false, authorization = true }) {
     }
     if (!authorization) {
         subBlock.innerHTML = '<a>Запустите приложение через Telegram, чтобы получить информацию о подписке</a>'
+        return
     }
     if (user) {
         subStatus.innerHTML = user['enable']? '<green>Активна</green>' : '<red>Неактивна</red>'
