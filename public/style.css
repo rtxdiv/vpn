@@ -1,5 +1,5 @@
 :root {
-    --def-text-color: #cdcdcd
+    --def-text-color: #cdcdcd;
 }
 body {
     background: #0A1121;
@@ -55,7 +55,9 @@ body {
             height: 40px;
             padding: 0 15px;
             box-sizing: border-box;
-            border: var(--def-text-color) 1px solid;
+            border: 1px solid;
+            border-color: var(--def-text-color);
+            color: var(--def-text-color);
             opacity: 0.7;
             border-radius: 5px;
             cursor: pointer;
