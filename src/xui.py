@@ -36,10 +36,17 @@ class XUIClient:
         return client[0]
 
 
-    async def create_client(self, id: any, limit_ip: int, expiry: int):
+    async def create_client(self, id: any, limit_ip: int, expiry: int, comment: str):
         if not id: raise ForeseenException('Не передан Tg-ID')
         uuid4 = str(uuid.uuid4())
-        new_client = py3xui.Client(enable=True, email=str(id), limitIp=limit_ip, expiryTime=expiry, flow='xtls-rprx-vision', subId=uuid4)
+        new_client = py3xui.Client(
+            enable=True,
+            email=str(id),
+            limitIp=limit_ip,
+            expiryTime=expiry,
+            flow='xtls-rprx-vision',
+            subId=uuid4, comment=comment
+        )
         await self._api.client.add(self._inbound_id, [new_client])
 
 

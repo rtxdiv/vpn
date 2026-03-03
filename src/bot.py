@@ -5,6 +5,7 @@ from aiogram.enums import ParseMode
 from xui import XUIClient
 from datetime import datetime
 from exceptions import ForeseenException
+import time
 
 
 class MainBot:
@@ -13,12 +14,13 @@ class MainBot:
         self._xui = XUIClient()
 
         self._dp = Dispatcher()
-        self._dp.message.register(self.cmd_start, Command('start'))
-        self._dp.message.register(self.cmd_add, Command('add'))
-        self._dp.message.register(self.cmd_reset, Command('update'))
-        self._dp.callback_query.register(self.cb_tariff, F.data == 'cb_tariff')
-        self._dp.callback_query.register(self.cb_help, F.data == 'cb_help')
-        self._dp.callback_query.register(self.cb_already_bought, F.data == 'cb_already_bought')
+        # self._dp.message.register(self.cmd_start, Command('start'))
+        # self._dp.message.register(self.cmd_add, Command('add'))
+        self._dp.message.register(self.cmd_bonus, Command('bonus'))
+        # self._dp.message.register(self.cmd_reset, Command('update'))
+        # self._dp.callback_query.register(self.cb_tariff, F.data == 'cb_tariff')
+        # self._dp.callback_query.register(self.cb_help, F.data == 'cb_help')
+        # self._dp.callback_query.register(self.cb_already_bought, F.data == 'cb_already_bought')
         
     async def run(self):
         await self._xui.login()
@@ -96,6 +98,20 @@ class MainBot:
             await ctx.answer('Произошла непредвиденная ошибка')
             print(e)
 
+    # IN DEVELOPMENT
+    async def cmd_bonus(self, ctx: Ctx, command: CommandObject):
+        if (command.args != 'PROMO-30'): return
+        try:
+            days = 30
+            expiry = int(time.time() * 1000) + (days * 24 * 60 * 60 * 1000)
+            await self._xui.create_client(ctx.from_user.id, 1, expiry, 'PROMO-30')
+            await ctx.answer('Подписка обновлена')
+
+        except ForeseenException as e:
+            await ctx.answer(str(e))
+        except Exception as e:
+            await ctx.answer('Произошла непредвиденная ошибка')
+            print(e)
 
     def format_date(self, timestamp):
         if timestamp <= 0: return 'Бессрочно'
