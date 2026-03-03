@@ -55,8 +55,8 @@ body {
             height: 40px;
             padding: 0 15px;
             box-sizing: border-box;
-            color: #959595;
-            border: #959595 1px solid;
+            border: var(--def-text-color) 1px solid;
+            opacity: 0.7;
             border-radius: 5px;
             cursor: pointer;
         }
