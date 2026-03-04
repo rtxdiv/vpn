@@ -42,7 +42,7 @@ async def cmd_bonus(ctx: Message, command: CommandObject):
                 [InlineKeyboardButton(text='Подписка', url=sub_url)]
             ]
         )
-        message += '👀 Поучаствуйте в голосовании: @rtdVpn\n💚 По всем вопросам: @rtxdiv\n'
+        message += '\n🗳️ Поучаствуйте в голосовании: @rtdVpn\n💚 По всем вопросам: @rtxdiv'
 
         await ctx.answer(message, reply_markup=keyboard, parse_mode=ParseMode.MARKDOWN)
 
