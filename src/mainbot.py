@@ -16,7 +16,7 @@ bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
 @dp.message(Command('activate'))
-async def cmd_bonus(ctx: Message, command: CommandObject):
+async def cmd_activate(ctx: Message, command: CommandObject):
     if command.args != 'PROMO-30': return
 
     days = 30
@@ -52,7 +52,7 @@ async def cmd_bonus(ctx: Message, command: CommandObject):
         await ctx.answer(str(e))
     except Exception as e:
         await ctx.answer('Произошла непредвиденная ошибка')
-        error_log.log(str(e))
+        error_log.error(str(e))
 
 # @dp.message(Command('update'))
 async def cmd_reset(ctx: Message, command: CommandObject):
@@ -64,7 +64,7 @@ async def cmd_reset(ctx: Message, command: CommandObject):
         await ctx.answer(str(e))
     except Exception as e:
         await ctx.answer('Произошла непредвиденная ошибка')
-        error_log.log(str(e))
+        error_log.error(str(e))
 
 
 def format_date(timestamp):
