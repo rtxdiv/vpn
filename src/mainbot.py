@@ -33,7 +33,7 @@ async def cmd_activate(ctx: Message, command: CommandObject):
         if not client:
             expiry = int(time.time() * 1000) + (days * 24 * 60 * 60 * 1000)
             new_client = await xui.create_client(ctx.from_user.id, 1, expiry, 'PROMO-30')
-            info_log.log(f'[NEW PROMO-30 USER] id: {ctx.from_user.id} | username: {ctx.from_user.username} | first_name: {ctx.from_user.first_name} | last_name: {ctx.from_user.last_name}')
+            info_log.info(f'[NEW PROMO-30 USER] id: {ctx.from_user.id} | username: {ctx.from_user.username} | first_name: {ctx.from_user.first_name} | last_name: {ctx.from_user.last_name}')
             sub_url = f'{SUB_HOST}/{new_client.sub_id}'
         else:
             message = '*У вас уже есть подписка!*\n'
