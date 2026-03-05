@@ -46,7 +46,7 @@ async def cmd_activate(ctx: Message, command: CommandObject):
         )
         message += '\n🗳️ Поучаствуйте в голосовании: @rtdVpn\n💚 По всем вопросам: @rtxdiv'
 
-        await ctx.answer(message, reply_markup=keyboard, parse_mode=ParseMode.MARKDOWN_V2)
+        await ctx.answer(message, reply_markup=keyboard, parse_mode=ParseMode.MARKDOWN)
 
     except ForeseenException as e:
         await ctx.answer(str(e))
