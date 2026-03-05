@@ -52,7 +52,7 @@ async def cmd_bonus(ctx: Message, command: CommandObject):
         await ctx.answer(str(e))
     except Exception as e:
         await ctx.answer('Произошла непредвиденная ошибка')
-        error_log.log(e)
+        error_log.log(str(e))
 
 # @dp.message(Command('update'))
 async def cmd_reset(ctx: Message, command: CommandObject):
@@ -64,7 +64,7 @@ async def cmd_reset(ctx: Message, command: CommandObject):
         await ctx.answer(str(e))
     except Exception as e:
         await ctx.answer('Произошла непредвиденная ошибка')
-        error_log.log(e)
+        error_log.log(str(e))
 
 
 def format_date(timestamp):
