@@ -83,3 +83,14 @@ async def cmd_enable(ctx: Message, command: CommandObject):
         await ctx.answer(Msg.NOT_FORSEEN)
         error_log.error(str(e))
 
+@dp.message(Command('disable_message'))
+async def cmd_enable(ctx: Message, command: CommandObject):
+    try:
+        message = '❗ *Доступ к PROMO-подписке приосановлен администратором*\n'
+        message += '\nПо всем вопросам: @rtxdiv'
+        await bot.send_message(chat_id=command.args, text=message, parse_mode=ParseMode.MARKDOWN)
+        await ctx.answer('Отправлено!')
+        
+    except Exception as e:
+        await ctx.answer(f'Произошла ошибка: {e}')
+        print(e)
