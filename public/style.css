@@ -1,5 +1,8 @@
 :root {
     --def-text-color: #cdcdcd;
+    --container-max-width: 800px;
+    --container-width: 92%;
+    --scroll-margin: max(4vw, calc((100vw - 800px) / 2));
 }
 body {
     background: #0A1121;
@@ -11,27 +14,42 @@ body {
     user-select: none;
     -webkit-user-select: none;
     cursor: default;
+    margin: 0;
+    margin-top: 22px;
+    gap: 11px;
 }
 .container {
-    width: 90%;
-    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    width: var(--container-width);
+    max-width: var(--container-max-width);
+    gap: 12px;
+}
 
-    .block {
+.block {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 25px;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #161E31, #242f47);
+    color: var(--def-text-color);
+    width: 100%;
+}
+.errblock {
+    background: linear-gradient(45deg, #ff6b6b6f, #e29f9f51) !important;
+}
+
+
+#sub {
+    display: none;
+}
+#sub-info {
+    justify-content: space-between;
+    .top {
         display: flex;
         flex-direction: column;
-        box-sizing: border-box;
-        padding: 25px;
-        margin: 15px 0;
-        border-radius: 10px;
-        background: linear-gradient(45deg, #161E31, #242f47);
-        color: var(--def-text-color);
-    }
 
-    .errblock {
-        background: linear-gradient(45deg, #ff6b6b6f, #e29f9f51) !important;
-    }
-
-    #sub {
         .status {
             font-size: 17px;
         }
@@ -43,7 +61,7 @@ body {
             color: #ebebeb;
         }
         .devices, .date {
-            font-size: 16px;
+            font-size: 18px;
             margin: 2px 0;
         }
 
@@ -63,29 +81,109 @@ body {
             cursor: pointer;
         }
     }
-
-    #about, #tutorial, #support {
-        display: none;
+    .bottom {
+        display: flex;
         flex-direction: row;
-        align-items: center;
-        justify-content: start;
-        padding: 10px;
+        justify-content: end;
+        gap: 8px;
+        margin-top: 30px;
 
-        > img {
-            width: 28px;
-            aspect-ratio: 1/1;
-            margin-right: 10px;
-            opacity: 0.2;
+        .settings, .history {
+            display: flex;
+            height: 40px;
+            background: #35425c;
+            padding: 7px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            cursor: pointer;
+
+            > img {
+                height: 100%;
+                aspect-ratio: 1/1;
+                opacity: 0.7;
+            }
         }
     }
 }
+#sub-settings {
+    justify-content: space-between;
 
-red {
-    color: rgb(225, 67, 67);
+    .bottom {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        gap: 8px;
+        margin-top: 30px;
+    }
 }
-green {
-    color: rgb(74, 225, 74);
+#sub-periods {
+    justify-content: space-between;
+
+    .bottom {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        gap: 8px;
+        margin-top: 30px;
+    }
 }
-def {
-    color: var(--def-text-color);
+#sub-error {
+    display: none;
 }
+
+.sqare-btn {
+    display: flex;
+    height: 40px;
+    background: #35425c;
+    padding: 7px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    cursor: pointer;
+
+    > img {
+        height: 100%;
+        aspect-ratio: 1/1;
+        opacity: 0.7;
+    }
+}
+
+#about, #tutorial, #support {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    padding: 12px;
+
+    > img {
+        width: 28px;
+        aspect-ratio: 1/1;
+        margin-right: 10px;
+        opacity: 0.2;
+    }
+}
+
+.scroll-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    .scroll-block {
+        scroll-snap-align: center;
+        margin: 0 var(--scroll-margin);
+        flex-shrink: 0;
+        width: var(--container-width);
+        max-width: var(--container-max-width);
+    }
+}
+.scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+red { color: rgb(225, 67, 67); }
+green { color: rgb(74, 225, 74); }
+def { color: var(--def-text-color); }

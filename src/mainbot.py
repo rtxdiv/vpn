@@ -4,7 +4,7 @@ from datetime import datetime
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command, CommandObject
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
-from exceptions import ForeseenException
+from exceptions import ForeseenException, Msg
 from aiogram.enums import ParseMode
 from xui_client import xui
 from logger_config import info_log, error_log
@@ -51,26 +51,35 @@ async def cmd_activate(ctx: Message, command: CommandObject):
     except ForeseenException as e:
         await ctx.answer(str(e))
     except Exception as e:
-        await ctx.answer('Произошла непредвиденная ошибка')
+        await ctx.answer(Msg.NOT_FORSEEN)
         error_log.error(str(e))
 
-# @dp.message(Command('update'))
+@dp.message(Command('update'))
 async def cmd_reset(ctx: Message, command: CommandObject):
     try:
         await xui.reset_sub_id(command.args)
-        await ctx.answer('Подписка обновлена')
+        await ctx.answer('ID подписки обновлён')
         
     except ForeseenException as e:
         await ctx.answer(str(e))
     except Exception as e:
-        await ctx.answer('Произошла непредвиденная ошибка')
+        await ctx.answer(Msg.NOT_FORSEEN)
         error_log.error(str(e))
 
+@dp.message(Command('enable'))
+async def cmd_enable(ctx: Message, command: CommandObject):
+    try:
+        ### await xui.enable_client(command.args, )
+        #
+        # ЛОГИКА:
+        # если expiry < NOW, то прибавить к текущему expiry
+        # иначе прибавить expiry к NOW
+        #
+        await ctx.answer('Срок подписки обновлён')
+        
+    except ForeseenException as e:
+        await ctx.answer(str(e))
+    except Exception as e:
+        await ctx.answer(Msg.NOT_FORSEEN)
+        error_log.error(str(e))
 
-def format_date(timestamp):
-    if timestamp <= 0: return 'Бессрочно'
-    dt = datetime.fromtimestamp(timestamp / 1000)
-    return dt.strftime('%d.%m.%Y')
-
-def to_gb(bytes):
-    return round(bytes / (1024 * 1024 * 1024), 1)

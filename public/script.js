@@ -1,10 +1,10 @@
-const debug = document.querySelector('#debug')
 const subBlock = document.querySelector('#sub')
-const subStatus = document.querySelector('#sub .status')
-const subName = document.querySelector('#sub .name')
-const subDevices = document.querySelector('#sub .devices')
-const subDate = document.querySelector('#sub .date')
-const subConf = document.querySelector('#sub .conf')
+const subStatus = document.querySelector('#sub-info .status')
+const subName = document.querySelector('#sub-info .name')
+const subDevices = document.querySelector('#sub-info .devices')
+const subDate = document.querySelector('#sub-info .date')
+const subError = document.querySelector('#sub-error')
+
 const aboutBlock = document.querySelector('#about')
 const tutorialBlock = document.querySelector('#tutorial')
 const supportBlock = document.querySelector('#support')
@@ -36,20 +36,24 @@ main()
 
 function drawSub({ user = false, error = false, authorization = true, subHost = false }) {
     if (error) {
-        subBlock.classList.add('errblock')
-        subBlock.innerHTML = '<a>Ошибка при загрузке подписки</a>'
+        subBlock.style.display = 'none'
+        subError.style.display = 'flex'
+        subError.innerHTML = '<a>Ошибка при загрузке подписки</a>'
 
         addButton(aboutBlock)
         addButton(supportBlock)
         return
     }
     if (!authorization) {
-        subBlock.innerHTML = '<a>Запустите приложение через Telegram, чтобы получить информацию о подписке</a>'
+        subBlock.style.display = 'none'
+        subError.style.display = 'flex'
+        subError.innerHTML = '<a>Запустите приложение через Telegram, чтобы получить информацию о подписке</a>'
         addButton(aboutBlock)
         addButton(supportBlock)
         return
     }
     if (user) {
+        subBlock.style.display = 'flex'
         subStatus.innerHTML = user['enable']? '<green>Активна</green>' : '<red>Неактивна</red>'
         subName.innerHTML = `<def>«</def>${ user["comment"] || 'Подписка' }<def>»</def>`
         subDevices.innerHTML = `Устройства: ${ user['limitIp'] == 0? 'бесконечно' : user['limitIp'] }`

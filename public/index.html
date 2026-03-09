@@ -8,18 +8,54 @@
     <link rel="stylesheet" href="public/style.css">
 </head>
 <body>
-    <div class="container">
-        
-        <div class="block" id="sub">
 
-            <a class="status"><green></green></a>
-            <a class="name"></a>
-            <a class="devices"></a>
-            <a class="date"></a>
+    <div class="scroll-container" id="sub">
 
-            <div class="conf">Конфигурация</div>
-
+        <div class="block scroll-block" id="sub-info">
+            <div class="top">
+                <a class="status"><green></green></a>
+                <a class="name"></a>
+                <a class="devices"></a>
+                <a class="date"></a>
+            </div>
+            <div class="bottom">
+                <div class="settings sqare-btn" onclick="location.href='#sub-settings'">
+                    <img src="public/img/settings.png">
+                </div>
+                <div class="history sqare-btn" onclick="location.href='#sub-periods'">
+                    <img src="public/img/history.png">
+                </div>
+            </div>
         </div>
+
+        <div class="block scroll-block" id="sub-settings">
+            <div class="top">
+
+            </div>
+            <div class="bottom">
+                <div class="back sqare-btn" onclick="location.href='#sub-info'">
+                    <img src="public/img/back.png">
+                </div>
+            </div>
+        </div>
+
+        <div class="block scroll-block" id="sub-periods">
+            <div class="top">
+
+            </div>
+            <div class="bottom">
+                <div class="back sqare-btn" onclick="location.href='#sub-info'">
+                    <img src="public/img/back.png">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="block" id="sub-error"></div>
+    </div>
+
+    <div class="container">
             
         <div class="block" id="about" data-url="https://t.me/rtdVpn">
             <img src="public/img/about.png">
