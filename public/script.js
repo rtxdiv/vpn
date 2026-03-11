@@ -32,17 +32,17 @@ const getSub = async () => {
     }
 }
 const getTariffs = async () => {
-    const resp = await fetch('/sub', {
+    const resp = await fetch('/tariffs', {
         headers: {
             'Content-Type': 'application/json'
         }
     })
     if (resp.ok) {
         const body = await resp.json()
-        displayTariffs({ tariffs: body })
+        // displayTariffs({ tariffs: body })
         
     } else {
-        displayTariffs({ error: true })
+        // displayTariffs({ error: true })
     }
 }
 
