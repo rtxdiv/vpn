@@ -1,5 +1,6 @@
-from xui import XUIClient
+from src.xui.xui_service import XUIClient
 import os
+
 
 xui = XUIClient(
     os.environ['PANEL_HOST'] + '/' + os.environ['PANEL_PATH'],

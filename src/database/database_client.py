@@ -1,14 +1,13 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
-from pathlib import Path
 from functools import wraps
 from typing import Callable
+from root import ROOT_DIR
 
 
-BASE_DIR = Path(__file__).resolve().parent
-DB_PATH = BASE_DIR.parent / 'database' / 'main.db'
-DATABASE_URL = f"sqlite+aiosqlite:///{DB_PATH}"
+DB_PATH = ROOT_DIR / 'main.db'
+DB_URL = f"sqlite+aiosqlite:///{DB_PATH}"
 
-engine = create_async_engine(url=DATABASE_URL)
+engine = create_async_engine(url=DB_URL)
 
 AsyncSessionLocal = async_sessionmaker(
     engine,

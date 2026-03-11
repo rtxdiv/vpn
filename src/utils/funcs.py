@@ -1,5 +1,6 @@
 from datetime import datetime
 
+
 def format_date(timestamp):
     if timestamp <= 0: return 'Бессрочно'
     dt = datetime.fromtimestamp(timestamp / 1000)

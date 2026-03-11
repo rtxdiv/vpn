@@ -1,6 +1,7 @@
 import logging
 from pathlib import Path
 
+
 def setup_loggers():
     info_log = logging.getLogger('info_log')
     info_log.setLevel(logging.INFO)
