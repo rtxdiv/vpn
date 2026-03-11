@@ -1,6 +1,5 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from functools import wraps
-from typing import Callable
 from root import ROOT_DIR
 
 
@@ -16,7 +15,7 @@ AsyncSessionLocal = async_sessionmaker(
     autoflush=False
 )
 
-def with_session(func: Callable) -> Callable:
+def database_session(func):
     @wraps(func)
     async def wrapper(*args, **kwargs):
         async with AsyncSessionLocal() as session:

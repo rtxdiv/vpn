@@ -1,10 +1,11 @@
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from src.utils.auth_guard import authorization
 from src.xui.xui_client import xui
 import os
 from root import ROOT_DIR
+from src.database.database_service import *
 
 
 app = FastAPI()
@@ -18,6 +19,10 @@ async def get_root():
 
 @app.get('/sub')
 @authorization
-async def get_user(request: Request):
-    user = await xui.get_by_tgid(request.state.telegram_user['id'])
-    return { 'user': user, 'subHost': os.environ['SUB_HOST'] }
+async def get_sub(request: Request):
+    return await xui.get_by_tgid(request.state.telegram_user['id'])
+
+@app.get('/tariffs')
+async def get_tariffs():
+    tariffs = await get_all_tafiffs()
+    return tariffs

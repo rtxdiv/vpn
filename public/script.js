@@ -13,7 +13,7 @@ const telegram = window.Telegram.WebApp
 telegram.expand()
 
 
-const main = async () => {
+const getSub = async () => {
     const resp = await fetch('/sub', {
         headers: {
             'Content-Type': 'application/json',
@@ -22,19 +22,38 @@ const main = async () => {
     })
     if (resp.ok) {
         const body = await resp.json()
-        drawSub({ user: body.user, subHost: body.subHost })
+        displaySub({ user: body })
         
     } else if (resp.status == 401) {
-        drawSub({ authorization: false })
+        displaySub({ authorization: false })
 
     } else {
-        drawSub({ error: true })
+        displaySub({ error: true })
     }
+}
+const getTariffs = async () => {
+    const resp = await fetch('/sub', {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    if (resp.ok) {
+        const body = await resp.json()
+        displayTariffs({ tariffs: body })
+        
+    } else {
+        displayTariffs({ error: true })
+    }
+}
+
+const main = async () => {
+    await getSub()
+    await getTariffs()
 }
 main()
 
 
-function drawSub({ user = false, error = false, authorization = true, subHost = false }) {
+function displaySub({ user = false, error = false, authorization = true }) {
     if (error) {
         subBlock.style.display = 'none'
         subError.style.display = 'flex'
