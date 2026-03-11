@@ -25,4 +25,5 @@ async def get_sub(request: Request):
 @app.get('/tariffs')
 async def get_tariffs():
     tariffs = await get_all_tafiffs()
+    print(tariffs)
     return tariffs
