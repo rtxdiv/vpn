@@ -136,7 +136,6 @@ body {
 
     .block {
         width: 250px;
-        scroll-snap-align: start;
         margin: 0;
         margin-left: var(--scroll-margin);
     }
