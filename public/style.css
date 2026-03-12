@@ -17,14 +17,11 @@ body {
     margin: 0;
     font-size: 18px;
     scroll-behavior: smooth;
-    
-    > * {
-        padding-top: 20px;
-    }
 }
 .container {
     width: var(--container-width) !important;
     max-width: var(--container-max-width) !important;
+    margin-top: 10px;
 }
 
 .block {
@@ -232,6 +229,7 @@ body {
     -ms-overflow-style: none;
 
     .block {
+        margin-top: 10px;
         scroll-snap-align: center;
         flex-shrink: 0;
         width: var(--container-width);
