@@ -133,6 +133,10 @@ body {
 }
 #tariffs {
     display: none;
+
+    .block {
+        width: 300px;
+    }
 }
 #tariffs-error {
     display: none;
