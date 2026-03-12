@@ -181,6 +181,7 @@ body {
     @media screen and (min-width: 800px) {
         width: var(--container-width);
         max-width: var(--container-width);
+        flex-shrink: 0;
 
         .block {
             width: 100%;
