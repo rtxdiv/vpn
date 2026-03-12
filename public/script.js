@@ -106,7 +106,7 @@ function displayTariffs({ tariffs = false, error = false }) {
         tariffsBlock.style.display = 'flex'
         tariffs.forEach(tariff => {
             tariffsBlock.innerHTML += `
-                <div class="scroll-block">
+                <div class="block">
                     <div class="top">
                         <a class="country">${tariff.country}</a>
                         <a class="name">${tariff.name}</a>
