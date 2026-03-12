@@ -20,11 +20,8 @@ body {
     font-size: 17px;
 }
 .container {
-    display: flex;
-    flex-direction: column;
-    width: var(--container-width);
-    max-width: var(--container-max-width);
-    gap: 10px;
+    width: var(--container-width) !important;
+    max-width: var(--container-max-width) !important;
 }
 
 .block {
@@ -117,18 +114,24 @@ body {
     display: none;
     font-size: 17px;
 }
-#about, #tutorial, #support {
+#help {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: start;
-    padding: 12px;
+    flex-direction: column;
+    gap: 10px;
 
-    > img {
-        width: 28px;
-        aspect-ratio: 1/1;
-        margin-right: 10px;
-        opacity: 0.2;
+    #help-about, #help-tutorial, #help-support {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        padding: 12px;
+
+        > img {
+            width: 28px;
+            aspect-ratio: 1/1;
+            margin-right: 10px;
+            opacity: 0.2;
+        }
     }
 }
 #tariffs {
