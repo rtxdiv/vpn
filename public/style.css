@@ -17,7 +17,7 @@ body {
     margin: 0;
     margin-top: 22px;
     gap: 15px;
-    font-size: 17px;
+    font-size: 18px;
 }
 .container {
     width: var(--container-width) !important;
@@ -139,11 +139,6 @@ body {
 
     .block {
         width: 250px;
-        margin: 0;
-        margin-left: var(--scroll-margin);
-    }
-    .block:last-of-type {
-        margin-right: var(--scroll-margin);
     }
 }
 #tariffs-error {
