@@ -133,11 +133,11 @@ body {
 }
 #tariffs {
     display: none;
+    gap: 10px;
 
     .block {
         width: 250px;
         margin: 0;
-        margin-left: var(--scroll-margin);
     }
 }
 #tariffs-error {
