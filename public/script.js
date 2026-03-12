@@ -115,8 +115,7 @@ function displayTariffs({ tariffs = false, error = false }) {
                         <a class="price">${tariff.price}₽<span class="note"> / мес.</span></a>
                     </div>
                     <div class="bottom">
-                        <div class="rect-btn">Upgrade</div>
-                        <div class="rect-btn">Buy</div>
+                        <div class="rect-btn">Купить</div>
                     </div>
                 </div>
             `
