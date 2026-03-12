@@ -225,7 +225,7 @@ body {
         max-width: var(--container-max-width);
     }
     .block:first-of-type {
-        margin-left: var(--scroll-margin);
+        /* margin-left: var(--scroll-margin); */
     }
     .block:last-of-type {
         margin-right: var(--scroll-margin);
