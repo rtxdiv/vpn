@@ -5,6 +5,9 @@ const subDevices = document.querySelector('#sub-info .devices')
 const subDate = document.querySelector('#sub-info .date')
 const subError = document.querySelector('#sub-error')
 
+const tariffsBlock = document.querySelector('#tariffs')
+const tariffsError = document.querySelector('#tariffs-error')
+
 const aboutBlock = document.querySelector('#about')
 const tutorialBlock = document.querySelector('#tutorial')
 const supportBlock = document.querySelector('#support')
@@ -39,34 +42,32 @@ const getTariffs = async () => {
     })
     if (resp.ok) {
         const body = await resp.json()
-        // displayTariffs({ tariffs: body })
+        displayTariffs({ tariffs: body })
         
     } else {
-        // displayTariffs({ error: true })
+        displayTariffs({ error: true })
     }
 }
 
 const main = async () => {
-    await getTariffs()
     await getSub()
+    await getTariffs()
 }
 main()
 
 
 function displaySub({ user = false, error = false, authorization = true }) {
     if (error) {
-        subBlock.style.display = 'none'
         subError.style.display = 'flex'
-        subError.innerHTML = '<a>Ошибка при загрузке подписки</a>'
-
+        subError.querySelector('.message').innerHTML = 'Ошибка при загрузке подписки'
+        subError.classList.add('error-block')
         addButton(aboutBlock)
         addButton(supportBlock)
         return
     }
     if (!authorization) {
-        subBlock.style.display = 'none'
         subError.style.display = 'flex'
-        subError.innerHTML = '<a>Запустите приложение через Telegram, чтобы получить информацию о подписке</a>'
+        subError.querySelector('.message').innerHTML = 'Запустите приложение через Telegram, чтобы получить информацию о подписке'
         addButton(aboutBlock)
         addButton(supportBlock)
         return
@@ -88,12 +89,37 @@ function displaySub({ user = false, error = false, authorization = true }) {
 
         addButton(tutorialBlock)
         addButton(supportBlock)
-        
     } else {
         subBlock.innerHTML = '<a>У вас ещё нет подписки</a>'
         
         addButton(aboutBlock)
         addButton(supportBlock)
+    }
+}
+function displayTariffs({ tariffs = false, error = false }) {
+    if (error) {
+        tariffsError.display = 'flex'
+        tariffsError.querySelector('.message').innerHTML = 'Ошибка при загрузке тарифов'
+        subError.classList.add('error-block')
+
+    } else if (tariffs) {
+        tariffsBlock.style.display = 'flex'
+        tariffs.forEach(tariff => {
+            tariffsBlock.innerHTML += `
+                <div class="scroll-block">
+                    <div class="top">
+                        <a class="country">${tariff.country}</a>
+                        <a class="name">${tariff.name}</a>
+                        <a class="devices">Устройсва: ${tariff.devices}</a>
+                        <a class="traffic">Трафик: ${tariff.traffic==0? 'бесконечно' : tariff.traffic + " Gb" }</a>
+                    </div>
+                    <div class="bottom">
+                        <div class="rect-btn">Upgrade</div>
+                        <div class="rect-btn">Buy</div>
+                    </div>
+                </div>
+            `
+        })
     }
 }
 
