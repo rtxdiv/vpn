@@ -232,6 +232,7 @@ body {
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    scroll-padding-top: var(--container-margin-top);
 
     .block {
         scroll-snap-align: center;
