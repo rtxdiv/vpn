@@ -17,10 +17,9 @@ body {
     margin: 0;
     font-size: 18px;
     scroll-behavior: smooth;
-    padding-bottom: 30px;
-
+    
     > * {
-        margin-top: 20px;
+        padding-top: 20px;
     }
 }
 .container {
