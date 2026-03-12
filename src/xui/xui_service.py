@@ -1,6 +1,7 @@
 from src.utils.exceptions import *
 import py3xui
 import uuid
+from src.utils.logger_client import error_log
 
 
 class XUIClient:
@@ -23,7 +24,12 @@ class XUIClient:
 
 
     async def get_inbound(self) -> py3xui.Inbound:
-        inbounds = await self._api.inbound.get_list()
+        inbound = None
+        try:
+            inbounds = await self._api.inbound.get_list()
+        except Exception as exc:
+            error_log.error(exc)
+            raise InboundNotFoundException
         inbound = [item for item in inbounds if item.protocol == self._protocol][0]
         if not inbound: raise InboundNotFoundException
         return inbound
@@ -33,29 +39,9 @@ class XUIClient:
         if not id: raise GetTgIdException
         inbound = await self.get_inbound()
         client = [item for item in inbound.settings.clients if item.email == str(id)]
-        if not client: 
-            # return None
-            raise ClientNotFoundException
+        if not client: return None
         return client[0]
-
-
-    async def create_client(self, id: any, limit_ip: int, expiry: int, comment: str) -> py3xui.Client:
-        if not id: raise GetTgIdException
-        uuid4 = await self.get_new_uuid()
-        new_client = py3xui.Client(
-            id=uuid4,
-            enable=True,
-            email=str(id),
-            limitIp=limit_ip,
-            expiryTime=expiry,
-            flow=self._flow,
-            subId=uuid4,
-            comment=comment
-        )
-        try: await self._api.client.add(self._inbound_id, [new_client])
-        except: raise CreateClientException
-        return new_client
-    
+        
 
     async def enable_client(self, id: any, expiry: int):
         client = await self._api.client.get_by_email(str(id))
@@ -92,6 +78,28 @@ class XUIClient:
         return client[0]
     
 
+    async def create_client(self, id: any, limit_ip: int, expiry: int, comment: str) -> py3xui.Client:
+        if not id: raise GetTgIdException
+        uuid4 = await self.get_new_uuid()
+        new_client = py3xui.Client(
+            id=uuid4,
+            enable=True,
+            email=str(id),
+            limitIp=limit_ip,
+            expiryTime=expiry,
+            flow=self._flow,
+            subId=uuid4,
+            comment=comment
+        )
+        try: await self._api.client.add(self._inbound_id, [new_client])
+        except Exception as exc:
+            error_log.error(exc)
+            raise CreateClientException
+        return new_client
+    
+
     async def update_client(self, uuid4: str, new_client: py3xui.Client):
         try: await self._api.client.update(uuid4, new_client)
-        except: raise UpdateClientException
+        except Exception as exc:
+            error_log.error(exc)
+            raise UpdateClientException

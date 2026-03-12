@@ -22,7 +22,6 @@ async def get_root():
 @app.get('/sub')
 @authorization
 async def get_sub(request: Request):
-    raise Exception('ОКАК')
     return await xui.get_by_tgid(request.state.telegram_user['id'])
 
 @app.get('/tariffs')
