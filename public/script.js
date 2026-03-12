@@ -112,6 +112,7 @@ function displayTariffs({ tariffs = false, error = false }) {
                         <a class="name">${tariff.name}</a>
                         <a class="devices">Устройсва: ${tariff.devices}</a>
                         <a class="traffic">Трафик: ${tariff.traffic==0? 'бесконечно' : tariff.traffic + " Gb" }</a>
+                        <a class="price">${tariff.price}₽<span class="note"> / мес.</span></a>
                     </div>
                     <div class="bottom">
                         <div class="rect-btn">Upgrade</div>

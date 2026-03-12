@@ -139,6 +139,38 @@ body {
 
     .block {
         width: 250px;
+        justify-content: space-between;
+        .top {
+            display: flex;
+            flex-direction: column;
+            
+            .country {
+                font-size: 17px;
+            }
+            .name {
+                font-size: 26px;
+                font-weight: 800;
+                margin: 4px 0 15px 0;
+            }
+            .devices, .traffic {
+                font-size: 17px;
+                margin: 2px 0;
+            }
+            .price {
+                font-size: 22px;
+                font-weight: 700;
+                margin: 10px 0;
+
+                .note {
+                    font-size: 17px;
+                    font-weight: 500;
+                }
+            }
+        }
+        .bottom {
+            display: flex;
+            flex-direction: column;
+        }
     }
 }
 #tariffs-error {
