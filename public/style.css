@@ -5,6 +5,9 @@
     --scroll-margin: max(4vw, calc((100vw - 800px) / 2));
     --container-margin-top: 20px;
 }
+html {
+    scroll-padding-top: 20px;
+}
 body {
     background: #0A1121;
     display: flex;
@@ -232,16 +235,12 @@ body {
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    scroll-padding-top: 20px;
-    scroll-margin-top: 20px;
 
     .block {
         scroll-snap-align: center;
         flex-shrink: 0;
         width: var(--container-width);
         max-width: var(--container-max-width);
-        scroll-padding-top: 20px;
-        scroll-margin-top: 20px;
     }
     .block:first-of-type {
         margin-left: var(--scroll-margin);
