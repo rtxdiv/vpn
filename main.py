@@ -6,7 +6,7 @@ from src.server.fastapi_server import app
 from src.xui.xui_client import xui
 from src.bot.bot_server import bot, dp
 
-
+raise Exception('ОКАКККККККККККККККК')
 async def main():
     config = uvicorn.Config(app, host='localhost', port=8000)
     server = uvicorn.Server(config)
