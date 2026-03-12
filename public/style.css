@@ -176,9 +176,14 @@ body {
             display: flex;
             flex-direction: column;
         }
+    }
 
-        @media screen and (min-width: 800px) {
-            width: 100%;
+    @media screen and (min-width: 800px) {
+        width: var(--container-width);
+        max-width: var(--container-width);
+
+        .block {
+            width: max-content;
         }
     }
 }
