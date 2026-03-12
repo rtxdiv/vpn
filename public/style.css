@@ -188,10 +188,13 @@ body {
 
     .block {
         scroll-snap-align: center;
-        margin: 0 var(--scroll-margin);
+        margin-left: var(--scroll-margin);
         flex-shrink: 0;
         width: var(--container-width);
         max-width: var(--container-max-width);
+    }
+    .block:last-of-type {
+        margin-right: var(--scroll-margin);
     }
 }
 .scroll-container::-webkit-scrollbar {
