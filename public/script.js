@@ -25,6 +25,7 @@ const getSub = async () => {
     })
     if (resp.ok) {
         const body = await resp.json()
+        alert(body)
         displaySub({ user: body })
         
     } else if (resp.status == 401) {
