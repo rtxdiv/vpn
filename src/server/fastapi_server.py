@@ -38,7 +38,7 @@ def forseen_exception_handler(exc: ForeseenException):
 
 @app.exception_handler(Exception)
 def forseen_exception_handler(exc: ForeseenException):
-    error_log.error(exc)
+    error_log.error(exc.message)
     return JSONResponse(
         status_code=500,
         content={'detail': 'Ошибка сервера'}

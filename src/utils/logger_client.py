@@ -3,6 +3,7 @@ from pathlib import Path
 
 
 def setup_loggers():
+    # info logger
     info_log = logging.getLogger('info_log')
     info_log.setLevel(logging.INFO)
     
@@ -12,7 +13,7 @@ def setup_loggers():
         info_handler.setFormatter(logging.Formatter('%(asctime)s - %(message)s'))
         info_log.addHandler(info_handler)
     
-    # Error logger
+    # error logger
     error_log = logging.getLogger('error_log')
     error_log.setLevel(logging.ERROR)
     error_log.propagate = False
