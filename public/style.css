@@ -19,7 +19,7 @@ body {
     scroll-behavior: smooth;
     padding-bottom: 30px;
 
-    * > {
+    > * {
         margin-top: 20px;
     }
 }
