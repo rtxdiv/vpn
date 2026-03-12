@@ -135,7 +135,10 @@ body {
     display: none;
 
     .block {
-        width: 300px;
+        width: 250px;
+        scroll-snap-align: start;
+        margin: 0;
+        margin-left: var(--scroll-margin);
     }
 }
 #tariffs-error {
