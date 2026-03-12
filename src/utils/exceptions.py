@@ -3,35 +3,43 @@ class ForeseenException(Exception):
 
 class GetTgIdException(ForeseenException):
     def __init__(self, message='Ошибка получения Telegram ID'):
-        super().__init__(message)
+        self.message = message
+        super().__init__(self.message)
 
 class GetUuidException(ForeseenException):
     def __init__(self, message='Ошибка получения UUID'):
-        super().__init__(message)
+        self.message = message
+        super().__init__(self.message)
 
 class ClientNotFoundException(ForeseenException):
     def __init__(self, message='Клиент не найден'):
-        super().__init__(message)
+        self.message = message
+        super().__init__(self.message)
 
 class InboundNotFoundException(ForeseenException):
     def __init__(self, message='Ошибка поиска VPN-туннеля'):
-        super().__init__(message)
+        self.message = message
+        super().__init__(self.message)
 
 class GenerateUuidException(ForeseenException):
     def __init__(self, message='Ошибка генерации UUID'):
-        super().__init__(message)
+        self.message = message
+        super().__init__(self.message)
 
 class ResetSubIdException(ForeseenException):
     def __init__(self, message='Ошибка сброса ID подписки'):
-        super().__init__(message)
+        self.message = message
+        super().__init__(self.message)
 
 class CreateClientException(ForeseenException):
     def __init__(self, message='Ошибка создания клиента'):
-        super().__init__(message)
+        self.message = message
+        super().__init__(self.message)
 
 class UpdateClientException(ForeseenException):
     def __init__(self, message='Ошибка обновления клиента'):
-        super().__init__(message)
+        self.message = message
+        super().__init__(self.message)
 
 
 class TelegramAuthError(Exception):

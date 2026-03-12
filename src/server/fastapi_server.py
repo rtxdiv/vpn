@@ -29,7 +29,7 @@ async def get_tariffs():
     return await get_all_tafiffs()
 
 @app.exception_handler(ForeseenException)
-def forseen_exception_handler(exc: ForeseenException):
+def forseen_exception_handler(request: Request, exc: ForeseenException):
     print(exc)
     return JSONResponse(
         status_code=400,
@@ -37,7 +37,7 @@ def forseen_exception_handler(exc: ForeseenException):
     )
 
 @app.exception_handler(Exception)
-def forseen_exception_handler(exc: ForeseenException):
+def forseen_exception_handler(request: Request, exc: ForeseenException):
     print(exc)
     return JSONResponse(
         status_code=500,
