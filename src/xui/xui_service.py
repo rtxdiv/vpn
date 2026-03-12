@@ -33,7 +33,9 @@ class XUIClient:
         if not id: raise GetTgIdException
         inbound = await self.get_inbound()
         client = [item for item in inbound.settings.clients if item.email == str(id)]
-        if not client: return None
+        if not client: 
+            # return None
+            raise ClientNotFoundException
         return client[0]
 
 
