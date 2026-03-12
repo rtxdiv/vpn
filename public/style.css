@@ -16,7 +16,7 @@ body {
     cursor: default;
     margin: 0;
     margin-top: 22px;
-    /* gap: 11px; */
+    gap: 11px;
     font-size: 17px;
 }
 .container {
