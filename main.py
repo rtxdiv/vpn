@@ -5,10 +5,7 @@ import uvicorn
 from src.server.fastapi_server import app
 from src.xui.xui_client import xui
 from src.bot.bot_server import bot, dp
-from src.database.models import Tariffs
-from src.utils.logger_client import error_log
 
-error_log.error('ОКАК')
 
 async def main():
     config = uvicorn.Config(app, host='localhost', port=8000)

@@ -30,7 +30,7 @@ async def get_tariffs():
 
 @app.exception_handler(ForeseenException)
 def forseen_exception_handler(exc: ForeseenException):
-    error_log.error(exc.message)
+    print(exc)
     return JSONResponse(
         status_code=400,
         content={'detail': exc.message}
@@ -38,7 +38,7 @@ def forseen_exception_handler(exc: ForeseenException):
 
 @app.exception_handler(Exception)
 def forseen_exception_handler(exc: ForeseenException):
-    error_log.error(exc.message)
+    print(exc)
     return JSONResponse(
         status_code=500,
         content={'detail': 'Ошибка сервера'}
