@@ -6,7 +6,7 @@
     --container-margin-top: 20px;
 }
 html {
-    scroll-padding-top: 20px;
+    scroll-padding-top: var(--container-margin-top);
 }
 body {
     background: #0A1121;
