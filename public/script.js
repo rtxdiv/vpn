@@ -25,7 +25,6 @@ const getSub = async () => {
     })
     if (resp.ok) {
         const body = await resp.json()
-        alert(body)
         displaySub({ user: body })
         
     } else if (resp.status == 401) {
@@ -59,14 +58,14 @@ main()
 
 function displaySub({ user = false, error = false, authorization = true }) {
     if (error) {
-        subError.style.display = 'flex'
         subError.querySelector('.message').innerHTML = 'Ошибка при загрузке подписки'
         subError.classList.add('error-block')
+        subError.style.display = 'flex'
         return
     }
     if (!authorization) {
-        subError.style.display = 'flex'
         subError.querySelector('.message').innerHTML = 'Запустите приложение через Telegram, чтобы получить информацию о подписке'
+        subError.style.display = 'flex'
         return
     }
     if (user) {
@@ -85,6 +84,7 @@ function displaySub({ user = false, error = false, authorization = true }) {
 
     } else {
         subError.querySelector('.message').innerHTML = 'У вас ещё нет подписки'
+        subError.style.display = 'flex'
     }
 }
 function displayTariffs({ tariffs = false, error = false }) {
