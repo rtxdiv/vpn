@@ -175,13 +175,13 @@ body {
     -ms-overflow-style: none;
 
     .block {
-        display: flex;
+        /* display: flex;
         flex-direction: column;
         box-sizing: border-box;
         padding: 25px;
         border-radius: 10px;
         background: linear-gradient(45deg, #161E31, #242f47);
-        color: var(--def-text-color);
+        color: var(--def-text-color); */
         scroll-snap-align: center;
         margin: 0 var(--scroll-margin);
         flex-shrink: 0;
