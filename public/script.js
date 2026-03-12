@@ -61,15 +61,11 @@ function displaySub({ user = false, error = false, authorization = true }) {
         subError.style.display = 'flex'
         subError.querySelector('.message').innerHTML = 'Ошибка при загрузке подписки'
         subError.classList.add('error-block')
-        addButton(aboutBlock)
-        addButton(supportBlock)
         return
     }
     if (!authorization) {
         subError.style.display = 'flex'
         subError.querySelector('.message').innerHTML = 'Запустите приложение через Telegram, чтобы получить информацию о подписке'
-        addButton(aboutBlock)
-        addButton(supportBlock)
         return
     }
     if (user) {
@@ -85,15 +81,9 @@ function displaySub({ user = false, error = false, authorization = true }) {
             localDate = date.toLocaleDateString('ru-RU')
         } else localDate = 'бессрочно'
         subDate.innerHTML = `Действует до: ${ localDate }`
-        addButton(subConf, `${subHost}/${user['subId']}`)
 
-        addButton(tutorialBlock)
-        addButton(supportBlock)
     } else {
-        subBlock.innerHTML = '<a>У вас ещё нет подписки</a>'
-        
-        addButton(aboutBlock)
-        addButton(supportBlock)
+        subError.querySelector('.message').innerHTML = 'У вас ещё нет подписки'
     }
 }
 function displayTariffs({ tariffs = false, error = false }) {

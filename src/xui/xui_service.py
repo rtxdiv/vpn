@@ -1,4 +1,4 @@
-from src.utils.exceptions import ForeseenException, Msg
+from src.utils.exceptions import *
 import py3xui
 import uuid
 
@@ -25,20 +25,20 @@ class XUIClient:
     async def get_inbound(self) -> py3xui.Inbound:
         inbounds = await self._api.inbound.get_list()
         inbound = [item for item in inbounds if item.protocol == self._protocol][0]
-        if not inbound: raise ForeseenException(Msg.INBOUND_NOT_FOUND)
+        if not inbound: raise InboundNotFoundException
         return inbound
 
 
     async def get_by_tgid(self, id: any) -> py3xui.Client:
-        if not id: raise ForeseenException(Msg.TG_ID_GET)
+        if not id: raise GetTgIdException
         inbound = await self.get_inbound()
         client = [item for item in inbound.settings.clients if item.email == str(id)]
-        if not client: raise ForeseenException(Msg.CLIENT_NOT_FOUND)
+        if not client: return None
         return client[0]
 
 
     async def create_client(self, id: any, limit_ip: int, expiry: int, comment: str) -> py3xui.Client:
-        if not id: raise ForeseenException(Msg.TG_ID_GET)
+        if not id: raise GetTgIdException
         uuid4 = await self.get_new_uuid()
         new_client = py3xui.Client(
             id=uuid4,
@@ -51,7 +51,7 @@ class XUIClient:
             comment=comment
         )
         try: await self._api.client.add(self._inbound_id, [new_client])
-        except: raise ForeseenException(Msg.CLIENT_CREATE)
+        except: raise CreateClientException
         return new_client
     
 
@@ -59,16 +59,16 @@ class XUIClient:
         client = await self._api.client.get_by_email(str(id))
         client.expiry_time = expiry
         client.enable = True
-        await self.update_client(client.uuid, client, )
+        await self.update_client(client.uuid, client)
 
 
     async def reset_sub_id(self, id: any):
-        if not id: raise ForeseenException(Msg.TG_ID_GET)
+        if not id: raise GetTgIdException
         client = await self._api.client.get_by_email(str(id))
         uuid4 = await self.get_new_uuid()
         client.id = uuid4
         client.sub_id = uuid4
-        await self.update_client(client.uuid, client, Msg.SUB_ID_RESET)
+        await self.update_client(client.uuid, client)
 
 
     async def get_new_uuid(self) -> str:
@@ -79,17 +79,17 @@ class XUIClient:
             client = await self.get_by_uuid(uuid4)
             if (client): continue
             return uuid4
-        raise ForeseenException(Msg.UUID_GENERATION)
+        raise GenerateUuidException
 
 
     async def get_by_uuid(self, uuid: str) -> py3xui.Client:
-        if not uuid: raise ForeseenException(Msg.UUID_GET)
+        if not uuid: raise GetUuidException
         inbound = await self.get_inbound()
         client = [item for item in inbound.settings.clients if item.uuid == uuid]
         if not client: return None
         return client[0]
     
 
-    async def update_client(self, uuid4: str, new_client: py3xui.Client, message = Msg.NOT_FORSEEN):
+    async def update_client(self, uuid4: str, new_client: py3xui.Client):
         try: await self._api.client.update(uuid4, new_client)
-        except: raise ForeseenException(message)
+        except: raise UpdateClientException

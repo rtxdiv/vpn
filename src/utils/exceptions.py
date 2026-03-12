@@ -1,20 +1,38 @@
-from enum import Enum
-
-
 class ForeseenException(Exception):
     pass
 
+class GetTgIdException(ForeseenException):
+    def __init__(self, message='Ошибка получения Telegram ID'):
+        super().__init__(message)
+
+class GetUuidException(ForeseenException):
+    def __init__(self, message='Ошибка получения UUID'):
+        super().__init__(message)
+
+class ClientNotFoundException(ForeseenException):
+    def __init__(self, message='Клиент не найден'):
+        super().__init__(message)
+
+class InboundNotFoundException(ForeseenException):
+    def __init__(self, message='Ошибка поиска VPN-туннеля'):
+        super().__init__(message)
+
+class GenerateUuidException(ForeseenException):
+    def __init__(self, message='Ошибка генерации UUID'):
+        super().__init__(message)
+
+class ResetSubIdException(ForeseenException):
+    def __init__(self, message='Ошибка сброса ID подписки'):
+        super().__init__(message)
+
+class CreateClientException(ForeseenException):
+    def __init__(self, message='Ошибка создания клиента'):
+        super().__init__(message)
+
+class UpdateClientException(ForeseenException):
+    def __init__(self, message='Ошибка обновления клиента'):
+        super().__init__(message)
+
+
 class TelegramAuthError(Exception):
     pass
-
-
-class Msg(Enum):
-    NOT_FORSEEN = 'Произошла непредвиденная ошибка'
-    TG_ID_GET = 'Ошибка получения Telegram ID'
-    UUID_GET = 'Ошибка получения UUID'
-    CLIENT_NOT_FOUND = 'Клиент не найден'
-    INBOUND_NOT_FOUND = 'Ошибка поиска VPN-туннеля'
-    UUID_GENERATION = 'Ошибка генерации UUID'
-    SUB_ID_RESET = 'Ошибка сброса ID подписки'
-    CLIENT_CREATE = 'Ошибка создание клиента'
-    CLIENT_ENABLE = 'Ошибка обновления клиента'
