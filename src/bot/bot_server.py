@@ -1,10 +1,10 @@
 import os
 import time
-from aiogram import Bot, Dispatcher, F
+from aiogram import Bot, Dispatcher
 from aiogram.filters import Command, CommandObject
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.enums import ParseMode
-from src.utils.exceptions import ForeseenException, Msg
+from src.utils.exceptions import *
 from src.xui.xui_client import xui
 from src.utils.logger_client import info_log, error_log
 
@@ -51,7 +51,7 @@ async def cmd_activate(ctx: Message, command: CommandObject):
     except ForeseenException as e:
         await ctx.answer(str(e))
     except Exception as e:
-        await ctx.answer(Msg.NOT_FORSEEN)
+        await ctx.answer('Ошибка сервера')
         error_log.error(str(e))
 
 @dp.message(Command('update'))
@@ -63,10 +63,10 @@ async def cmd_reset(ctx: Message, command: CommandObject):
     except ForeseenException as e:
         await ctx.answer(str(e))
     except Exception as e:
-        await ctx.answer(Msg.NOT_FORSEEN)
+        await ctx.answer('Ошибка сервера')
         error_log.error(str(e))
 
-@dp.message(Command('enable'))
+# @dp.message(Command('enable'))
 async def cmd_enable(ctx: Message, command: CommandObject):
     try:
         ### await xui.enable_client(command.args, )
@@ -80,7 +80,7 @@ async def cmd_enable(ctx: Message, command: CommandObject):
     except ForeseenException as e:
         await ctx.answer(str(e))
     except Exception as e:
-        await ctx.answer(Msg.NOT_FORSEEN)
+        await ctx.answer('Ошибка сервера')
         error_log.error(str(e))
 
 @dp.message(Command('disable_message'))

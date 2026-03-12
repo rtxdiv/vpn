@@ -3,7 +3,6 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from src.utils.auth_guard import authorization
 from src.xui.xui_client import xui
-import os
 from root import ROOT_DIR
 from src.database.database_service import *
 
