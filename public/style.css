@@ -16,7 +16,7 @@ body {
     cursor: default;
     margin: 0;
     margin-top: 22px;
-    gap: 15px;
+    gap: 18px;
     font-size: 18px;
 }
 .container {
@@ -41,6 +41,7 @@ body {
 
 #sub {
     display: none;
+    gap: var(--scroll-margin);
 
     #sub-info {
         justify-content: space-between;
@@ -136,6 +137,7 @@ body {
 }
 #tariffs {
     display: none;
+    gap: 10px;
 
     .block {
         width: 250px;
@@ -150,16 +152,17 @@ body {
             .name {
                 font-size: 26px;
                 font-weight: 800;
-                margin: 4px 0 15px 0;
+                margin: 4px 0 12px 0;
             }
             .devices, .traffic {
                 font-size: 17px;
                 margin: 2px 0;
             }
             .price {
-                font-size: 22px;
+                font-size: 24px;
                 font-weight: 700;
-                margin: 10px 0;
+                margin-top: 10px;
+                letter-spacing: 1px;
 
                 .note {
                     font-size: 17px;
@@ -168,6 +171,7 @@ body {
             }
         }
         .bottom {
+            margin-top: 20px;
             display: flex;
             flex-direction: column;
         }
@@ -219,6 +223,9 @@ body {
         flex-shrink: 0;
         width: var(--container-width);
         max-width: var(--container-max-width);
+    }
+    .block:first-of-type {
+        margin-left: var(--scroll-margin);
     }
     .block:last-of-type {
         margin-right: var(--scroll-margin);
