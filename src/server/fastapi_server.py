@@ -33,7 +33,7 @@ def forseen_exception_handler(request: Request, exc: ForeseenException):
     print(exc)
     return JSONResponse(
         status_code=400,
-        content={'detail': exc}
+        content={'detail': str(exc)}
     )
 
 @app.exception_handler(Exception)
