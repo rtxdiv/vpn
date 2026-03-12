@@ -50,8 +50,8 @@ const getTariffs = async () => {
 }
 
 const main = async () => {
-    await getSub()
     await getTariffs()
+    await getSub()
 }
 main()
 
