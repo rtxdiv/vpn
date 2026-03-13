@@ -258,9 +258,9 @@ green { color: rgb(74, 225, 74); }
 def { color: var(--def-text-color); }
 
 a[href]:link {
-    color: #0068cf;
+    color: #0f6fd0;
     cursor: pointer;
 }
 a[href]:active, a[href]:hover {
-    color: #0080ff;
+    color: #3084d9;
 }
