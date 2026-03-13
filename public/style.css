@@ -272,3 +272,7 @@ body {
 red { color: rgb(225, 67, 67); }
 green { color: rgb(74, 225, 74); }
 def { color: var(--def-text-color); }
+
+a:link, a:hover, a:active, a:visited {
+    color: #0061c1;
+}
