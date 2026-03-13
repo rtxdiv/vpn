@@ -128,15 +128,15 @@ body {
     flex-direction: column;
     margin-top: 10px;
     border-radius: 10px;
-    overflow: hidden;
+    background: linear-gradient(45deg, #161E31, #242f47);
+    padding: 12px;
 
     #help-about, #help-tutorial, #help-support {
         display: none;
         flex-direction: row;
         align-items: center;
         justify-content: start;
-        padding: 12px;
-        border-radius: 0;
+        padding: 5px;
 
         > img {
             width: 28px;
