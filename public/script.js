@@ -58,7 +58,7 @@ const getSettings = async () => {
     })
     if (resp.ok) {
         const body = await resp.json()
-        displaySettings({ settings: body })
+        displaySettings({ settings: body[0] })
 
     } else {
         displaySettings({ error: true })
@@ -74,6 +74,7 @@ main()
 
 
 function displaySub({ user = false, error = false, authorization = true }) {
+    console.log(user)
     if (error) {
         subError.querySelector('.message').innerHTML = 'Ошибка при загрузке подписки'
         subError.classList.add('error-block')
@@ -105,6 +106,7 @@ function displaySub({ user = false, error = false, authorization = true }) {
     }
 }
 function displayTariffs({ tariffs = false, error = false }) {
+    console.log(tariffs)
     if (error) {
         tariffsError.querySelector('.message').innerHTML = 'Ошибка при загрузке тарифов'
         subError.classList.add('error-block')
