@@ -1,6 +1,6 @@
 :root {
     --def-text-color: #becad5;
-    --header-text-color: #5d6f97;
+    --header-text-color: #7189ad;
     --container-max-width: 800px;
     --container-width: 92%;
     --scroll-margin: max(4vw, calc((100vw - 800px) / 2));
@@ -21,6 +21,7 @@ body {
     flex-direction: column;
     align-items: center;
     font-family: "PT Sans Caption", sans-serif;
+    font-family: "Commissioner", sans-serif;
     color: var(--def-text-color);
     user-select: none;
     -webkit-user-select: none;
