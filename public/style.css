@@ -1,5 +1,6 @@
 :root {
-    --def-text-color: #cdcdcd;
+    --def-text-color: #b3b6cd;
+    --header-text-color: #d2bba1;
     --container-max-width: 800px;
     --container-width: 92%;
     --scroll-margin: max(4vw, calc((100vw - 800px) / 2));
@@ -27,6 +28,7 @@ body {
     font-size: 17px;
     scroll-behavior: smooth;
     padding-bottom: 30px;
+    color: var(--def-text-color);
 
     > * {
         margin-top: var(--container-large-margin);
@@ -79,7 +81,7 @@ body {
                 font-weight: 900;
                 letter-spacing: 1px;
                 margin: 4px 0 15px 0;
-                color: #ebebeb;
+                color: var(--header-text-color);
             }
             .devices, .date {
                 font-size: 17px;
@@ -162,6 +164,7 @@ body {
                 font-size: 26px;
                 font-weight: 800;
                 margin: 4px 0 15px 0;
+                color: var(--header-text-color);
             }
             .devices, .traffic {
                 font-size: 17px;
