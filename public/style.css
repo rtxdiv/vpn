@@ -1,12 +1,13 @@
 :root {
     --def-text-color: #becad5;
-    --header-text-color: #4d669a;
+    --header-text-color: #5d6f97;
     --container-max-width: 800px;
     --container-width: 92%;
     --scroll-margin: max(4vw, calc((100vw - 800px) / 2));
     --container-large-margin: 20px;
     --container-middle-margin: 15px;
     --container-mini-magin: 10px;
+    --def-font-size: 18px;
 }
 html {
     scroll-padding-top: var(--container-middle-margin);
@@ -25,7 +26,7 @@ body {
     -webkit-user-select: none;
     cursor: default;
     margin: 0;
-    font-size: 17px;
+    font-size: var(--def-font-size);
     scroll-behavior: smooth;
     padding-bottom: 30px;
     color: var(--def-text-color);
@@ -56,7 +57,6 @@ body {
 
 #settings-message {
     display: none;
-    font-size: 17px;
     margin-top: var(--container-mini-magin);
 }
 #sub {
@@ -84,7 +84,6 @@ body {
                 color: var(--header-text-color);
             }
             .devices, .date {
-                font-size: 17px;
                 margin: 2px 0;
             }
         }
@@ -121,7 +120,6 @@ body {
 }
 #sub-error {
     display: none;
-    font-size: 17px;
     background: linear-gradient(45deg, #161E31, #39486b);
     margin-top: var(--container-middle-margin);
 }
@@ -158,7 +156,7 @@ body {
             flex-direction: column;
             
             .country {
-                font-size: 15px;
+                font-size: 16px;
             }
             .name {
                 font-size: 26px;
@@ -168,7 +166,6 @@ body {
                 letter-spacing: 1px;
             }
             .devices, .traffic {
-                font-size: 17px;
                 margin: 2px 0;
             }
             .price {
@@ -178,7 +175,7 @@ body {
                 letter-spacing: 1px;
 
                 .note {
-                    font-size: 17px;
+                    font-size: var(--def-font-size);
                     font-weight: normal;
                 }
             }
@@ -202,7 +199,6 @@ body {
 }
 #tariffs-error {
     display: none;
-    font-size: 17px;
 }
 
 .sqare-btn {
