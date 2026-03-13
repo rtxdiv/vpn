@@ -48,13 +48,15 @@ body {
 
 
 #settings-message {
-    background: linear-gradient(45deg, #161E31, #39486b);
     display: none;
     font-size: 17px;
 }
 #sub {
     display: none;
     gap: var(--scroll-margin);
+    .block {
+        background: linear-gradient(45deg, #161E31, #39486b);
+    }
 
     #sub-info {
         justify-content: space-between;
