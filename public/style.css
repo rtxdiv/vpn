@@ -8,7 +8,7 @@
     --container-mini-magin: 10px;
 }
 html {
-    scroll-padding-top: var(--container-large-margin / 2);
+    scroll-padding-top: var(--container-middle-margin);
 }
 body {
     background: #0A1121;
