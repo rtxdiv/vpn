@@ -1,6 +1,6 @@
 :root {
-    --def-text-color: #a5b3c0;
-    --header-text-color: #5a93f9;
+    --def-text-color: #becad5;
+    --header-text-color: #7c899b;
     /* #7ecc78 */
     --container-max-width: 800px;
     --container-width: 92%;
@@ -20,7 +20,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "PT Sans Caption", sans-serif;
     color: var(--def-text-color);
     user-select: none;
     -webkit-user-select: none;
