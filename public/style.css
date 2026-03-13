@@ -3,7 +3,7 @@
     --container-max-width: 800px;
     --container-width: 92%;
     --scroll-margin: max(4vw, calc((100vw - 800px) / 2));
-    --container-margin-top: 20px;
+    --container-vertical-margin: 20px;
 }
 html {
     scroll-padding-top: var(--container-margin-top);
@@ -24,7 +24,8 @@ body {
     padding-bottom: 30px;
 
     > * {
-        margin-top: var(--container-margin-top);
+        margin-top: var(--container-vertical-margin / 2);
+        margin-bottom: var(--container-vertical-margin / 2);
     }
 }
 .container {
