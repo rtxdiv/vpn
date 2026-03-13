@@ -57,6 +57,7 @@ body {
 #sub {
     display: none;
     gap: var(--scroll-margin);
+    margin-top: var(--container-middle-margin);
     .block {
         background: linear-gradient(45deg, #161E31, #39486b);
     }
