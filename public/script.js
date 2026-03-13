@@ -76,9 +76,9 @@ const getSettings = async () => {
 }
 
 const main = async () => {
-    getSettings()
-    getClient()
-    getTariffs()
+    await getSettings()
+    await getClient()
+    await getTariffs()
 }
 main()
 
