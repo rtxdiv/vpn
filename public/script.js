@@ -96,6 +96,7 @@ function displayClient({ user = false, error = false, authorization = true }) {
     if (!authorization) {
         subError.querySelector('.message').innerHTML = 'Запустите приложение через Telegram, чтобы получить информацию о подписке'
         subError.style.display = 'flex'
+        addButton(supportBlock, settings.support_url)
         return
     }
     if (user) {
@@ -167,7 +168,6 @@ function addButton(elem, url = null) {
     elem.style.display = 'flex'
     elem.addEventListener('click', function(event) {
         link = url? url : event.target.dataset.url
-        alert(link)
         if (link) telegram.openLink(link)
     })
 }
