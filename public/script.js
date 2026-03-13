@@ -58,13 +58,10 @@ const getSettings = async () => {
     })
     if (resp.ok) {
         const body = await resp.json()
-        displaySub({ user: body })
-        
-    } else if (resp.status == 401) {
-        displaySub({ authorization: false })
+        displaySettings({ settings: body })
 
     } else {
-        displaySub({ error: true })
+        displaySettings({ error: true })
     }
 }
 
