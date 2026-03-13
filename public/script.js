@@ -141,8 +141,8 @@ function displaySettings({ settings = false, error = false }) {
         settingsMessage.display = 'flex'
         return
     }
-    if (settings['message']) {
-        settingsMessage.querySelector('.message').innerHTML = settings['message']
+    if (settings.message) {
+        settingsMessage.querySelector('.message').innerHTML = settings.message
         settingsMessage.display = 'flex'
     }
 }
