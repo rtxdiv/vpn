@@ -132,16 +132,15 @@ function displayTariffs({ tariffs = false, error = false }) {
     }
 }
 function displaySettings({ settings = false, error = false }) {
-    console.log(settings.message)
-    console.log(error)
+    console.log(settings)
     if (error) {
         settingsMessage.querySelector('.message').innerHTML = 'Ошибка при загрузке настроек'
         settingsMessage.classList.add('error-block')
         settingsMessage.display = 'flex'
         return
     }
-    if (settings.message) {
-        settingsMessage.querySelector('.message').innerHTML = settings.message
+    if (settings['message']) {
+        settingsMessage.querySelector('.message').innerHTML = settings['message']
         settingsMessage.display = 'flex'
     }
 }
