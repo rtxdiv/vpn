@@ -126,8 +126,9 @@ body {
 #help {
     display: flex;
     flex-direction: column;
-    gap: 10px;
     margin-top: 10px;
+    border-radius: 10px;
+    overflow: hidden;
 
     #help-about, #help-tutorial, #help-support {
         display: none;
@@ -135,6 +136,7 @@ body {
         align-items: center;
         justify-content: start;
         padding: 12px;
+        border-radius: 0;
 
         > img {
             width: 28px;
