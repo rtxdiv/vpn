@@ -129,6 +129,7 @@ body {
 #sub-error {
     display: none;
     font-size: 17px;
+    background: linear-gradient(45deg, #161E31, #39486b);
 }
 #help {
     display: flex;
