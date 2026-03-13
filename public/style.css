@@ -220,7 +220,7 @@ body {
 .sqare-btn {
     display: flex;
     height: 40px;
-    background: #5c6b97;
+    background: #161E31;
     padding: 7px;
     box-sizing: border-box;
     border-radius: 5px;
@@ -274,8 +274,9 @@ green { color: rgb(74, 225, 74); }
 def { color: var(--def-text-color); }
 
 a[href]:link {
-    color: #0061c1;
+    color: #0068cf;
+    cursor: pointer;
 }
-a[href]:active {
-    color: #4a91d7;
+a[href]:active, a[href]:hover {
+    color: #0080ff;
 }
