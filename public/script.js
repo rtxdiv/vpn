@@ -1,3 +1,5 @@
+const settingsMessage = document.querySelector('#settings-message')
+
 const subBlock = document.querySelector('#sub')
 const subStatus = document.querySelector('#sub-info .status')
 const subName = document.querySelector('#sub-info .name')
@@ -48,10 +50,28 @@ const getTariffs = async () => {
         displayTariffs({ error: true })
     }
 }
+const getSettings = async () => {
+    const resp = await fetch('/settings', {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    if (resp.ok) {
+        const body = await resp.json()
+        displaySub({ user: body })
+        
+    } else if (resp.status == 401) {
+        displaySub({ authorization: false })
+
+    } else {
+        displaySub({ error: true })
+    }
+}
 
 const main = async () => {
     getSub()
     getTariffs()
+    getSettings()
 }
 main()
 
@@ -89,12 +109,12 @@ function displaySub({ user = false, error = false, authorization = true }) {
 }
 function displayTariffs({ tariffs = false, error = false }) {
     if (error) {
-        tariffsError.display = 'flex'
         tariffsError.querySelector('.message').innerHTML = 'Ошибка при загрузке тарифов'
         subError.classList.add('error-block')
-
-    } else if (tariffs) {
-        tariffsBlock.style.display = 'flex'
+        tariffsError.display = 'flex'
+        return
+    }
+    if (tariffs) {
         tariffs.forEach(tariff => {
             tariffsBlock.innerHTML += `
                 <div class="block">
@@ -111,6 +131,19 @@ function displayTariffs({ tariffs = false, error = false }) {
                 </div>
             `
         })
+        tariffsBlock.style.display = 'flex'
+    }
+}
+function displaySettings({ settings = false, error = false }) {
+    if (error) {
+        settingsMessage.querySelector('.message').innerHTML = 
+        settingsMessage.classList.add('error-block')
+        settingsMessage.display = 'flex'
+    }
+    if (!settings) return
+    if (settings.message) {
+        settingsMessage.querySelector('.message').innerHTML = 'Ошибка при загрузке настроек'
+        settingsMessage.display = 'flex'
     }
 }
 

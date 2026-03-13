@@ -48,6 +48,9 @@ body {
 }
 
 
+#settings-message {
+    display: none;
+}
 #sub {
     display: none;
     gap: var(--scroll-margin);

@@ -28,6 +28,11 @@ async def get_sub(request: Request):
 async def get_tariffs():
     return await get_all_tafiffs()
 
+@app.get('/settings')
+async def get_settings():
+    return await get_all_settings()
+
+
 @app.exception_handler(ForeseenException)
 def forseen_exception_handler(request: Request, exc: ForeseenException):
     return JSONResponse(

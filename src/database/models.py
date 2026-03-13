@@ -1,9 +1,13 @@
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from sqlalchemy import String, Integer
+from sqlalchemy import String, Integer, Float
 
 
 class Base(DeclarativeBase):
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+
+    def __repr__(self) -> str:
+        return f'{__class__.__name__}: {__class__.__dict__}'
+
 
 class Tariffs(Base):
     __tablename__ = 'tariffs'
@@ -14,6 +18,17 @@ class Tariffs(Base):
     devices: Mapped[int] = mapped_column(Integer, nullable=False)
     traffic: Mapped[int] = mapped_column(Integer, nullable=False)
     price: Mapped[int] = mapped_column(Integer, nullable=False)
+    
 
-    def __repr__(self) -> str:
-        return f'Tariffs(id={self.id!r}, uid={self.uid!r}, name={self.name!r})'
+class Periods(Base):
+    __tablename__ = 'periods'
+
+    days: Mapped[int] = mapped_column(Integer, nullable=False)
+    months: Mapped[int] = mapped_column(Integer, nullable=False)
+    discount: Mapped[float] = mapped_column(Float, nullable=False)
+
+
+class Settings(Base):
+    __tablename__ = 'settings'
+
+    message: Mapped[str] = mapped_column(String)
