@@ -3,10 +3,12 @@
     --container-max-width: 800px;
     --container-width: 92%;
     --scroll-margin: max(4vw, calc((100vw - 800px) / 2));
-    --container-margin-top: 20px;
+    --container-large-margin: 20px;
+    --container-middle-margin: 15px;
+    --container-mini-magin: 10px;
 }
 html {
-    scroll-padding-top: var(--container-margin-top);
+    scroll-padding-top: var(--container-large-margin / 2);
 }
 body {
     background: #0A1121;
@@ -24,7 +26,7 @@ body {
     padding-bottom: 30px;
 
     > * {
-        margin-top: var(--container-margin-top);
+        margin-top: var(--container-large-margin);
     }
 }
 .container {
@@ -50,6 +52,7 @@ body {
 #settings-message {
     display: none;
     font-size: 17px;
+    margin-top: var(--container-mini-magin);
 }
 #sub {
     display: none;
