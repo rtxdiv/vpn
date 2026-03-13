@@ -129,9 +129,9 @@ body {
     margin-top: 10px;
     border-radius: 10px;
     background: linear-gradient(45deg, #161E31, #242f47);
-    padding: 12px;
+    padding: 16px 12px;
     box-sizing: border-box;
-    gap: 10px;
+    gap: 12px;
 
     #help-about, #help-tutorial, #help-support {
         display: none;
@@ -140,7 +140,7 @@ body {
         justify-content: start;
 
         > img {
-            width: 28px;
+            width: 25px;
             aspect-ratio: 1/1;
             margin-right: 10px;
             opacity: 0.2;
