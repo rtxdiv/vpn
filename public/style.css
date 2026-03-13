@@ -19,7 +19,7 @@ body {
     -webkit-user-select: none;
     cursor: default;
     margin: 0;
-    font-size: 18px;
+    font-size: 17px;
     scroll-behavior: smooth;
     padding-bottom: 30px;
 
@@ -30,7 +30,6 @@ body {
 .container {
     width: var(--container-width) !important;
     max-width: var(--container-max-width) !important;
-    margin-top: 10px;
 }
 
 .block {
@@ -50,6 +49,7 @@ body {
 
 #settings-message {
     display: none;
+    font-size: 17px;
 }
 #sub {
     display: none;
