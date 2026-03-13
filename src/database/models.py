@@ -32,6 +32,6 @@ class Settings(Base):
     __tablename__ = 'settings'
 
     message: Mapped[str] = mapped_column(String)
-    about_link: Mapped[str] = mapped_column(String)
-    tutorial_link: Mapped[str] = mapped_column(String)
-    support_link: Mapped[str] = mapped_column(String)
+    about_url: Mapped[str] = mapped_column(String)
+    tutorial_url: Mapped[str] = mapped_column(String)
+    support_url: Mapped[str] = mapped_column(String)
