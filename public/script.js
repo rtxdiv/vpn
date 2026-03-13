@@ -166,6 +166,7 @@ function displaySettings({ settings = false, error = false }) {
 
 function addButton(elem, url = null) {
     elem.style.display = 'flex'
+    elem.style.cursor = 'pointer'
     elem.addEventListener('click', function(event) {
         link = url? url : event.target.dataset.url
         if (link) telegram.openLink(link)

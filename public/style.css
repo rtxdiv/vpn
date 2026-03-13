@@ -10,6 +10,9 @@
 html {
     scroll-padding-top: var(--container-middle-margin);
 }
+* {
+    -webkit-tap-highlight-color: transparent;
+}
 body {
     background: #0A1121;
     display: flex;
