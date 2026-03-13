@@ -48,7 +48,7 @@ body {
 
 
 #settings-message {
-    background: linear-gradient(45deg, rgb(39, 53, 84), rgb(57, 72, 107));
+    background: linear-gradient(45deg, #161E31, #39486b);
     display: none;
     font-size: 17px;
 }
