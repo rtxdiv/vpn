@@ -19,7 +19,7 @@ app.mount('/public', StaticFiles(directory=PUBLIC_DIR, html=True), name='public'
 async def get_root():
     return FileResponse(PUBLIC_DIR / 'index.html')
 
-@app.get('/sub')
+@app.get('/client')
 @authorization
 async def get_sub(request: Request):
     return await xui.get_by_tgid(request.state.telegram_user['id'])

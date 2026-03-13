@@ -1,3 +1,4 @@
+// imports
 const settingsMessage = document.querySelector('#settings-message')
 
 const subBlock = document.querySelector('#sub')
@@ -10,16 +11,22 @@ const subError = document.querySelector('#sub-error')
 const tariffsBlock = document.querySelector('#tariffs')
 const tariffsError = document.querySelector('#tariffs-error')
 
-const aboutBlock = document.querySelector('#about')
-const tutorialBlock = document.querySelector('#tutorial')
-const supportBlock = document.querySelector('#support')
+const aboutBlock = document.querySelector('#help-about')
+const tutorialBlock = document.querySelector('#help-tutorial')
+const supportBlock = document.querySelector('#help-support')
 
 const telegram = window.Telegram.WebApp
 telegram.expand()
 
 
-const getSub = async () => {
-    const resp = await fetch('/sub', {
+// globals
+let client
+let tariffs
+let settings
+
+
+const getClient = async () => {
+    const resp = await fetch('/client', {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Telegram ${telegram.initData}`
@@ -27,13 +34,14 @@ const getSub = async () => {
     })
     if (resp.ok) {
         const body = await resp.json()
-        displaySub({ user: body })
+        client = body
+        displayClient({ user: body })
         
     } else if (resp.status == 401) {
-        displaySub({ authorization: false })
+        displayClient({ authorization: false })
 
     } else {
-        displaySub({ error: true })
+        displayClient({ error: true })
     }
 }
 const getTariffs = async () => {
@@ -44,6 +52,7 @@ const getTariffs = async () => {
     })
     if (resp.ok) {
         const body = await resp.json()
+        tariffs = body
         displayTariffs({ tariffs: body })
         
     } else {
@@ -58,6 +67,7 @@ const getSettings = async () => {
     })
     if (resp.ok) {
         const body = await resp.json()
+        settings = body
         displaySettings({ settings: body })
 
     } else {
@@ -66,19 +76,21 @@ const getSettings = async () => {
 }
 
 const main = async () => {
-    getSub()
-    getTariffs()
     getSettings()
+    getClient()
+    getTariffs()
 }
 main()
 
 
-function displaySub({ user = false, error = false, authorization = true }) {
+function displayClient({ user = false, error = false, authorization = true }) {
     console.log(user)
     if (error) {
         subError.querySelector('.message').innerHTML = 'Ошибка при загрузке подписки'
         subError.classList.add('error-block')
         subError.style.display = 'flex'
+        addButton(aboutBlock, settings.about_url)
+        addButton(supportBlock, settings.support_url)
         return
     }
     if (!authorization) {
@@ -99,10 +111,14 @@ function displaySub({ user = false, error = false, authorization = true }) {
             localDate = date.toLocaleDateString('ru-RU')
         } else localDate = 'бессрочно'
         subDate.innerHTML = `Действует до: ${ localDate }`
+        addButton(tutorialBlock, settings.tutorial_url)
+        addButton(supportBlock, settings.support_url)
 
     } else {
         subError.querySelector('.message').innerHTML = 'У вас ещё нет подписки'
         subError.style.display = 'flex'
+        addButton(aboutBlock, settings.about_url)
+        addButton(supportBlock, settings.support_url)
     }
 }
 function displayTariffs({ tariffs = false, error = false }) {
@@ -147,9 +163,11 @@ function displaySettings({ settings = false, error = false }) {
     }
 }
 
-function addButton(elem, link = undefined) {
+function addButton(elem, url = null) {
     elem.style.display = 'flex'
     elem.addEventListener('click', function(event) {
-        telegram.openLink(link ?? event.target.dataset.url)
+        link = url? url : event.target.dataset.url
+        alert(link)
+        if (link) telegram.openLink(link)
     })
 }
