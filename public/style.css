@@ -1,6 +1,7 @@
 :root {
-    --def-text-color: #b3b6cd;
+    --def-text-color: #6b8cb0;
     --header-text-color: #d2bba1;
+    /* #7ecc78 */
     --container-max-width: 800px;
     --container-width: 92%;
     --scroll-margin: max(4vw, calc((100vw - 800px) / 2));
