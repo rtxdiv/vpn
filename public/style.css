@@ -131,7 +131,7 @@ body {
     background: linear-gradient(45deg, #161E31, #242f47);
     padding: 15px 12px;
     box-sizing: border-box;
-    gap: 12px;
+    gap: 15px;
 
     #help-about, #help-tutorial, #help-support {
         display: none;
