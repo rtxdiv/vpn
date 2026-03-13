@@ -103,7 +103,7 @@ function displayClient({ user = false, error = false, authorization = true }) {
         subBlock.style.display = 'flex'
         subStatus.innerHTML = user['enable']? '<green>Активна</green>' : '<red>Неактивна</red>'
         subName.innerHTML = `${ user["comment"] || 'Подписка' }`
-        subDevices.innerHTML = `• Устройства: ${ user['limitIp'] == 0? 'бесконечно' : user['limitIp'] }`
+        subDevices.innerHTML = `· Устройства: ${ user['limitIp'] == 0? 'бесконечно' : user['limitIp'] }`
 
         const expiry = user['expiryTime']
         let localDate
@@ -111,7 +111,7 @@ function displayClient({ user = false, error = false, authorization = true }) {
             const date = new Date(user['expiryTime'])
             localDate = date.toLocaleDateString('ru-RU')
         } else localDate = 'бессрочно'
-        subDate.innerHTML = `• Действует до: ${ localDate }`
+        subDate.innerHTML = `· Действует до: ${ localDate }`
         addButton(tutorialBlock, settings.tutorial_url)
         addButton(supportBlock, settings.support_url)
 
