@@ -58,7 +58,7 @@ const getSettings = async () => {
     })
     if (resp.ok) {
         const body = await resp.json()
-        displaySettings({ settings: body[0] })
+        displaySettings({ settings: body })
 
     } else {
         displaySettings({ error: true })
