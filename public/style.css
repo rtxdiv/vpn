@@ -157,14 +157,13 @@ body {
             
             .country {
                 font-size: 16px;
-                opacity: 0.8;
+                opacity: 0.6;
             }
             .name {
                 font-size: 28px;
                 font-weight: 800;
                 margin: 4px 0 15px 0;
                 color: var(--header-text-color);
-                letter-spacing: 1px;
             }
             .devices, .traffic {
                 margin: 2px 0;
@@ -173,7 +172,6 @@ body {
                 font-size: 24px;
                 font-weight: 700;
                 margin-top: 30px;
-                letter-spacing: 1px;
 
                 .note {
                     font-size: var(--def-font-size);

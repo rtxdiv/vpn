@@ -102,7 +102,7 @@ function displayClient({ user = false, error = false, authorization = true }) {
     if (user) {
         subBlock.style.display = 'flex'
         subStatus.innerHTML = user['enable']? '<green>Активна</green>' : '<red>Неактивна</red>'
-        subName.innerHTML = `«${ user["comment"] || 'Подписка' }»`
+        subName.innerHTML = `${ user["comment"] || 'Подписка' }`
         subDevices.innerHTML = `Устройства: ${ user['limitIp'] == 0? 'бесконечно' : user['limitIp'] }`
 
         const expiry = user['expiryTime']
