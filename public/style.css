@@ -154,7 +154,6 @@ body {
     .block {
         width: 250px;
         justify-content: space-between;
-        padding: 20px;
         .top {
             display: flex;
             flex-direction: column;
