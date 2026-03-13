@@ -1,7 +1,6 @@
 :root {
     --def-text-color: #becad5;
-    --header-text-color: #7c899b;
-    /* #7ecc78 */
+    --header-text-color: #4d669a;
     --container-max-width: 800px;
     --container-width: 92%;
     --scroll-margin: max(4vw, calc((100vw - 800px) / 2));
@@ -166,6 +165,7 @@ body {
                 font-weight: 800;
                 margin: 4px 0 15px 0;
                 color: var(--header-text-color);
+                letter-spacing: 1px;
             }
             .devices, .traffic {
                 font-size: 17px;
