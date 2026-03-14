@@ -12,4 +12,5 @@ async def get_all_tafiffs(session: AsyncSession):
 @database_session
 async def get_all_settings(session: AsyncSession):
     settings = await session.execute(select(Settings))
-    return settings.scalar_one_or_none()
+    settings_list = settings.scalars().all()
+    return { setting.key: setting.value for setting in settings_list }
