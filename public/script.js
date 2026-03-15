@@ -201,8 +201,9 @@ function closeWindow(event) {
         popupIsOpened = false
     }
 }
-function showBtnResult({ elem, error = false }) {
+function showBtnResult({ elem, error = false, message }) {
     const btn = elem.querySelector('.btn')
+    btn.textContent = message
     btn.style.width = '100%'
     btn.classList.add(error? 'error' : 'success')
     setTimeout(() => {

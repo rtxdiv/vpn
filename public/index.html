@@ -36,15 +36,16 @@
 
         <div class="block" id="sub-settings">
             <div class="top">
-                <div class="btn-container" onclick="showBtnResult({ elem: this })">
+                <div class="rect-btn" onclick="showBtnResult({ elem: this, message: 'Успех!' })">
                     Скопировать ссылку
-                    <div class="btn">Скопировано</div>
+                    <div class="overflow"></div>
                 </div>
-                <div class="btn-container">
+                <div class="rect-btn">
                     Подписка
                 </div>
-                <div class="btn-container" onclick="showBtnResult({ elem: this, error: true })">
+                <div class="rect-btn" onclick="showBtnResult({ elem: this, error: true, message: 'Ошибка!' })">
                     Сбросить ID
+                    <div class="overflow"></div>
                 </div>
             </div>
             <div class="bottom">
