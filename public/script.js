@@ -197,7 +197,6 @@ function openPopup({ action, id = null }) {
     alert(document.documentElement.clientHeight)
     alert(document.documentElement.scrollHeight)
     alert(document.documentElement.offsetHeight)
-    alert('REAL: ' + popupBg.offsetHeight)
     
 
     console.log(`${action}: ${id}`)
@@ -208,6 +207,7 @@ function openPopup({ action, id = null }) {
     document.body.style.overflow = 'hidden'
     history.pushState({ popup: true }, '', location.href)
     popupIsOpened = true
+    alert('REAL: ' + popupBg.offsetHeight)
 }
 function closePopup(event) {
     if (!event || event.target == popupBg) {
