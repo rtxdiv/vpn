@@ -20,7 +20,6 @@ const popup = document.querySelector('#popup')
 popupBg.addEventListener('click', closeWindow)
 window.addEventListener('popstate', function(event) {
     if (popupIsOpened) {
-        event.preventDefault()
         closeWindow()
     }
 })
@@ -191,14 +190,14 @@ function addButton(elem, url = null) {
 function openWindow({ action, id = null }) {
     console.log(`${action}: ${id}`)
     popupBg.style.display = 'flex'
-    popup.style.transform = 'none'
+    document.body.style.overflow = 'hidden'
     history.pushState({ popup: true }, '', location.href)
     popupIsOpened = true
 }
 function closeWindow(event) {
-    if (event.target == popupBg || !event.target) {
+    if (!event.target || event.target == popupBg) {
         popupBg.style.display = 'none'
-        popup.style.transform = ''
+        document.body.style.overflow = 'auto'
         popupIsOpened = false
     }
 }
