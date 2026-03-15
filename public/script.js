@@ -149,7 +149,7 @@ function displayTariffs({ tariffs = false, error = false }) {
     }
     if (tariffs) {
         tariffs.forEach(tariff => {
-            if (tariff.tariff_id == client.comment) clientInfoName.textContent = tariff.tariff_id
+            if (tariff.tariff_id == client["comment"]) clientInfoName.textContent = tariff.tariff_id
             tariffsBlock.innerHTML += `
                 <div class="block">
                     <div class="top">
