@@ -121,10 +121,10 @@ body {
                     border-radius: 5px;
                 }
                 .success {
-                    background: #378760;
+                    background: #3b8775;
                 }
                 .error {
-                    background: #8e4d4d;
+                    background: #895252;
                 }
                 .animated {
                     animation: btnOverflowEnable 1.5s ease-in-out forwards;
