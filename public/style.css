@@ -320,7 +320,7 @@ body {
     from { transform: translateY(100%); }
     to { transform: translateY(0%); }
 }
-@keyframes btnOverflowPulse {
+@keyframes btnOverflowEnable {
     0% { width: 0%; }
     50% { width: 100%; }
     100% { width: 0%; }
