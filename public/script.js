@@ -191,6 +191,15 @@ function addButton(elem, url = null) {
     })
 }
 function openPopup({ action, id = null }) {
+
+    alert(document.body.scrollHeight)
+    alert(document.body.offsetHeight)
+    alert(document.documentElement.clientHeight)
+    alert(document.documentElement.scrollHeight)
+    alert(document.documentElement.offsetHeight)
+    alert('REAL: ' + popupBg.offsetHeight)
+    
+
     console.log(`${action}: ${id}`)
     popupBg.style.display = 'flex'
     requestAnimationFrame(() => {
