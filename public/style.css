@@ -313,10 +313,9 @@ body {
         border-top-right-radius: 25px;
         transform: translateY(100%);
         transition: 0.2s ease-out;
-
-        .opened {
-            transform: translateY(0%) !important;
-        }
+    }
+    #popup.opened {
+        transform: translateY(0%) !important;
     }
 }
 
