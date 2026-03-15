@@ -196,8 +196,9 @@ function openWindow({ action, id = null }) {
     popupIsOpened = true
 }
 function closeWindow(event) {
-    if (event.target != popupBg) return
-    popupBg.style.display = 'none'
-    popup.style.transform = ''
-    popupIsOpened = false
+    if (event.target == popupBg || !event.target) {
+        popupBg.style.display = 'none'
+        popup.style.transform = ''
+        popupIsOpened = false
+    }
 }

@@ -263,6 +263,7 @@ body {
     background: #00000066;
     position: absolute;
     justify-content: center;
+    margin: 0;
 
     #popup {
         display: flex;
