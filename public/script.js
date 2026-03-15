@@ -192,16 +192,18 @@ function addButton(elem, url = null) {
 }
 function openPopup({ action, id = null }) {
     console.log(`${action}: ${id}`)
-    popupBg.classList.remove('closed')
-    popupBg.classList.add('opened')
+    popupBg.style.display = 'flex'
+    popup.classList.add('opened')
     document.body.style.overflow = 'hidden'
     history.pushState({ popup: true }, '', location.href)
     popupIsOpened = true
 }
 function closePopup(event) {
     if (!event || event.target == popupBg) {
-        popupBg.classList.remove('opened')
-        popupBg.classList.add('closed')
+        popup.classList.remove('opened')
+        setTimeout(() => {
+            popupBg.style.display = 'none'
+        }, 200)
         document.body.style.overflow = 'auto'
         popupIsOpened = false
     }
@@ -210,8 +212,8 @@ function showBtnResult({ elem, error = false, message }) {
     const btn = elem.querySelector('.overflow')
     btn.textContent = message
     btn.classList.add(error? 'error' : 'success')
-    btn.classList.remove('animated')
-    setTimeout(() => {
+    requestAnimationFrame(() => {
+        btn.classList.remove('animated')
         btn.classList.add('animated')
-    }, 10)
+    })
 }

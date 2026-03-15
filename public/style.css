@@ -312,12 +312,11 @@ body {
         border-top-left-radius: 25px;
         border-top-right-radius: 25px;
         transform: translateY(100%);
-    }
-    .opened {
-        animation: openPopup 0.2s forwards ease-out;
-    }
-    .closed {
-        animation: closePopup 0.2s forwards ease-in;
+        transition: transform 0.2s ease-out;
+
+        .opened {
+            transform: translateY(0%);
+        }
     }
 }
 
@@ -327,34 +326,6 @@ body {
     20% { width: 100%; }
     80% { width: 100%; }
     100% { width: 0%; }
-}
-@keyframes openPopup {
-    0% {
-        display: flex;
-        #popup {
-            transform: translateY(100%);
-        }
-    }
-    100% {
-        display: flex;
-        #popup {
-            transform: translateY(0%);
-        }
-    }
-}
-@keyframes closePopup {
-    0% {
-        display: flex;
-        #popup {
-            transform: translateY(0%);
-        }
-    }
-    100% {
-        display: none;
-        #popup {
-            transform: translateY(100%);
-        }
-    }
 }
 
 red { color: rgb(225, 67, 67); }
