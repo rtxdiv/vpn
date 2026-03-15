@@ -118,12 +118,16 @@ body {
                     right: 0;
                     transition: 0.2s ease-in-out;
                     overflow: hidden;
+                    border-radius: 5px;
                 }
                 .success {
                     background: #378760;
                 }
                 .error {
                     background: #8e4d4d;
+                }
+                .animated {
+                    animation: btnOverflowEnable 1.5s forwards ease-in-out;
                 }
             }
         }
@@ -310,9 +314,15 @@ body {
         animation: popupEnable 0.2s forwards ease-out;
     }
 }
+
+
 @keyframes popupEnable {
     from { transform: translateY(100%); }
     to { transform: translateY(0%); }
+}
+@keyframes btnOverflowEnable {
+    from { width: 0% }
+    to { width: 100%; }
 }
 
 
