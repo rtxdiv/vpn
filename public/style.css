@@ -11,6 +11,7 @@
 }
 html {
     scroll-padding-top: var(--container-middle-margin);
+    scroll-behavior: smooth;
 }
 * {
     -webkit-tap-highlight-color: transparent;
@@ -28,7 +29,6 @@ body {
     cursor: default;
     margin: 0;
     font-size: var(--def-font-size);
-    scroll-behavior: smooth;
     padding-bottom: 30px;
     color: var(--def-text-color);
 
