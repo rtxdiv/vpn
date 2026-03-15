@@ -212,8 +212,8 @@ function showBtnResult({ elem, error = false, message }) {
     const btn = elem.querySelector('.overflow')
     btn.textContent = message
     btn.classList.add(error? 'error' : 'success')
-    requestAnimationFrame(() => {
-        btn.classList.remove('animated')
+    btn.classList.remove('animated')
+    setTimeout(() => {
         btn.classList.add('animated')
-    })
+    }, 10)
 }

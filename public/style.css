@@ -315,7 +315,7 @@ body {
         transition: 0.2s ease-out;
 
         .opened {
-            transform: translateY(0%);
+            transform: translateY(0%) !important;
         }
     }
 }
