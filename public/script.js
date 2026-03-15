@@ -201,3 +201,11 @@ function closeWindow(event) {
         popupIsOpened = false
     }
 }
+function showBtnResult({ elem, error = false }) {
+    const btn = elem.querySelector('.btn')
+    btn.style.width = '100%'
+    btn.classList.add(error? 'error' : 'success')
+    setTimeout(() => {
+        btn.style.width = '0'
+    }, 1000)
+}

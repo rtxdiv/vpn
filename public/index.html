@@ -36,13 +36,14 @@
 
         <div class="block" id="sub-settings">
             <div class="top">
-                <div class="rect-btn">
+                <div class="btn-container" onclick="showBtnResult({ elem: this })">
                     Скопировать ссылку
+                    <div class="btn">Скопировано</div>
                 </div>
-                <div class="rect-btn">
+                <div class="btn-container">
                     Подписка
                 </div>
-                <div class="rect-btn">
+                <div class="btn-container" onclick="showBtnResult({ elem: this, error: true })">
                     Сбросить ID
                 </div>
             </div>
