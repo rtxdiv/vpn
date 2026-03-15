@@ -101,7 +101,7 @@ body {
             display: flex;
             flex-direction: column;
             justify-self: center;
-            gap: 7px;
+            gap: 20px;
             background: red;
         }
         .bottom {
