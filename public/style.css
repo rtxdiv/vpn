@@ -321,8 +321,10 @@ body {
     to { transform: translateY(0%); }
 }
 @keyframes btnOverflowEnable {
-    from { width: 0% }
-    to { width: 100%; }
+    0% { width: 0% }
+    10% { width: 100%; }
+    90% { width: 100%; }
+    100% { width: 0%; }
 }
 
 
