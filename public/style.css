@@ -97,13 +97,19 @@ body {
     }
     #sub-settings {
         justify-content: space-between;
-
+        .top {
+            display: flex;
+            flex-direction: column;
+            justify-self: center;
+            gap: 7px;
+            background: red;
+        }
         .bottom {
             display: flex;
             flex-direction: row;
             justify-content: start;
             gap: 8px;
-            margin-top: 30px;
+            margin-top: 20px;
         }
     }
     #sub-periods {
