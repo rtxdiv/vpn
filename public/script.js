@@ -190,7 +190,7 @@ function openWindow({ action, id = null }) {
     popupIsOpened = true
 }
 function closeWindow() {
-    popupBg.style.display = 'none'
+    // popupBg.style.display = 'none'
     popup.style.transform = ''
     popupIsOpened = false
 }
