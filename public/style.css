@@ -127,7 +127,7 @@ body {
                     background: #8e4d4d;
                 }
                 .animated {
-                    animation: btnOverflowEnable forwards 1.5s ease-in-out;
+                    animation: btnOverflowEnable 1.5s ease-in-out;
                 }
             }
         }
