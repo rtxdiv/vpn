@@ -17,6 +17,13 @@ const supportBlock = document.querySelector('#help-support')
 
 const popupBg = document.querySelector('#popup-bg')
 const popup = document.querySelector('#popup')
+popupBg.addEventListener('click', closeWindow)
+window.addEventListener('click', function(event) {
+    if (popupIsOpened) {
+        event.preventDefault()
+        closeWindow()
+    }
+})
 
 const telegram = window.Telegram.WebApp
 telegram.expand()
@@ -146,7 +153,7 @@ function displayTariffs({ tariffs = false, error = false }) {
                         <a class="price">${tariff.price}₽<span class="note"> / мес.</span></a>
                     </div>
                     <div class="bottom">
-                        <div class="rect-btn" onclick="showWindow({action:'buy', id:'${tariff.tariff_id}'})">Купить</div>
+                        <div class="rect-btn" onclick="openWindow({action:'buy', id:'${tariff.tariff_id}'})">Купить</div>
                     </div>
                 </div>
             `
@@ -176,9 +183,14 @@ function addButton(elem, url = null) {
         if (link) telegram.openLink(link)
     })
 }
-function showWindow({ action, id = null }) {
+function openWindow({ action, id = null }) {
     console.log(`${action}: ${id}`)
     popupBg.style.display = 'flex'
     popup.style.transform = 'none'
     popupIsOpened = true
+}
+function closeWindow() {
+    popupBg.style.display = 'none'
+    popup.style.transform = ''
+    popupIsOpened = false
 }

@@ -273,8 +273,8 @@ body {
         box-sizing: border-box;
         padding: 40px;
         background: linear-gradient(45deg, #161E31, #242f47);
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
         transform: translateY(-100%);
         transition: 0.2s ease-out;
     }
