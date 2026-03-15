@@ -104,7 +104,7 @@ body {
             gap: 7px;
 
             .rect-btn  {
-                background: rgba(10, 17, 33, 0.3);
+                background: rgba(10, 17, 33, 0.2);
                 position: relative;
                 overflow: hidden;
 
@@ -127,7 +127,7 @@ body {
                     background: #8e4d4d;
                 }
                 .animated {
-                    animation: btnOverflowEnable 2s ease-in-out forwards;
+                    animation: btnOverflowEnable 1.5s ease-in-out forwards;
                 }
             }
         }
@@ -322,7 +322,8 @@ body {
 }
 @keyframes btnOverflowEnable {
     0% { width: 0%; }
-    50% { width: 100%; }
+    10% { width: 100%; }
+    90% { width: 100%; }
     100% { width: 0%; }
 }
 
