@@ -32,7 +32,7 @@ window.addEventListener('pagehide', function(event) {
 })
 
 const telegram = window.Telegram.WebApp
-// telegram.expand()
+telegram.expand()
 
 
 // globals
