@@ -24,6 +24,11 @@ window.addEventListener('popstate', function(event) {
         closeWindow()
     }
 })
+window.addEventListener('pagehide', function(event) {
+    if (popupIsOpened) {
+        closeWindow()
+    }
+})
 
 const telegram = window.Telegram.WebApp
 telegram.expand()
@@ -187,9 +192,11 @@ function openWindow({ action, id = null }) {
     console.log(`${action}: ${id}`)
     popupBg.style.display = 'flex'
     popup.style.transform = 'none'
+    history.pushState({ popup: true }, '', location.href)
     popupIsOpened = true
 }
-function closeWindow() {
+function closeWindow(event) {
+    if (event.target != popupBg) return
     popupBg.style.display = 'none'
     popup.style.transform = ''
     popupIsOpened = false
