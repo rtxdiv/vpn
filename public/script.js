@@ -19,15 +19,15 @@ const supportBlock = document.querySelector('#help-support')
 
 const popupBg = document.querySelector('#popup-bg')
 const popup = document.querySelector('#popup')
-popupBg.addEventListener('click', closeWindow)
+popupBg.addEventListener('click', closePopup)
 window.addEventListener('popstate', function(event) {
     if (popupIsOpened) {
-        closeWindow()
+        closePopup()
     }
 })
 window.addEventListener('pagehide', function(event) {
     if (popupIsOpened) {
-        closeWindow()
+        closePopup()
     }
 })
 
@@ -160,7 +160,7 @@ function displayTariffs({ tariffs = false, error = false }) {
                         <a class="price">${tariff.price}₽<span class="note"> / мес.</span></a>
                     </div>
                     <div class="bottom">
-                        <div class="rect-btn" onclick="openWindow({action:'buy', id:'${tariff.tariff_id}'})">Купить</div>
+                        <div class="rect-btn" onclick="openPopup({action:'buy', id:'${tariff.tariff_id}'})">Купить</div>
                     </div>
                 </div>
             `
@@ -190,16 +190,18 @@ function addButton(elem, url = null) {
         if (link) telegram.openLink(link)
     })
 }
-function openWindow({ action, id = null }) {
+function openPopup({ action, id = null }) {
     console.log(`${action}: ${id}`)
-    popupBg.style.display = 'flex'
+    popupBg.classList.remove('closed')
+    popupBg.classList.add('opened')
     document.body.style.overflow = 'hidden'
     history.pushState({ popup: true }, '', location.href)
     popupIsOpened = true
 }
-function closeWindow(event) {
+function closePopup(event) {
     if (!event || event.target == popupBg) {
-        popupBg.style.display = 'none'
+        popupBg.classList.remove('opened')
+        popupBg.classList.add('closed')
         document.body.style.overflow = 'auto'
         popupIsOpened = false
     }
