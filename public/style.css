@@ -270,6 +270,8 @@ body {
     #popup {
         width: 100%;
         max-width: 600px;
+        box-sizing: border-box;
+        padding: 40px;
         background: linear-gradient(45deg, #161E31, #242f47);
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
