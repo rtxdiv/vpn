@@ -148,6 +148,7 @@ function displayTariffs({ tariffs = false, error = false }) {
         return
     }
     if (tariffs) {
+        alert(client)
         tariffs.forEach(tariff => {
             if (tariff.tariff_id == client["comment"]) clientInfoName.textContent = tariff.tariff_id
             tariffsBlock.innerHTML += `
