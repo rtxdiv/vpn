@@ -182,6 +182,7 @@ function displaySettings({ settings = false, error = false }) {
     }
 }
 
+
 function addButton(elem, url = null) {
     elem.style.display = 'flex'
     elem.style.cursor = 'pointer'
@@ -217,5 +218,11 @@ function showBtnResult({ elem, error = false, message }) {
     btn.classList.remove('animated')
     requestAnimationFrame(() => {
         btn.classList.add('animated')
+    })
+}
+function scrollTo(id) {
+    document.querySelector(id).scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest'
     })
 }
