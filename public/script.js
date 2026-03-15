@@ -142,7 +142,7 @@ function displayTariffs({ tariffs = false, error = false }) {
                         <a class="price">${tariff.price}₽<span class="note"> / мес.</span></a>
                     </div>
                     <div class="bottom">
-                        <div class="rect-btn" onclick="showWindow()">Купить</div>
+                        <div class="rect-btn" onclick="showWindow({action='buy', id=${tariff.tariff_id}})">Купить</div>
                     </div>
                 </div>
             `
@@ -173,6 +173,5 @@ function addButton(elem, url = null) {
     })
 }
 function showWindow(args = {}) {
-    console.log('okak')
     console.log(args)
 }
