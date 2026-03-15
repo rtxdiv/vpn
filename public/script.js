@@ -32,7 +32,7 @@ window.addEventListener('pagehide', function(event) {
 })
 
 const telegram = window.Telegram.WebApp
-// telegram.expand()
+telegram.expand()
 
 
 // globals
@@ -204,9 +204,9 @@ function closePopup(event) {
     if (!event || event.target == popupBg) {
         popup.classList.remove('opened')
         setTimeout(() => {
+            document.body.style.overflow = 'auto'
             popupBg.style.display = 'none'
         }, 100)
-        document.body.style.overflow = 'auto'
         popupIsOpened = false
     }
 }
