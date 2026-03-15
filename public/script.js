@@ -1,12 +1,14 @@
 // imports
 const settingsMessage = document.querySelector('#settings-message')
 
-const subBlock = document.querySelector('#sub')
-const subStatus = document.querySelector('#sub-info .status')
-const subName = document.querySelector('#sub-info .name')
-const subDevices = document.querySelector('#sub-info .devices')
-const subDate = document.querySelector('#sub-info .date')
-const subError = document.querySelector('#sub-error')
+const clientBlock = document.querySelector('#client')
+const clientError = document.querySelector('#client-error')
+const clientInfoStatus = document.querySelector('#client-info .status')
+const clientInfoName = document.querySelector('#client-info .name')
+const clientInfoDevices = document.querySelector('#client-info .devices')
+const clientInfoDate = document.querySelector('#client-info .date')
+const clientSettingsCopy = document.querySelector('#client-settings-copy')
+const clientSettingsLink = document.querySelector('#client-settings-link')
 
 const tariffsBlock = document.querySelector('#tariffs')
 const tariffsError = document.querySelector('#tariffs-error')
@@ -101,24 +103,24 @@ main()
 function displayClient({ user = false, error = false, authorization = true }) {
     console.log(user)
     if (error) {
-        subError.querySelector('.message').innerHTML = 'Ошибка при загрузке подписки'
-        subError.classList.add('error-block')
-        subError.style.display = 'flex'
+        clientError.querySelector('.message').innerHTML = 'Ошибка при загрузке подписки'
+        clientError.classList.add('error-block')
+        clientError.style.display = 'flex'
         addButton(aboutBlock, settings.about_url)
         addButton(supportBlock, settings.support_url)
         return
     }
     if (!authorization) {
-        subError.querySelector('.message').innerHTML = 'Запустите приложение через Telegram, чтобы получить информацию о подписке'
-        subError.style.display = 'flex'
+        clientError.querySelector('.message').innerHTML = 'Запустите приложение через Telegram, чтобы получить информацию о подписке'
+        clientError.style.display = 'flex'
         addButton(supportBlock, settings.support_url)
         return
     }
     if (user) {
-        subBlock.style.display = 'flex'
-        subStatus.innerHTML = user['enable']? '<green>Активна</green>' : '<red>Неактивна</red>'
-        subName.innerHTML = `${ user["comment"] || 'Подписка' }`
-        subDevices.innerHTML = `Устройства: ${ user['limitIp'] == 0? 'бесконечно' : user['limitIp'] }`
+        clientBlock.style.display = 'flex'
+        clientInfoStatus.innerHTML = user['enable']? '<green>Активна</green>' : '<red>Неактивна</red>'
+        clientInfoName.innerHTML = `${ user["comment"] }`
+        clientInfoDevices.innerHTML = `Устройства: ${ user['limitIp'] == 0? 'бесконечно' : user['limitIp'] }`
 
         const expiry = user['expiryTime']
         let localDate
@@ -126,13 +128,13 @@ function displayClient({ user = false, error = false, authorization = true }) {
             const date = new Date(user['expiryTime'])
             localDate = date.toLocaleDateString('ru-RU')
         } else localDate = 'бессрочно'
-        subDate.innerHTML = `Действует до: ${ localDate }`
+        clientInfoDate.innerHTML = `Действует до: ${ localDate }`
         addButton(tutorialBlock, settings.tutorial_url)
         addButton(supportBlock, settings.support_url)
 
     } else {
-        subError.querySelector('.message').innerHTML = 'У вас ещё нет подписки'
-        subError.style.display = 'flex'
+        clientError.querySelector('.message').innerHTML = 'У вас ещё нет подписки'
+        clientError.style.display = 'flex'
         addButton(aboutBlock, settings.about_url)
         addButton(supportBlock, settings.support_url)
     }
@@ -141,12 +143,13 @@ function displayTariffs({ tariffs = false, error = false }) {
     console.log(tariffs)
     if (error) {
         tariffsError.querySelector('.message').innerHTML = 'Ошибка при загрузке тарифов'
-        subError.classList.add('error-block')
+        tariffsError.classList.add('error-block')
         tariffsError.display = 'flex'
         return
     }
     if (tariffs) {
         tariffs.forEach(tariff => {
+            if (tariff.tariff_id == client.comment) clientInfoName.textContent = tariff.tariff_id
             tariffsBlock.innerHTML += `
                 <div class="block">
                     <div class="top">

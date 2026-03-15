@@ -15,9 +15,9 @@
 
     <div class="block container" id="settings-message"><a class="message"></a></div>
 
-    <div class="scroll-container" id="sub">
+    <div class="scroll-container" id="client">
 
-        <div class="block" id="sub-info">
+        <div class="block" id="client-info">
             <div class="top">
                 <a class="status"></a>
                 <a class="name"></a>
@@ -34,13 +34,13 @@
             </div>
         </div>
 
-        <div class="block" id="sub-settings">
+        <div class="block" id="client-settings">
             <div class="top">
-                <div class="rect-btn" onclick="showBtnResult({ elem: this, message: 'Успех!' })">
+                <div class="rect-btn" onclick="showBtnResult({ elem: this, message: 'Успех!' })" id="sub-settings-copy">
                     Скопировать ссылку
                     <div class="overflow"></div>
                 </div>
-                <div class="rect-btn">
+                <div class="rect-btn" id="client-settings-link">
                     Подписка ↗
                 </div>
                 <div class="rect-btn" onclick="showBtnResult({ elem: this, error: true, message: 'Ошибка!' })">
@@ -49,25 +49,25 @@
                 </div>
             </div>
             <div class="bottom">
-                <div class="back sqare-btn" onclick="location.href='#sub-info'">
+                <div class="back sqare-btn" onclick="location.href='#client-info'">
                     <img src="public/img/back.png">
                 </div>
             </div>
         </div>
 
-        <div class="block" id="sub-periods">
+        <div class="block" id="client-periods">
             <div class="top">
 
             </div>
             <div class="bottom">
-                <div class="back sqare-btn" onclick="location.href='#sub-info'">
+                <div class="back sqare-btn" onclick="location.href='#client-info'">
                     <img src="public/img/back.png">
                 </div>
             </div>
         </div>
 
     </div>
-    <div class="block container" id="sub-error"><a class="message"></a></div>
+    <div class="block container" id="client-error"><a class="message"></a></div>
 
 
     <div class="container" id="help">

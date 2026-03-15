@@ -60,7 +60,7 @@ body {
     display: none;
     margin-top: var(--container-mini-magin);
 }
-#sub {
+#client {
     display: none;
     gap: var(--scroll-margin);
     margin-top: var(--container-middle-margin);
@@ -68,7 +68,7 @@ body {
         background: linear-gradient(45deg, #161E31, #39486b);
     }
 
-    #sub-info {
+    #client-info {
         justify-content: space-between;
         .top {
             display: flex;
@@ -95,7 +95,7 @@ body {
             margin-top: 25px;
         }
     }
-    #sub-settings {
+    #client-settings {
         justify-content: space-between;
         .top {
             display: flex;
@@ -140,7 +140,7 @@ body {
             margin-top: 20px;
         }
     }
-    #sub-periods {
+    #client-periods {
         justify-content: space-between;
 
         .bottom {
@@ -152,7 +152,7 @@ body {
         }
     }
 }
-#sub-error {
+#client-error {
     display: none;
     background: linear-gradient(45deg, #161E31, #39486b);
     margin-top: var(--container-middle-margin);
