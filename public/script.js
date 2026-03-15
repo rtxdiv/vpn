@@ -195,8 +195,7 @@ function openWindow({ action, id = null }) {
     popupIsOpened = true
 }
 function closeWindow(event) {
-    console.log(event)
-    if (!event.target || event.target == popupBg) {
+    if (!event || event.target == popupBg) {
         popupBg.style.display = 'none'
         document.body.style.overflow = 'auto'
         popupIsOpened = false
