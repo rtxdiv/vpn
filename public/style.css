@@ -263,9 +263,9 @@ body {
     height: 100vh;
     background: rgba(0, 0, 0, 0.5);
     display: none;
-    flex-direction: column;
     justify-content: center;
     align-items: end;
+    margin: 0;
 
     #popup {
         width: 100%;
