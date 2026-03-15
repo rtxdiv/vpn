@@ -174,6 +174,5 @@ function addButton(elem, url = null) {
 }
 function showWindow(args = { action, id: null }) {
     console.log(args)
-    console.log(action)
     console.log(args.id)
 }
