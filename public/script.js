@@ -192,11 +192,11 @@ function addButton(elem, url = null) {
 }
 function openPopup({ action, id = null }) {
 
-    alert(document.body.scrollHeight)
-    alert(document.body.offsetHeight)
-    alert(document.documentElement.clientHeight)
-    alert(document.documentElement.scrollHeight)
-    alert(document.documentElement.offsetHeight)
+    alert('scrollHeight: ' + document.body.scrollHeight)
+    alert('offsetHeight: ' + document.body.offsetHeight)
+    alert('clientHeight: ' + document.documentElement.clientHeight)
+    alert('scrollHeight: ' + document.documentElement.scrollHeight)
+    alert('offsetHeight (html): ' + document.documentElement.offsetHeight)
     
 
     console.log(`${action}: ${id}`)
