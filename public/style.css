@@ -119,12 +119,13 @@ body {
                     transition: 0.2s ease-in-out;
                     overflow: hidden;
                     border-radius: 5px;
+                    background: #35425c;
                 }
                 .success {
-                    background: #348162;
+                    background: #348162 !important;
                 }
                 .error {
-                    background: #8a4646;
+                    background: #8a4646 !important;
                 }
                 .animated {
                     animation: btnOverflowEnable 1.5s ease-in-out forwards;
