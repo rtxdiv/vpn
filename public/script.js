@@ -207,5 +207,5 @@ function showBtnResult({ elem, error = false }) {
     btn.classList.add(error? 'error' : 'success')
     setTimeout(() => {
         btn.style.width = '0'
-    }, 1000)
+    }, 1500)
 }
