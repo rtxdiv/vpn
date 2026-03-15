@@ -127,7 +127,7 @@ body {
                     background: #8e4d4d;
                 }
                 .animated {
-                    animation: btnOverflowEnable 1.5s ease-in-out;
+                    animation: btnOverflowEnable 2s ease-in-out forwards;
                 }
             }
         }
@@ -320,11 +320,11 @@ body {
     from { transform: translateY(100%); }
     to { transform: translateY(0%); }
 }
-@keyframes btnOverflowEnable {
-    0% { width: 0% }
-    100% { width: 100%; }
+@keyframes btnOverflowPulse {
+    0% { width: 0%; }
+    50% { width: 100%; }
+    100% { width: 0%; }
 }
-
 
 red { color: rgb(225, 67, 67); }
 green { color: rgb(74, 225, 74); }
