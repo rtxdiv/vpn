@@ -312,7 +312,7 @@ body {
         border-top-left-radius: 25px;
         border-top-right-radius: 25px;
         transform: translateY(100%);
-        transition: 0.2s ease-out;
+        transition: 0.1s ease-out;
     }
     #popup.opened {
         transform: translateY(0%) !important;
