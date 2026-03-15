@@ -172,6 +172,8 @@ function addButton(elem, url = null) {
         if (link) telegram.openLink(link)
     })
 }
-function showWindow({ action, id = null }) {
-    console.log(action + ': ' + id)
+function showWindow(args = { action, id: null }) {
+    console.log(args)
+    console.log(action)
+    console.log(args.id)
 }
