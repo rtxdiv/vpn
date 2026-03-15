@@ -193,7 +193,9 @@ function addButton(elem, url = null) {
 function openPopup({ action, id = null }) {
     console.log(`${action}: ${id}`)
     popupBg.style.display = 'flex'
-    popup.classList.add('opened')
+    setTimeout(() => {
+        popup.classList.add('opened')
+    }, 10)
     document.body.style.overflow = 'hidden'
     history.pushState({ popup: true }, '', location.href)
     popupIsOpened = true
