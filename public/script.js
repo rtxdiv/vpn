@@ -142,7 +142,7 @@ function displayTariffs({ tariffs = false, error = false }) {
                         <a class="price">${tariff.price}₽<span class="note"> / мес.</span></a>
                     </div>
                     <div class="bottom">
-                        <div class="rect-btn" onclick="showWindow({action:'buy', id:'${tariff.tariff_id}'})">Купить</div>
+                        <div class="rect-btn" onclick="showWindow({action:'buy'})">Купить</div>
                     </div>
                 </div>
             `
@@ -172,7 +172,6 @@ function addButton(elem, url = null) {
         if (link) telegram.openLink(link)
     })
 }
-function showWindow(args = { action, id: null }) {
-    console.log(args)
-    console.log(args.id)
+function showWindow({ action, id = null }) {
+    console.log(id)
 }
