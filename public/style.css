@@ -127,7 +127,7 @@ body {
                     background: #8e4d4d;
                 }
                 .animated {
-                    animation: forwards  1.5s ease-in-out;
+                    animation: forwards 1.5s ease-in-out;
                 }
             }
         }
@@ -322,9 +322,7 @@ body {
 }
 @keyframes btnOverflowEnable {
     0% { width: 0% }
-    10% { width: 100%; }
-    90% { width: 100%; }
-    100% { width: 0%; }
+    100% { width: 100%; }
 }
 
 
