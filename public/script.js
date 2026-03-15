@@ -220,7 +220,7 @@ function showBtnResult({ elem, error = false, message }) {
         btn.classList.add('animated')
     })
 }
-function scrollTo(id) {
+function scrollXTo(id) {
     document.querySelector(id).scrollIntoView({
         behavior: 'smooth',
         block: 'nearest'
