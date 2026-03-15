@@ -207,5 +207,7 @@ function showBtnResult({ elem, error = false, message }) {
     btn.style.width = '100%'
     btn.classList.add(error? 'error' : 'success')
     btn.classList.remove('animated')
-    btn.classList.add('animated')
+    setTimeout(() => {
+        btn.classList.add('animated')
+    }, 1000);
 }
