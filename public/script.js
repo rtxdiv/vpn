@@ -192,11 +192,11 @@ function addButton(elem, url = null) {
 }
 function openPopup({ action, id = null }) {
 
-    alert('scrollHeight: ' + document.body.scrollHeight)
-    alert('offsetHeight: ' + document.body.offsetHeight)
-    alert('clientHeight: ' + document.documentElement.clientHeight)
-    alert('scrollHeight: ' + document.documentElement.scrollHeight)
-    alert('offsetHeight (html): ' + document.documentElement.offsetHeight)
+    alert('scrollHeight: ' + document.body.scrollHeight) //820
+    alert('offsetHeight: ' + document.body.offsetHeight) //820
+    alert('clientHeight: ' + document.documentElement.clientHeight) //691
+    alert('scrollHeight: ' + document.documentElement.scrollHeight) //820
+    alert('offsetHeight (html): ' + document.documentElement.offsetHeight) //820
     
 
     console.log(`${action}: ${id}`)
@@ -207,7 +207,7 @@ function openPopup({ action, id = null }) {
     document.body.style.overflow = 'hidden'
     history.pushState({ popup: true }, '', location.href)
     popupIsOpened = true
-    alert('REAL: ' + popupBg.offsetHeight)
+    alert('REAL: ' + popupBg.offsetHeight) //691
 }
 function closePopup(event) {
     if (!event || event.target == popupBg) {
