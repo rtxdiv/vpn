@@ -18,7 +18,7 @@ const supportBlock = document.querySelector('#help-support')
 const popupBg = document.querySelector('#popup-bg')
 const popup = document.querySelector('#popup')
 popupBg.addEventListener('click', closeWindow)
-window.addEventListener('click', function(event) {
+window.addEventListener('popstate', function(event) {
     if (popupIsOpened) {
         event.preventDefault()
         closeWindow()
@@ -190,7 +190,7 @@ function openWindow({ action, id = null }) {
     popupIsOpened = true
 }
 function closeWindow() {
-    // popupBg.style.display = 'none'
+    popupBg.style.display = 'none'
     popup.style.transform = ''
     popupIsOpened = false
 }
