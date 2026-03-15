@@ -204,7 +204,6 @@ function closeWindow(event) {
 function showBtnResult({ elem, error = false, message }) {
     const btn = elem.querySelector('.overflow')
     btn.textContent = message
-    btn.style.width = '100%'
     btn.classList.add(error? 'error' : 'success')
     btn.classList.remove('animated')
     btn.classList.add('animated')
