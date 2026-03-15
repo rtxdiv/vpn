@@ -206,7 +206,5 @@ function showBtnResult({ elem, error = false, message }) {
     btn.textContent = message
     btn.classList.add(error? 'error' : 'success')
     btn.classList.remove('animated')
-        setTimeout(() => {
-        btn.classList.add('animated')
-    }, 10)
+    btn.classList.add('animated')
 }
