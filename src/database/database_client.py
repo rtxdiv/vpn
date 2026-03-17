@@ -1,10 +1,12 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from functools import wraps
-from root import ROOT_DIR
+import os
 
-
-DB_PATH = ROOT_DIR / 'main.db'
-DB_URL = f"sqlite+aiosqlite:///{DB_PATH}"
+HOST = os.environ['MYSQL_HOST']
+USER = os.environ['MYSQL_USER']
+PASSWORD = os.environ['MYSQL_PASSWORD']
+DATABASE = os.environ['MYSQL_DATABASE']
+DB_URL = f'mysql+aiomysql://${USER}:{PASSWORD}@{HOST}/{DATABASE}'
 
 engine = create_async_engine(url=DB_URL)
 

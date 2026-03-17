@@ -1,64 +1,102 @@
 from typing import Optional
+import datetime
+from sqlalchemy import Date, Float, ForeignKeyConstraint, Index, Integer, String, TIMESTAMP, Text, text
+from sqlalchemy.dialects.mysql import FLOAT, INTEGER, TINYINT
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
-from sqlalchemy import String, Integer, Float, ForeignKey
-
 
 class Base(DeclarativeBase):
-    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
 
-    def __repr__(self) -> str:
-        return f'{__class__.__name__}: {__class__.__dict__}'
-
-
-class Tariffs(Base):
-    __tablename__ = 'tariffs'
-
-    tariff_id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String, nullable=False, unique=True)
-    country: Mapped[str] = mapped_column(String, nullable=False)
-    devices: Mapped[int] = mapped_column(Integer, nullable=False)
-    traffic: Mapped[int] = mapped_column(Integer, nullable=False)
-    price: Mapped[int] = mapped_column(Integer, nullable=False)
-    enabled: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
-    
 
 class AllowedPeriods(Base):
     __tablename__ = 'allowed_periods'
 
-    days: Mapped[int] = mapped_column(Integer, nullable=False)
-    months: Mapped[int] = mapped_column(Integer, nullable=False)
-    discount: Mapped[float] = mapped_column(Float, nullable=False)
+    days: Mapped[int] = mapped_column(INTEGER(unsigned=True), nullable=False)
+    months: Mapped[int] = mapped_column(INTEGER(unsigned=True), nullable=False)
+    discount: Mapped[float] = mapped_column(FLOAT(unsigned=True), nullable=False, server_default=text("'0'"))
+
+
+class Payments(Base):
+    __tablename__ = 'payments'
+    __table_args__ = (
+        Index('payment_id', 'payment_id', unique=True),
+    )
+
+    payment_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
+    user_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
+    created: Mapped[datetime.datetime] = mapped_column(TIMESTAMP, nullable=False, server_default=text('(now())'))
+    amount: Mapped[float] = mapped_column(Float, nullable=False)
+    currency: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
+    success: Mapped[Optional[int]] = mapped_column(TINYINT(unsigned=True))
+    updated: Mapped[Optional[datetime.datetime]] = mapped_column(TIMESTAMP)
+
+    purchases: Mapped[list['Purchases']] = relationship('Purchases', back_populates='payment')
 
 
 class Settings(Base):
     __tablename__ = 'settings'
 
-    key: Mapped[str] = mapped_column(String, nullable=False, unique=True)
-    value: Mapped[str] = mapped_column(String)
+    key: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
+    value: Mapped[Optional[str]] = mapped_column(Text(collation='utf8mb4_unicode_ci'))
+
+
+class Tariffs(Base):
+    __tablename__ = 'tariffs'
+    __table_args__ = (
+        Index('uname', 'uname', unique=True),
+    )
+
+    uname: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
+    name: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
+    country: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
+    devices: Mapped[int] = mapped_column(INTEGER(unsigned=True), nullable=False)
+    traffic: Mapped[int] = mapped_column(INTEGER(unsigned=True), nullable=False)
+    price: Mapped[float] = mapped_column(FLOAT(unsigned=True), nullable=False)
+    enabled: Mapped[int] = mapped_column(TINYINT(unsigned=True), nullable=False)
+
+    user_periods: Mapped[list['UserPeriods']] = relationship('UserPeriods', back_populates='tariffs')
+    purchases_from_tariff_uname: Mapped[list['Purchases']] = relationship('Purchases', foreign_keys='[Purchases.from_tariff_uname]', back_populates='tariffs')
+    purchases_to_tariff_uname: Mapped[list['Purchases']] = relationship('Purchases', foreign_keys='[Purchases.to_tariff_uname]', back_populates='tariffs_')
 
 
 class UserPeriods(Base):
     __tablename__ = 'user_periods'
+    __table_args__ = (
+        ForeignKeyConstraint(['tariff_uname'], ['tariffs.uname'], onupdate='CASCADE', name='tariff_uname_fk'),
+        Index('tariff_uname_fk', 'tariff_uname')
+    )
 
-    user_id: Mapped[str] = mapped_column(String, nullable=False)
-    tariff_id: Mapped[str] = mapped_column(String, ForeignKey('tariffs.tariff_id', name='fk_tariff'), nullable=False)
-    days: Mapped[int] = mapped_column(Integer, nullable=False)
-    used: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
-    
-    tariff: Mapped["Tariffs"] = relationship(viewonly=True)
+    user_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
+    tariff_uname: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
+    days: Mapped[int] = mapped_column(INTEGER(unsigned=True), nullable=False)
+    used: Mapped[int] = mapped_column(TINYINT(unsigned=True), nullable=False, server_default=text('(0)'))
+    starts: Mapped[datetime.date] = mapped_column(Date, nullable=False)
+
+    tariffs: Mapped['Tariffs'] = relationship('Tariffs', back_populates='user_periods')
+    purchases: Mapped[list['Purchases']] = relationship('Purchases', back_populates='user_period')
 
 
-class Payments(Base):
-    __tablename__ = 'payments'
+class Purchases(Base):
+    __tablename__ = 'purchases'
+    __table_args__ = (
+        ForeignKeyConstraint(['from_tariff_uname'], ['tariffs.uname'], onupdate='CASCADE', name='from_tariff_uname_fk'),
+        ForeignKeyConstraint(['payment_id'], ['payments.payment_id'], onupdate='CASCADE', name='payment_id_fk'),
+        ForeignKeyConstraint(['to_tariff_uname'], ['tariffs.uname'], onupdate='CASCADE', name='to_tariff_uname_fk'),
+        ForeignKeyConstraint(['user_period_id'], ['user_periods.id'], onupdate='CASCADE', name='user_period_fk'),
+        Index('from_tariff_uname_fk', 'from_tariff_uname'),
+        Index('payment_id_fk', 'payment_id'),
+        Index('to_tariff_uname_fk', 'to_tariff_uname'),
+        Index('user_period_fk', 'user_period_id')
+    )
 
-    payment_id: Mapped[str] = mapped_column(String, nullable=False)
-    user_id: Mapped[str] = mapped_column(String, nullable=False)
-    amount: Mapped[float] = mapped_column(Float, nullable=False)
-    currency: Mapped[str] = mapped_column(String, nullable=False)
-    status: Mapped[str] = mapped_column(String, nullable=False, default='waiting')
-    timestamp: Mapped[int] = mapped_column(Integer, nullable=False)
-    tariff_id: Mapped[str] = mapped_column(String, ForeignKey('tariffs.tariff_id', name='tariff_fk'), nullable=False)
-    period_id: Mapped[Optional[int]] = mapped_column(Integer, ForeignKey('user_periods.id', name='period_fk'), nullable=True)
+    user_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
+    payment_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
+    to_tariff_uname: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
+    confirmed: Mapped[int] = mapped_column(TINYINT(unsigned=True), nullable=False, server_default=text('(0)'))
+    user_period_id: Mapped[Optional[int]] = mapped_column(Integer)
+    from_tariff_uname: Mapped[Optional[str]] = mapped_column(String(64, 'utf8mb4_unicode_ci'))
 
-    tariff: Mapped["Tariffs"] = relationship(viewonly=True)
-    period: Mapped["UserPeriods"] = relationship(viewonly=True)
+    tariffs: Mapped[Optional['Tariffs']] = relationship('Tariffs', foreign_keys=[from_tariff_uname], back_populates='purchases_from_tariff_uname')
+    payment: Mapped['Payments'] = relationship('Payments', back_populates='purchases')
+    tariffs_: Mapped['Tariffs'] = relationship('Tariffs', foreign_keys=[to_tariff_uname], back_populates='purchases_to_tariff_uname')
+    user_period: Mapped[Optional['UserPeriods']] = relationship('UserPeriods', back_populates='purchases')

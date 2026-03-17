@@ -149,7 +149,7 @@ function displayTariffs({ tariffs = false, error = false }) {
     }
     if (tariffs) {
         tariffs.forEach(tariff => {
-            if (client && tariff.tariff_id == client["comment"]) clientInfoName.innerHTML = tariff.name
+            if (client && tariff.uname == client["comment"]) clientInfoName.innerHTML = tariff.name
             tariffsBlock.innerHTML += `
                 <div class="block">
                     <div class="top">
@@ -160,7 +160,7 @@ function displayTariffs({ tariffs = false, error = false }) {
                         <a class="price">${tariff.price}₽<span class="note"> / мес.</span></a>
                     </div>
                     <div class="bottom">
-                        <div class="rect-btn" onclick="openPopup({action:'buy', id:'${tariff.tariff_id}'})">Купить</div>
+                        <div class="rect-btn" onclick="openPopup({action:'buy', id:'${tariff.uname}'})">Купить</div>
                     </div>
                 </div>
             `
