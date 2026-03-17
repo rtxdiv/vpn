@@ -22,8 +22,6 @@ idna==3.11
 init-data-py==0.2.7
 magic-filter==1.0.12
 multidict==6.7.1
-mysql==0.0.3
-mysqlclient==2.2.8
 propcache==0.4.1
 py3xui==0.5.5
 pydantic==2.12.5
