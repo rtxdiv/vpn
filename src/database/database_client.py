@@ -6,7 +6,7 @@ HOST = os.environ['MYSQL_HOST']
 USER = os.environ['MYSQL_USER']
 PASSWORD = os.environ['MYSQL_PASSWORD']
 DATABASE = os.environ['MYSQL_DATABASE']
-DB_URL = f'mysql+aiomysql://${USER}:{PASSWORD}@{HOST}/{DATABASE}'
+DB_URL = f'mysql+aiomysql://{USER}:{PASSWORD}@{HOST}/{DATABASE}'
 
 engine = create_async_engine(url=DB_URL)
 
