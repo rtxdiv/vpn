@@ -52,7 +52,7 @@ class Tariffs(Base):
     devices: Mapped[int] = mapped_column(INTEGER(unsigned=True), nullable=False)
     traffic: Mapped[int] = mapped_column(INTEGER(unsigned=True), nullable=False)
     price: Mapped[float] = mapped_column(FLOAT(unsigned=True), nullable=False)
-    enabled: Mapped[int] = mapped_column(TINYINT(unsigned=True), nullable=False)
+    enabled: Mapped[int] = mapped_column(TINYINT(unsigned=True), nullable=False, server_default=text('(1)'))
 
     user_periods: Mapped[list['UserPeriods']] = relationship('UserPeriods', back_populates='tariffs')
     purchases_from_tariff_uname: Mapped[list['Purchases']] = relationship('Purchases', foreign_keys='[Purchases.from_tariff_uname]', back_populates='tariffs')
