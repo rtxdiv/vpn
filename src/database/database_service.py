@@ -32,12 +32,21 @@ async def get_user_periods_end(session: AsyncSession, id: any) -> str:
     return f'{end_date.day} {months[end_date.month]} {end_date.year}'
 
 @database_session
-async def get_tariff_and_price(session: AsyncSession, uname: str, months: int = 1) -> Optional[float]:
+async def get_tariff_and_price(session: AsyncSession, uname: str, months: Optional[int] = None) -> Optional[float]:
     tariff = await session.scalar(select(Tariffs).where(Tariffs.uname == uname))
     if not tariff: raise ForeseenException
-    periods = (await session.scalars(select(AllowedPeriods).where(AllowedPeriods.months == months))).all()
-    period = [item for item in periods if item.months == months][0]
+    periods = (await session.scalars(
+        select(AllowedPeriods)
+        .where(AllowedPeriods.months == months)
+        .order_by(AllowedPeriods.months)
+    )).all()
+    
+    period = None
+    if not months:
+        period = periods[0]
+    else:
+        period = [item for item in periods if item.months == months][0]
     if not period: raise ForeseenException
     total = round(tariff.price * months * (1 - period.discount))
-    return { tariff: tariff, periods: periods, total: total }
+    return { tariff: tariff, periods: periods, total: total, months: period.months }
     

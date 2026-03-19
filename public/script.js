@@ -10,7 +10,6 @@ const clientInfoDate = document.querySelector('#client-info .date')
 const clientSettingsCopy = document.querySelector('#client-settings .copy')
 const clientSettingsLink = document.querySelector('#client-settings .link')
 
-
 const tariffsBlock = document.querySelector('#tariffs')
 const tariffsError = document.querySelector('#tariffs-error')
 
@@ -20,6 +19,14 @@ const supportBlock = document.querySelector('#help-support')
 
 const popupBg = document.querySelector('#popup-bg')
 const popup = document.querySelector('#popup')
+const popupContent = document.querySelector('#popup-content')
+const popupTitle = document.querySelector('#popup-content .title')
+const popupText = document.querySelector('#popup-content .text')
+const popupRadiogroup = document.querySelector('#popup-content .radiogroup')
+const popupButton = document.querySelector('#popup-content .button')
+const popupError = document.querySelector('#popup-error')
+
+
 popupBg.addEventListener('click', closePopup)
 window.addEventListener('popstate', function(event) {
     if (popupIsOpened) {
@@ -43,7 +50,7 @@ let settings
 let popupIsOpened = false
 
 
-const getClient = async () => {
+async function getClient () {
     const resp = await fetch('/client', {
         method: 'POST',
         headers: {
@@ -63,7 +70,7 @@ const getClient = async () => {
         displayClient({ error: true })
     }
 }
-const getTariffs = async () => {
+async function getTariffs () {
     const resp = await fetch('/tariffs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
@@ -77,7 +84,7 @@ const getTariffs = async () => {
         displayTariffs({ error: true })
     }
 }
-const getSettings = async () => {
+async function getSettings () {
     const resp = await fetch('/settings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
@@ -91,22 +98,27 @@ const getSettings = async () => {
         displaySettings({ error: true })
     }
 }
-const getPaymentBuy = async () => {
+async function prepareBuy({ uname, months = null }) {
+    openPopup()
     const resp = await fetch('/payment/buy', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Telegram ${telegram.initData}`
-        }
+        },
+        body: JSON.stringify({
+            uname: uname,
+            months: months
+        })
     })
     if (resp.ok) {
         const body = await resp.json()
-        // document.body.innerHTML = 'Success ' + JSON.stringify(body)
-
+        disaplyPopup({ data: body })
     } else {
-        // document.body.innerHTML = 'Error ' + JSON.stringify(resp)
+        disaplyPopup({ error: await resp.text() })
     }
 }
+
 
 const main = async () => {
     await getSettings()
@@ -177,7 +189,7 @@ function displayTariffs({ tariffs = false, error = false }) {
                         <a class="price">${tariff.price}₽<span class="note"> / мес.</span></a>
                     </div>
                     <div class="bottom">
-                        <div class="rect-btn" onclick="openPopup({action:'buy', id:'${tariff.uname}'})">Купить</div>
+                        <div class="rect-btn" onclick="prepareBuy({ uname: ${tariff.uname} })">Купить</div>
                     </div>
                 </div>
             `
@@ -198,6 +210,37 @@ function displaySettings({ settings = false, error = false }) {
         settingsMessage.style.display = 'flex'
     }
 }
+function disaplyPopup({ data = false, error = false }) {
+    popupContent.style.display = 'none'
+    popupError.style.display = 'none'
+    if (error) {
+        popupError.querySelector('.message').innerHTML = `Ошибка: ${error}`
+        popupError.style.display = 'flex'
+        return
+    }
+    if (data) {
+        popupTitle.innerHTML = data.tariff.name
+        popupText.innerHTML = `
+            Устройства: ${data.tariff.devices}<br>
+            Трафик: ${data.tariff.traffic==0? 'бесконечно' : data.tariff.traffic + " Gb" }
+            Начнется с: ${data.starts}
+        `
+        data.periods.forEach(period => {
+            popupRadiogroup.innerHTML += `
+                <label>
+                    <input type="radio" name="popup-option" ${ period.months == data.months? 'checked' : null }>
+                    <span>${period.months} мес.</span>
+                </label>
+            `
+        })
+        popupButton.innerHTML = `Оплатить ${data.total}₽ (СБП)`
+        popupContent.style.display = 'flex'
+
+    } else {
+        popupError.querySelector('.message').innerHTML = `Ошибка при получении данных`
+        popupError.style.display = 'flex'
+    }
+}
 
 
 function addButton(elem, url = null) {
@@ -215,9 +258,8 @@ function scrollXTo(id) {
     })
 }
 
-function openPopup({ action, id = null }) {
+function openPopup() {
     if (popupIsOpened) return
-    console.log(`${action}: ${id}`)
     popupBg.style.display = 'flex'
     requestAnimationFrame(() => {
         popup.classList.add('opened')
