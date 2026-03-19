@@ -100,10 +100,10 @@ const getPaymentBuy = async () => {
     })
     if (resp.ok) {
         const body = await resp.json()
-        console.log(body)
+        document.body.innerHTML = JSON.stringify(body)
 
     } else {
-        console.log(resp)
+        document.body.innerHTML = JSON.stringify(resp)
     }
 }
 
