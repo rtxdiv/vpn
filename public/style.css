@@ -132,10 +132,6 @@ body {
             }
         }
         .bottom {
-            .sqare-btn {
-                width: 80px;
-            }
-
             display: flex;
             flex-direction: row;
             justify-content: start;
@@ -147,10 +143,6 @@ body {
         justify-content: space-between;
 
         .bottom {
-            .sqare-btn {
-                width: 80px;
-            }
-
             display: flex;
             flex-direction: row;
             justify-content: start;
@@ -255,7 +247,7 @@ body {
     cursor: pointer;
 
     > img {
-        height: 80%;
+        height: 70%;
         aspect-ratio: 1/1;
         opacity: 0.6;
     }
