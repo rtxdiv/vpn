@@ -145,7 +145,7 @@ function displayClient({ user = false, error = false, authorization = true }) {
             localDate = date.toLocaleDateString('ru-RU')
         } else localDate = 'бессрочно'
         clientInfoDate.innerHTML = `Действует до: ${ localDate }`
-        addButton(clientSettingsSublink, settings.sub_link + client.subId)
+        addButton(clientSettingsSublink, settings.sub_url + client.subId)
         addButton(tutorialBlock, settings.tutorial_url)
         addButton(supportBlock, settings.support_url)
 
