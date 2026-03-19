@@ -342,7 +342,7 @@ body {
                 align-items: center;
                 width: 100%;
                 height: 45px;
-                padding: 0 12px;
+                padding: 0 15px;    
                 border-radius: 5px;
                 background: #35425c;
                 cursor: pointer;
@@ -354,7 +354,7 @@ body {
                     cursor: pointer;
                     width: 15px;
                     height: 15px;
-                    opacity: 0;
+                    opacity: 0.3;
                     accent-color: #348162;
                 }
                 input[type="radio"]:checked + span {
