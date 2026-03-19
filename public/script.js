@@ -100,10 +100,10 @@ const getPaymentBuy = async () => {
     })
     if (resp.ok) {
         const body = await resp.json()
-        document.body.innerHTML = 'Success ' + JSON.stringify(body)
+        // document.body.innerHTML = 'Success ' + JSON.stringify(body)
 
     } else {
-        document.body.innerHTML = 'Error ' + JSON.stringify(resp)
+        // document.body.innerHTML = 'Error ' + JSON.stringify(resp)
     }
 }
 
@@ -111,7 +111,6 @@ const main = async () => {
     await getSettings()
     await getClient()
     await getTariffs()
-    await getPaymentBuy()
 }
 main()
 
