@@ -222,7 +222,7 @@ function closePopup(event) {
         popup.classList.remove('opened')
         setTimeout(() => {
             popupBg.style.display = 'none'
-        }, 300)
+        }, 1000)
         document.body.style.overflow = 'auto'
         popupIsOpened = false
     }
