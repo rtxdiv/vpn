@@ -295,20 +295,22 @@ body {
     margin: 0;
 
     #popup {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        max-width: 600px;
+        box-sizing: border-box;
+        padding: 40px;
+        background: var(--block-background-color);
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+        transform: translateY(100%);
+        transition: 0.2s ease-in-out;
+
         #popup-content {
             display: flex;
             flex-direction: column;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            max-width: 600px;
-            box-sizing: border-box;
-            padding: 40px;
-            background: var(--block-background-color);
-            border-top-left-radius: 25px;
-            border-top-right-radius: 25px;
-            transform: translateY(100%);
-            transition: 0.2s ease-in-out;
 
             #popup-title {
                 font-size: 22px;
