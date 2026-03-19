@@ -121,7 +121,7 @@ body {
                     width: 100%;
                     pointer-events: none;
                     opacity: 0;
-                    color: var(--def-text-color);
+                    color: white;
                 }
                 .success {
                     background: #008771 !important;
@@ -386,7 +386,7 @@ body {
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--def-text-color);
+            color: white;
             background: #008771;
             border-radius: 7px;
             margin-top: 10px;
