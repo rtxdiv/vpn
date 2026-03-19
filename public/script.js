@@ -211,8 +211,8 @@ function displaySettings({ settings = false, error = false }) {
     }
 }
 function disaplyPopup({ data = false, error = false }) {
-    // popupContent.style.display = 'none'
-    // popupError.style.display = 'none'
+    popupContent.style.display = 'none'
+    popupError.style.display = 'none'
     if (error) {
         popupError.querySelector('.message').innerHTML = `Ошибка: ${error}`
         popupError.style.display = 'flex'
@@ -221,15 +221,13 @@ function disaplyPopup({ data = false, error = false }) {
     if (data) {
         popupTitle.innerHTML = data.tariff.name
         popupText.innerHTML = `
-            Устройства: ${data.tariff.devices}<br>
-            Трафик: ${data.tariff.traffic==0? 'бесконечно' : data.tariff.traffic + " Gb" }<br>
-            Начнется с: ${data.starts}
+            Начнется: ${data.starts}
         `
         popupRadiogroup.innerHTML = ''
         data.periods.forEach(period => {
             popupRadiogroup.innerHTML += `
                 <label>
-                    <input type="radio" name="popup-option" ${ period.months == data.months? 'checked' : null }>
+                    <input type="radio" name="popup-option" value="${period.months}" ${ period.months == data.months? 'checked' : null } onchange="prepareBuy({ uname: '${data.tariff.uname}', months: this.value })">
                     <span>${period.months} мес.</span>
                 </label>
             `
