@@ -211,8 +211,8 @@ function displaySettings({ settings = false, error = false }) {
     }
 }
 function disaplyPopup({ data = false, error = false }) {
-    popupContent.style.display = 'none'
-    popupError.style.display = 'none'
+    // popupContent.style.display = 'none'
+    // popupError.style.display = 'none'
     if (error) {
         popupError.querySelector('.message').innerHTML = `Ошибка: ${error}`
         popupError.style.display = 'flex'
