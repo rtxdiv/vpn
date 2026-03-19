@@ -163,7 +163,6 @@ body {
     margin-top: 10px;
     border-radius: 10px;
     background: var(--block-background-color);
-    padding: 0 23px;
     box-sizing: border-box;
 
     #help-about, #help-tutorial, #help-support {
@@ -171,13 +170,6 @@ body {
         flex-direction: row;
         align-items: center;
         justify-content: start;
-        height: 40px;
-    }
-    > div:first-of-type {
-        padding-top: 23px;
-    }
-    > div:last-of-type {
-        padding-bottom: 23px;
     }
 }
 #tariffs {
