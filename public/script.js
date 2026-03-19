@@ -103,7 +103,7 @@ const getPaymentBuy = async () => {
         document.body.innerHTML = body.total
 
     } else {
-        document.body.innerHTML = JSON.stringify(resp)
+        document.body.innerHTML = resp.error
     }
 }
 
