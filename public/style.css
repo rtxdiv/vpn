@@ -105,7 +105,7 @@ body {
             gap: 7px;
 
             .rect-btn  {
-                background: rgba(10, 17, 33, 0.25);
+                background: #35425c;
                 position: relative;
                 overflow: hidden;
 
