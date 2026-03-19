@@ -1,8 +1,8 @@
 :root {
     --def-text-color: #becad5;
-    --side-text-color: #828f9d;
-    --header-text-color: #6d89b4;
-    --link-text-color: #538dc1;
+    --side-text-color: #677789;
+    --header-text-color: #586a86;
+    --link-text-color: #407eb4;
     --container-max-width: 800px;
     --container-width: 92%;
     --scroll-margin: max(4vw, calc((100vw - 800px) / 2));
@@ -234,7 +234,7 @@ body {
     justify-content: center;
     height: 40px;
     aspect-ratio: 1/1;
-    background: #1f273b;
+    background: #ffffff05;
     border-radius: 7px;
     cursor: pointer;
 
