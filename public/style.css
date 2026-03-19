@@ -383,8 +383,8 @@ body {
             }
 
             label:has(input[type="radio"]:checked)::before {
-                background-color: #348162;
-                border-color: #348162;
+                background-color: #4eb089;
+                border-color: #409875;
                 box-shadow: inset 0 0 0 4px #35425c;
             }
         }
