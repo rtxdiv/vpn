@@ -132,7 +132,7 @@ body {
             }
         }
         .bottom {
-            .rect-btn {
+            .sqare-btn {
                 width: 80px;
             }
 
@@ -147,7 +147,7 @@ body {
         justify-content: space-between;
 
         .bottom {
-            .rect-btn {
+            .sqare-btn {
                 width: 80px;
             }
 
