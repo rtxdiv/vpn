@@ -375,7 +375,7 @@ body {
                 transform: translateY(-50%);
                 width: 20px;
                 height: 20px;
-                border: 2px solid var(--def-text-color);
+                border: 2px solid #4f5f77;
                 border-radius: 50%;
                 background-color: transparent;
                 box-sizing: border-box;
