@@ -324,53 +324,57 @@ body {
             margin-bottom: 10px;
         }
 
-        #popup-text {
-            font-size: 17px;
-            margin-bottom: 10px;
-        }
+        #popup-radiogroup {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 10px 0;
 
-        #popup-radiogroup input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-            margin: 0;
-            padding: 0;
-            pointer-events: none; /* чтобы клики проходили сквозь на label */
-        }
+            #popup-text {
+                font-size: 17px;
+                margin-bottom: 10px;
+            }
 
-        /* Подготавливаем label: относительное позиционирование и увеличенный левый отступ для кастомной кнопки */
-        #popup-radiogroup label {
-            position: relative;
-            padding-left: 50px; /* 15px (отступ до кнопки) + 20px (ширина кнопки) + 15px (отступ после кнопки) */
-        }
+            input[type="radio"] {
+                position: absolute;
+                opacity: 0;
+                width: 0;
+                height: 0;
+                margin: 0;
+                padding: 0;
+                pointer-events: none;
+            }
 
-        /* Кастомная радиокнопка (псевдоэлемент label) */
-        #popup-radiogroup label::before {
-            content: '';
-            position: absolute;
-            left: 15px; /* отступ от левого края label */
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            border: 2px solid #ffffff; /* белая обводка на тёмном фоне */
-            border-radius: 50%;
-            background-color: transparent;
-            box-sizing: border-box;
-            transition: background-color 0.2s, border-color 0.2s;
-        }
+            label {
+                position: relative;
+                padding-left: 50px;
+            }
 
-        /* Эффект при наведении (опционально) */
-        #popup-radiogroup label:hover::before {
-            border-color: #cccccc;
-        }
+            label::before {
+                content: '';
+                position: absolute;
+                left: 15px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 20px;
+                height: 20px;
+                border: 2px solid #ffffff;
+                border-radius: 50%;
+                background-color: transparent;
+                box-sizing: border-box;
+                transition: background-color 0.2s, border-color 0.2s;
+            }
 
-        /* Стиль выбранной радиокнопки */
-        #popup-radiogroup label:has(input[type="radio"]:checked)::before {
-            background-color: #4CAF50;          /* зелёная заливка */
-            border-color: #4CAF50;               /* зелёная обводка */
-            box-shadow: inset 0 0 0 4px #35425c; /* внутренняя точка цветом фона label */
+            label:hover::before {
+                border-color: #cccccc;
+            }
+
+            label:has(input[type="radio"]:checked)::before {
+                background-color: #4CAF50;
+                border-color: #4CAF50;
+                box-shadow: inset 0 0 0 4px #35425c;
+            }
         }
 
         #popup-button {
