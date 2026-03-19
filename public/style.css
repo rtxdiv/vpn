@@ -311,6 +311,7 @@ body {
         #popup-content {
             display: flex;
             flex-direction: column;
+            width: 100%;
 
             #popup-title {
                 font-size: 22px;
