@@ -1,5 +1,5 @@
 :root {
-    --def-text-color: #becad5;
+    --def-text-color: #b5c0ca;
     --side-text-color: #708297;
     --header-text-color: #6277ac;
     --link-text-color: #407eb4;
@@ -252,6 +252,7 @@ body {
     align-items: center;
     border-radius: 7px;
     cursor: pointer;
+    color: ;
 }
 
 .scroll-container {
