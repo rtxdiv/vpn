@@ -121,6 +121,7 @@ body {
                     width: 100%;
                     pointer-events: none;
                     opacity: 0;
+                    color: var(--def-text-color);
                 }
                 .success {
                     background: #008771 !important;
