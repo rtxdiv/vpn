@@ -98,6 +98,26 @@ async function getSettings () {
         displaySettings({ error: true })
     }
 }
+const prepareBuy = async ({ uname, months = null }) => {
+    openPopup()
+    const resp = await fetch('/payment/buy', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Telegram ${telegram.initData}`
+        },
+        body: JSON.stringify({
+            uname: uname,
+            months: months
+        })
+    })
+    if (resp.ok) {
+        const body = await resp.json()
+        disaplyPopup({ data: body })
+    } else {
+        disaplyPopup({ error: await resp.text() })
+    }
+}
 
 
 const main = async () => {
@@ -219,27 +239,6 @@ function disaplyPopup({ data = false, error = false }) {
     } else {
         popupError.querySelector('.message').innerHTML = `Ошибка при получении данных`
         popupError.style.display = 'flex'
-    }
-}
-
-async function prepareBuy({ uname, months = null }) {
-    openPopup()
-    const resp = await fetch('/payment/buy', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Telegram ${telegram.initData}`
-        },
-        body: JSON.stringify({
-            uname: uname,
-            months: months
-        })
-    })
-    if (resp.ok) {
-        const body = await resp.json()
-        disaplyPopup({ data: body })
-    } else {
-        disaplyPopup({ error: await resp.text() })
     }
 }
 
