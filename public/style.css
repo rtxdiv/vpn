@@ -122,7 +122,7 @@ body {
                     background: #35425c;
                 }
                 .success {
-                    background: #348162 !important;
+                    background: #008771 !important;
                 }
                 .error {
                     background: #8a4646 !important;
@@ -415,7 +415,7 @@ body {
 }
 
 red { color: rgb(225, 67, 67); }
-green { color: rgb(74, 225, 74); }
+green { color: #00946f; }
 def { color: var(--def-text-color); }
 
 a[href]:link {
