@@ -100,7 +100,7 @@ const getPaymentBuy = async () => {
     })
     if (resp.ok) {
         const body = await resp.json()
-        document.body.innerHTML = JSON.stringify(body)
+        document.body.innerHTML = body.total
 
     } else {
         document.body.innerHTML = JSON.stringify(resp)
