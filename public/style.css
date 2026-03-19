@@ -243,7 +243,8 @@ body {
     justify-content: center;
     height: 40px;
     aspect-ratio: 1/1;
-    background: #283346;
+    background: #1a2338;
+    border: 1px #232f4c solid;
     border-radius: 5px;
     cursor: pointer;
 
