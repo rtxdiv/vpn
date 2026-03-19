@@ -161,13 +161,15 @@ body {
     display: flex;
     flex-direction: column;
     margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 
     #help-about, #help-tutorial, #help-support {
         display: none;
         flex-direction: row;
         align-items: center;
         justify-content: start;
-        height: 35px;
+        height: 40px;
     }
 }
 #tariffs {
