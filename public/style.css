@@ -1,6 +1,6 @@
 :root {
     --def-text-color: #becad5;
-    --side-text-color: #a8b5c1;
+    --side-text-color: #95a1ad;
     --header-text-color: #7189ad;
     --link-text-color: #538dc1;
     --container-max-width: 800px;
@@ -65,7 +65,7 @@ body {
 }
 
 #client {
-    display: none;
+    display: flex;
     gap: var(--scroll-margin);
     margin-top: var(--container-middle-margin);
 
