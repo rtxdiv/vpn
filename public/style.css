@@ -118,7 +118,7 @@ body {
                     right: 0;
                     transition: 0.2s ease-in-out;
                     overflow: hidden;
-                    border-radius: 5px;
+                    border-radius: 7px;
                     background: #35425c;
                 }
                 .success {
@@ -243,7 +243,7 @@ body {
     justify-content: center;
     height: 40px;
     aspect-ratio: 1/1;
-    background: #35425c;
+    background: #2d394f;
     border-radius: 5px;
     cursor: pointer;
 
