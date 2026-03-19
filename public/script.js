@@ -211,17 +211,14 @@ function displaySettings({ settings = false, error = false }) {
     }
 }
 function disaplyPopup({ data = false, error = false }) {
-    alert('начало отобраения')
-    popupContent.style.display = 'none'
-    popupError.style.display = 'none'
+    // popupContent.style.display = 'none'
+    // popupError.style.display = 'none'
     if (error) {
-        alert('ошибка')
         popupError.querySelector('.message').innerHTML = `Ошибка: ${error}`
         popupError.style.display = 'flex'
         return
     }
     if (data) {
-        alert('данные есть')
         popupTitle.innerHTML = data.tariff.name
         popupText.innerHTML = `
             Устройства: ${data.tariff.devices}<br>
@@ -240,7 +237,6 @@ function disaplyPopup({ data = false, error = false }) {
         popupContent.style.display = 'flex'
 
     } else {
-        alert('данных нет')
         popupError.querySelector('.message').innerHTML = `Ошибка при получении данных`
         popupError.style.display = 'flex'
     }
