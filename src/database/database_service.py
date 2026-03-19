@@ -27,8 +27,7 @@ async def get_user_periods_end(session: AsyncSession, id: any) -> str:
         .limit(1)
     )
     if not last_period: return 'сегодня'
-    date = datetime.strptime(last_period.starts, '%Y-%m-%d')
-    end_date = date + timedelta(days=last_period.days)
+    end_date = last_period.starts + timedelta(days=last_period.days)
     return f'{end_date.day} {months[end_date.month]} {end_date.year}'
 
 @database_session
