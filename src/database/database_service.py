@@ -46,6 +46,6 @@ async def get_tariff_and_price(session: AsyncSession, uname: str, months: Option
     else:
         period = [item for item in periods if item.months == months][0]
     if not period: raise ForeseenException
-    total = round(tariff.price * months * (1 - period.discount))
+    total = round(tariff.price * period.months * (1 - period.discount))
     return { tariff: tariff, periods: periods, total: total, months: period.months }
     
