@@ -9,6 +9,7 @@ const clientInfoDevices = document.querySelector('#client-info .devices')
 const clientInfoDate = document.querySelector('#client-info .date')
 const clientSettingsCopy = document.querySelector('#client-settings .copy')
 const clientSettingsLink = document.querySelector('#client-settings .link')
+const clientSettingsSublink = document.querySelector('#client-settings-sublink')
 
 const tariffsBlock = document.querySelector('#tariffs')
 const tariffsError = document.querySelector('#tariffs-error')
@@ -144,6 +145,7 @@ function displayClient({ user = false, error = false, authorization = true }) {
             localDate = date.toLocaleDateString('ru-RU')
         } else localDate = 'бессрочно'
         clientInfoDate.innerHTML = `Действует до: ${ localDate }`
+        addButton(clientSettingsSublink, settings.sub_link + client.subId)
         addButton(tutorialBlock, settings.tutorial_url)
         addButton(supportBlock, settings.support_url)
 
