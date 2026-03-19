@@ -145,7 +145,7 @@ function displayClient({ user = false, error = false, authorization = true }) {
             localDate = date.toLocaleDateString('ru-RU')
         } else localDate = 'бессрочно'
         clientInfoDate.innerHTML = `Действует до: ${ localDate }`
-        addButton(clientSettingsCopy, settings.sub_url + client.subId)
+        addButton(clientSettingsLink, settings.sub_url + client.subId)
         addButton(tutorialBlock, settings.tutorial_url)
         addButton(supportBlock, settings.support_url)
 
@@ -238,7 +238,6 @@ function closePopup(event) {
 }
 
 function showBtnResult({ elem, error = false, message }) {
-    console.log(error)
     const overflow = elem.querySelector('.overflow')
     overflow.classList.add(error? 'error' : 'success')
     overflow.textContent = message? message : error? 'Ошибка' : 'Успешно'
