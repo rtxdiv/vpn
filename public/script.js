@@ -219,21 +219,22 @@ function disaplyPopup({ data = false, error = false }) {
         return
     }
     if (data) {
-        popupTitle.innerHTML = data.tariff.name
-        popupText.innerHTML = `
-            Устройства: ${data.tariff.devices}<br>
-            Трафик: ${data.tariff.traffic==0? 'бесконечно' : data.tariff.traffic + " Gb" }
-            Начнется с: ${data.starts}
-        `
-        data.periods.forEach(period => {
-            popupRadiogroup.innerHTML += `
-                <label>
-                    <input type="radio" name="popup-option" ${ period.months == data.months? 'checked' : null }>
-                    <span>${period.months} мес.</span>
-                </label>
-            `
-        })
-        popupButton.innerHTML = `Оплатить ${data.total}₽ (СБП)`
+        popupText.innerHTML = JSON.stringify(data)
+        // popupTitle.innerHTML = data.tariff.name
+        // popupText.innerHTML = `
+        //     Устройства: ${data.tariff.devices}<br>
+        //     Трафик: ${data.tariff.traffic==0? 'бесконечно' : data.tariff.traffic + " Gb" }
+        //     Начнется с: ${data.starts}
+        // `
+        // data.periods.forEach(period => {
+        //     popupRadiogroup.innerHTML += `
+        //         <label>
+        //             <input type="radio" name="popup-option" ${ period.months == data.months? 'checked' : null }>
+        //             <span>${period.months} мес.</span>
+        //         </label>
+        //     `
+        // })
+        // popupButton.innerHTML = `Оплатить ${data.total}₽ (СБП)`
         popupContent.style.display = 'flex'
 
     } else {
