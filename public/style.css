@@ -83,6 +83,7 @@ body {
                 margin: 4px 0 12px 0;
                 color: var(--header-text-color);
                 text-decoration: underline;
+                text-decoration-thickness: 2px;
             }
             .devices, .date {
                 margin: 2px 0;
