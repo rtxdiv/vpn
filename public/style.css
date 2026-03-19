@@ -121,10 +121,10 @@ body {
                     width: 100%;
                     pointer-events: none;
                     opacity: 0;
-                    color: var(--def-text-color);
+                    color: #c3cfdb;
                 }
                 .success {
-                    background: #00806a !important;
+                    background: #008771 !important;
                 }
                 .error {
                     background: #974545 !important;
@@ -374,8 +374,8 @@ body {
             }
 
             label:has(input[type="radio"]:checked)::before {
-                background-color: #00806a;
-                border-color: #00806a;
+                background-color: #008771;
+                border-color: #008771;
                 box-shadow: inset 0 0 0 4px #35425c;
             }
         }
@@ -386,8 +386,8 @@ body {
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--def-text-color);
-            background: #00806a;
+            color: #c3cfdb;
+            background: #008771;
             border-radius: 7px;
             margin-top: 10px;
         }
