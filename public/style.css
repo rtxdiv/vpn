@@ -62,7 +62,7 @@ body {
 }
 
 #client {
-    display: none;
+    display: flex;
     gap: var(--scroll-margin);
     margin-top: var(--container-middle-margin);
 
