@@ -237,19 +237,19 @@ function closePopup(event) {
     }
 }
 
-function showBtnResult({ elem, error = false, message }) {
-    const overflow = elem.querySelector('.overflow')
-    overflow.classList.add(error? 'error' : 'success')
-    overflow.textContent = message ?? error? 'Ошибка' : 'Успешно'
-    overflow.classList.remove('animated')
-    requestAnimationFrame(() => {
-        overflow.classList.add('animated')
-    })
-}
-function copySubLink() {
-    navigator.clipboard.writeText(settings.sub_url + client.subId).then(() => {
-        showBtnResult({ elem: clientSettingsCopy, message: 'Скопировано!' })
-    }).catch(_ => {
-        showBtnResult({ elem: clientSettingsCopy, error: true })
-    })
-}
+// function showBtnResult({ elem, error = false, message }) {
+//     const overflow = elem.querySelector('.overflow')
+//     overflow.classList.add(error? 'error' : 'success')
+//     overflow.textContent = message ?? error? 'Ошибка' : 'Успешно'
+//     overflow.classList.remove('animated')
+//     requestAnimationFrame(() => {
+//         overflow.classList.add('animated')
+//     })
+// }
+// function copySubLink() {
+//     navigator.clipboard.writeText(settings.sub_url + client.subId).then(() => {
+//         showBtnResult({ elem: clientSettingsCopy, message: 'Скопировано!' })
+//     }).catch(_ => {
+//         showBtnResult({ elem: clientSettingsCopy, error: true })
+//     })
+// }
