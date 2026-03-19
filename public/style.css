@@ -251,7 +251,7 @@ body {
     > img {
         height: 65%;
         aspect-ratio: 1/1;
-        opacity: 0.35;
+        opacity: 0.4;
     }
 }
 .rect-btn {
@@ -317,7 +317,7 @@ body {
         border-top-left-radius: 25px;
         border-top-right-radius: 25px;
         transform: translateY(100%);
-        transition: 0.1s ease-in-out;
+        transition: 0.2s ease-in-out;
 
         #popup-title {
             font-size: 22px;
@@ -380,7 +380,7 @@ body {
                 border-radius: 50%;
                 background-color: transparent;
                 box-sizing: border-box;
-                transition: 0.15s;
+                transition: 0.1s;
             }
 
             label:has(input[type="radio"]:checked)::before {
