@@ -111,6 +111,7 @@ const main = async () => {
     await getSettings()
     await getClient()
     await getTariffs()
+    await getPaymentBuy()
 }
 main()
 
