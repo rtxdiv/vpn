@@ -15,7 +15,7 @@ async def prepare_buy(request: Request):
     try:
         starts = await get_user_periods_end(id=id)
         (total, tariff) = await get_tariff_and_price(uname='fn-solo', months=2)
-        return { starts: starts, tariff: tariff, total: total, pay_link: pay_link }
+        return { 'starts': starts, 'tariff': tariff, 'total': total, 'pay_link': pay_link }
     
     except ForeseenException:
         raise HTTPException(status_code=400, detail='Выбранный тариф или период не предусмотрен')
