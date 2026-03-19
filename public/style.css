@@ -1,6 +1,6 @@
 :root {
     --def-text-color: #becad5;
-    --side-text-color: #87929e;
+    --side-text-color: #828f9d;
     --header-text-color: #6d89b4;
     --link-text-color: #538dc1;
     --container-max-width: 800px;
@@ -185,7 +185,7 @@ body {
             
             .country {
                 font-size: 16px;
-                opacity: 0.7;
+                color: var(--side-text-color);
             }
             .name {
                 font-size: 28px;
@@ -234,7 +234,7 @@ body {
     justify-content: center;
     height: 40px;
     aspect-ratio: 1/1;
-    background: #202a44;
+    background: #1f273b;
     border-radius: 7px;
     cursor: pointer;
 
