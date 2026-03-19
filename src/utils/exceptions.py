@@ -1,5 +1,6 @@
 class ForeseenException(Exception):
-    pass
+    def __init__(self, message='Произошла ошибка'):
+        super().__init__(message)
 
 class GetTgIdException(ForeseenException):
     def __init__(self, message='Ошибка получения Telegram ID'):

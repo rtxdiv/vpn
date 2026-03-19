@@ -65,9 +65,7 @@ const getClient = async () => {
 const getTariffs = async () => {
     const resp = await fetch('/tariffs', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        headers: { 'Content-Type': 'application/json' }
     })
     if (resp.ok) {
         const body = await resp.json()
@@ -81,9 +79,7 @@ const getTariffs = async () => {
 const getSettings = async () => {
     const resp = await fetch('/settings', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        headers: { 'Content-Type': 'application/json' }
     })
     if (resp.ok) {
         const body = await resp.json()
@@ -92,6 +88,22 @@ const getSettings = async () => {
 
     } else {
         displaySettings({ error: true })
+    }
+}
+const getPaymentBuy = async () => {
+    const resp = await fetch('/payment/buy', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Telegram ${telegram.initData}`
+        }
+    })
+    if (resp.ok) {
+        const body = await resp.json()
+        console.log(body)
+
+    } else {
+        console.log(resp)
     }
 }
 
@@ -195,6 +207,7 @@ function addButton(elem, url = null) {
     })
 }
 function openPopup({ action, id = null }) {
+    if (popupIsOpened) return
     console.log(`${action}: ${id}`)
     popupBg.style.display = 'flex'
     requestAnimationFrame(() => {
