@@ -211,8 +211,8 @@ function displaySettings({ settings = false, error = false }) {
     }
 }
 function disaplyPopup({ data = false, error = false }) {
-    // popupContent.style.display = 'none'
-    // popupError.style.display = 'none'
+    popupContent.style.display = 'none'
+    popupError.style.display = 'none'
     if (error) {
         popupError.querySelector('.message').innerHTML = `Ошибка: ${error}`
         popupError.style.display = 'flex'
@@ -222,9 +222,10 @@ function disaplyPopup({ data = false, error = false }) {
         popupTitle.innerHTML = data.tariff.name
         popupText.innerHTML = `
             Устройства: ${data.tariff.devices}<br>
-            Трафик: ${data.tariff.traffic==0? 'бесконечно' : data.tariff.traffic + " Gb" }
+            Трафик: ${data.tariff.traffic==0? 'бесконечно' : data.tariff.traffic + " Gb" }<br>
             Начнется с: ${data.starts}
         `
+        popupRadiogroup.innerHTML = ''
         data.periods.forEach(period => {
             popupRadiogroup.innerHTML += `
                 <label>

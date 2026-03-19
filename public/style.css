@@ -310,7 +310,7 @@ body {
         transition: 0.2s ease-in-out;
 
         #popup-content {
-            display: flex;
+            display: none;
             flex-direction: column;
             width: 100%;
 
