@@ -299,7 +299,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #00000066;
+    background: #00000088;
     justify-content: center;
     margin: 0;
 
@@ -319,12 +319,14 @@ body {
         transition: 0.1s ease-in-out;
 
         #popup-title {
-            font-size: 20px;
-            font-weight: 600;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
 
         #popup-text {
             font-size: 17px;
+            margin-bottom: 5px;
         }
 
         #popup-radiogroup {
@@ -332,12 +334,13 @@ body {
 
             label {
                 display: flex;
-                align-items: center;
+                flex-direction: column;
+                gap: 7px;
                 width: 100%;
-                height: 42px;
+                height: 45px;
                 padding: 0 12px;
                 border-radius: 100px;
-                background: #f5f5f5;
+                background: #35425c;
                 cursor: pointer;
                 box-sizing: border-box;
             }
@@ -353,6 +356,10 @@ body {
         #popup-button {
             width: 100%;
             height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #348162;
         }
     }
     #popup.opened {
