@@ -161,15 +161,6 @@ body {
     display: flex;
     flex-direction: column;
     margin-top: 10px;
-    padding-top: 0;
-    padding-bottom: 0;
-
-    div:first-of-type {
-        padding-top: 20px;
-    }
-    div:last-of-type {
-        padding-bottom: 20px;
-    }
 
     #help-about, #help-tutorial, #help-support {
         display: none;
