@@ -9,7 +9,7 @@ const clientInfoDevices = document.querySelector('#client-info .devices')
 const clientInfoDate = document.querySelector('#client-info .date')
 const clientSettingsCopy = document.querySelector('#client-settings .copy')
 const clientSettingsLink = document.querySelector('#client-settings .link')
-const clientSettingsSublink = document.querySelector('#client-settings-sublink')
+
 
 const tariffsBlock = document.querySelector('#tariffs')
 const tariffsError = document.querySelector('#tariffs-error')
@@ -145,7 +145,7 @@ function displayClient({ user = false, error = false, authorization = true }) {
             localDate = date.toLocaleDateString('ru-RU')
         } else localDate = 'бессрочно'
         clientInfoDate.innerHTML = `Действует до: ${ localDate }`
-        addButton(clientSettingsSublink, settings.sub_url + client.subId)
+        addButton(clientSettingsCopy, settings.sub_url + client.subId)
         addButton(tutorialBlock, settings.tutorial_url)
         addButton(supportBlock, settings.support_url)
 
@@ -239,10 +239,17 @@ function closePopup(event) {
 
 function showBtnResult({ elem, error = false, message }) {
     const overflow = elem.querySelector('.overflow')
-    overflow.textContent = message
     overflow.classList.add(error? 'error' : 'success')
+    overflow.textContent = message ?? error? 'Ошибка' : 'Успешно'
     overflow.classList.remove('animated')
     requestAnimationFrame(() => {
         overflow.classList.add('animated')
+    })
+}
+function copySubLink() {
+    navigator.clipboard.writeText(settings.sub_url + client.subId).then(() => {
+        showBtnResult({ elem: clientSettingsCopy, message: 'Скопировано!' })
+    }).catch(_ => {
+        showBtnResult({ elem: clientSettingsCopy, error: true })
     })
 }

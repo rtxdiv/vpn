@@ -36,14 +36,14 @@
 
         <div class="block" id="client-settings">
             <div class="top">
-                <div class="rect-btn" onclick="showBtnResult({ elem: this, message: 'Успех!' })">
+                <div class="rect-btn" class="copy" onclick="copySubLink()">
                     Скопировать ссылку
                     <div class="overflow"></div>
                 </div>
-                <div class="rect-btn" id="client-settings-sublink">
+                <div class="rect-btn" class="link">
                     Подписка ↗
                 </div>
-                <div class="rect-btn" onclick="showBtnResult({ elem: this, error: true, message: 'Функционал не релизован' })">
+                <div class="rect-btn" onclick="showBtnResult({ elem: this, error: true, message: 'soon...' })">
                     Сбросить ID
                     <div class="overflow"></div>
                 </div>
@@ -57,7 +57,7 @@
 
         <div class="block" id="client-periods">
             <div class="top">
-
+                soon...
             </div>
             <div class="bottom">
                 <div class="back sqare-btn" onclick="scrollXTo('#client-info')">
