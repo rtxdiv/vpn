@@ -1,7 +1,7 @@
 :root {
     --def-text-color: #becad5;
     --side-text-color: #677789;
-    --header-text-color: #4e79aa;
+    --header-text-color: #3a57a0;
     --link-text-color: #407eb4;
     --container-max-width: 800px;
     --container-width: 92%;
@@ -83,7 +83,7 @@ body {
                 font-size: 34px;
                 font-weight: 800;
                 margin: 4px 0 12px 0;
-                color: #b9c7d2;
+                color: #a5b2bb;
             }
             .devices, .date {
                 margin: 2px 0;
