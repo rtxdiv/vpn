@@ -47,7 +47,6 @@ body {
     box-sizing: border-box;
     padding: 23px;
     border-radius: 10px;
-    background: linear-gradient(45deg, #161E31, #242e46);
     background: linear-gradient(45deg, #161E31, #272f44);
     color: var(--def-text-color);
     width: 100%;
@@ -163,7 +162,7 @@ body {
     flex-direction: column;
     margin-top: 10px;
     border-radius: 10px;
-    background: linear-gradient(45deg, #161E31, #242f47);
+    background: linear-gradient(45deg, #161E31, #272f44);
     padding: 15px;
     box-sizing: border-box;
     gap: 15px;
