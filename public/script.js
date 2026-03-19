@@ -112,9 +112,11 @@ async function prepareBuy ({ uname, months = null }) {
         })
     })
     if (resp.ok) {
+        alert('OK!')
         const body = await resp.json()
         disaplyPopup({ data: body })
     } else {
+        alert('ERROR!')
         disaplyPopup({ error: await resp.text()["detail"] })
     }
 }
