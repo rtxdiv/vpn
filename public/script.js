@@ -238,6 +238,7 @@ function closePopup(event) {
 }
 
 function showBtnResult({ elem, error = false, message }) {
+    console.log(error? 'error' : 'success')
     const overflow = elem.querySelector('.overflow')
     overflow.classList.add(error? 'error' : 'success')
     overflow.textContent = message ?? error? 'Ошибка' : 'Успешно'
@@ -249,7 +250,8 @@ function showBtnResult({ elem, error = false, message }) {
 function copySubLink() {
     navigator.clipboard.writeText('text').then(() => {
         showBtnResult({ elem: clientSettingsCopy, message: 'Скопировано!' })
-    }).catch(_ => {
+    }).catch(err => {
+        console.log(err)
         showBtnResult({ elem: clientSettingsCopy, error: true })
     })
     // settings.sub_url + client.subId
