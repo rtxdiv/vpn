@@ -17,7 +17,7 @@ html {
     -webkit-tap-highlight-color: transparent;
 }
 body {
-    background: #0A1121;
+    background: #0a1222;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -258,7 +258,7 @@ body {
     width: 100%;
     display: flex;
     height: 45px;
-    background: #313d55;
+    background: #23273c;
     justify-content: center;
     align-items: center;
     border-radius: 7px;
