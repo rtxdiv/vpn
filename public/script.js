@@ -247,9 +247,10 @@ function showBtnResult({ elem, error = false, message }) {
     })
 }
 function copySubLink() {
-    navigator.clipboard.writeText(settings.sub_url + client.subId).then(() => {
+    navigator.clipboard.writeText('text').then(() => {
         showBtnResult({ elem: clientSettingsCopy, message: 'Скопировано!' })
     }).catch(_ => {
         showBtnResult({ elem: clientSettingsCopy, error: true })
     })
+    // settings.sub_url + client.subId
 }
