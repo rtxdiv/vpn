@@ -119,6 +119,9 @@ async function prepareBuy ({ uname, months = null }) {
     }
 }
 window.prepareBuy = prepareBuy
+function test() {
+    console.log('test')
+}
 
 
 const main = async () => {
@@ -190,7 +193,7 @@ function displayTariffs({ tariffs = false, error = false }) {
                         <a class="price">${tariff.price}₽<span class="note"> / мес.</span></a>
                     </div>
                     <div class="bottom">
-                        <div class="rect-btn" onclick="prepareBuy({ uname: ${tariff.uname} })">Купить</div>
+                        <div class="rect-btn" onclick="test()">Купить</div>
                     </div>
                 </div>
             `
