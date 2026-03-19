@@ -333,7 +333,8 @@ body {
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 7px;
+            gap: 8px;
+            margin: 10px 0;
 
             label {
                 display: flex;
@@ -348,14 +349,18 @@ body {
                 box-sizing: border-box;
 
                 input[type="radio"] {
+                    margin: 0;
                     margin-right: 15px;
                     cursor: pointer;
-                    width: 20px;
-                    height: 20px;
-                    accent-color: rgb(13, 255, 0);
+                    width: 15px;
+                    height: 15px;
+                    opacity: 0;
                 }
                 input[type="radio"]:checked + span {
-                    font-weight: 500;
+                    
+                }
+                input[type="radio"]:checked {
+                    accent-color: #348162;
                 }
             }
         }
@@ -368,6 +373,7 @@ body {
             justify-content: center;
             background: #348162;
             border-radius: 5px;
+            margin-top: 10px;
         }
     }
     #popup.opened {
