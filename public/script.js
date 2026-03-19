@@ -98,7 +98,7 @@ async function getSettings () {
         displaySettings({ error: true })
     }
 }
-const prepareBuy = async ({ uname, months = null }) => {
+async function prepareBuy({ uname, months = null }) {
     openPopup()
     const resp = await fetch('/payment/buy', {
         method: 'POST',
@@ -189,7 +189,7 @@ function displayTariffs({ tariffs = false, error = false }) {
                         <a class="price">${tariff.price}₽<span class="note"> / мес.</span></a>
                     </div>
                     <div class="bottom">
-                        <div class="rect-btn" onclick="prepareBuy({ uname: ${tariff.uname} })">Купить</div>
+                        <div class="rect-btn" onclick="console.log('okak!!!')">Купить</div>
                     </div>
                 </div>
             `
