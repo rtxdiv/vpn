@@ -239,19 +239,17 @@ function closePopup(event) {
 
 function showBtnResult({ elem, error = false, message }) {
     const overflow = elem.querySelector('.overflow')
+    overflow.classList.remove('error', 'success', 'animated')
     overflow.classList.add(error? 'error' : 'success')
     overflow.textContent = message? message : error? 'Ошибка' : 'Успешно'
-    overflow.classList.remove('animated')
-    requestAnimationFrame(() => {
-        overflow.classList.add('animated')
-    })
+    void overflow.offsetHeight
+    overflow.classList.add('animated')
 }
 function copySubLink() {
-    navigator.clipboard.writeText('text').then(() => {
+    navigator.clipboard.writeText(settings.sub_url + client.subId).then(() => {
         showBtnResult({ elem: clientSettingsCopy, message: 'Скопировано!' })
     }).catch(err => {
         console.log(err)
         showBtnResult({ elem: clientSettingsCopy, error: true })
     })
-    // settings.sub_url + client.subId
 }
