@@ -1,5 +1,6 @@
 :root {
     --def-text-color: #becad5;
+    --side-text-color: #a8b5c1;
     --header-text-color: #7189ad;
     --link-text-color: #538dc1;
     --container-max-width: 800px;
@@ -161,14 +162,14 @@ body {
 #help {
     display: flex;
     margin-top: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 9px;
+    padding-bottom: 9px;
 
     #help-about, #help-tutorial, #help-support {
         display: none;
         align-items: center;
-        height: 38px;
-        color: var(--link-text-color);
+        height: 36px;
+        color: var(--side-text-color);
     }
 }
 #tariffs {
@@ -234,7 +235,6 @@ body {
     height: 40px;
     aspect-ratio: 1/1;
     background: #202a44;
-    background: #0a1222;
     border-radius: 7px;
     cursor: pointer;
 
