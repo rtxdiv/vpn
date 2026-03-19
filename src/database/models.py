@@ -1,16 +1,18 @@
 from typing import Optional
 import datetime
-from sqlalchemy import Date, Float, ForeignKeyConstraint, Index, Integer, String, TIMESTAMP, Text, text
+
+from sqlalchemy import Date, Float, ForeignKeyConstraint, Index, Integer, JSON, String, TIMESTAMP, Text, text
 from sqlalchemy.dialects.mysql import FLOAT, INTEGER, TINYINT
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 class Base(DeclarativeBase):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    pass
 
 
 class AllowedPeriods(Base):
     __tablename__ = 'allowed_periods'
 
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
     days: Mapped[int] = mapped_column(INTEGER(unsigned=True), nullable=False)
     months: Mapped[int] = mapped_column(INTEGER(unsigned=True), nullable=False)
     discount: Mapped[float] = mapped_column(FLOAT(unsigned=True), nullable=False, server_default=text("'0'"))
@@ -22,12 +24,15 @@ class Payments(Base):
         Index('payment_id', 'payment_id', unique=True),
     )
 
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
     payment_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     user_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
-    created: Mapped[datetime.datetime] = mapped_column(TIMESTAMP, nullable=False, server_default=text('(now())'))
+    type: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     amount: Mapped[float] = mapped_column(Float, nullable=False)
     currency: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
-    success: Mapped[Optional[int]] = mapped_column(TINYINT(unsigned=True))
+    data: Mapped[dict] = mapped_column(JSON, nullable=False)
+    created: Mapped[datetime.datetime] = mapped_column(TIMESTAMP, nullable=False, server_default=text('(now())'))
+    success: Mapped[int] = mapped_column(TINYINT(1), nullable=False, server_default=text("'0'"))
     updated: Mapped[Optional[datetime.datetime]] = mapped_column(TIMESTAMP)
 
     purchases: Mapped[list['Purchases']] = relationship('Purchases', back_populates='payment')
@@ -36,6 +41,7 @@ class Payments(Base):
 class Settings(Base):
     __tablename__ = 'settings'
 
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
     key: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     value: Mapped[Optional[str]] = mapped_column(Text(collation='utf8mb4_unicode_ci'))
 
@@ -46,13 +52,14 @@ class Tariffs(Base):
         Index('uname', 'uname', unique=True),
     )
 
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
     uname: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     name: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     country: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     devices: Mapped[int] = mapped_column(INTEGER(unsigned=True), nullable=False)
     traffic: Mapped[int] = mapped_column(INTEGER(unsigned=True), nullable=False)
     price: Mapped[float] = mapped_column(FLOAT(unsigned=True), nullable=False)
-    enabled: Mapped[int] = mapped_column(TINYINT(unsigned=True), nullable=False, server_default=text('(1)'))
+    enabled: Mapped[int] = mapped_column(TINYINT(1), nullable=False, server_default=text("'1'"))
 
     user_periods: Mapped[list['UserPeriods']] = relationship('UserPeriods', back_populates='tariffs')
     purchases_from_tariff_uname: Mapped[list['Purchases']] = relationship('Purchases', foreign_keys='[Purchases.from_tariff_uname]', back_populates='tariffs')
@@ -66,10 +73,11 @@ class UserPeriods(Base):
         Index('tariff_uname_fk', 'tariff_uname')
     )
 
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
     user_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     tariff_uname: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     days: Mapped[int] = mapped_column(INTEGER(unsigned=True), nullable=False)
-    used: Mapped[int] = mapped_column(TINYINT(unsigned=True), nullable=False, server_default=text('(0)'))
+    used: Mapped[int] = mapped_column(TINYINT(1), nullable=False, server_default=text("'0'"))
     starts: Mapped[datetime.date] = mapped_column(Date, nullable=False)
 
     tariffs: Mapped['Tariffs'] = relationship('Tariffs', back_populates='user_periods')
@@ -89,10 +97,10 @@ class Purchases(Base):
         Index('user_period_fk', 'user_period_id')
     )
 
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
     user_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     payment_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     to_tariff_uname: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
-    confirmed: Mapped[int] = mapped_column(TINYINT(unsigned=True), nullable=False, server_default=text('(0)'))
     user_period_id: Mapped[Optional[int]] = mapped_column(Integer)
     from_tariff_uname: Mapped[Optional[str]] = mapped_column(String(64, 'utf8mb4_unicode_ci'))
 

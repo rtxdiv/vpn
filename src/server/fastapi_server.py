@@ -1,37 +1,18 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
-from src.utils.auth_guard import authorization
-from src.xui.xui_client import xui
 from root import ROOT_DIR
 from src.database.database_service import *
 from src.utils.exceptions import *
 from src.utils.logger_client import error_log
+from controllers.root_controller import root_router
 
-
-app = FastAPI()
 
 PUBLIC_DIR = ROOT_DIR / 'public'
+
+app = FastAPI()
 app.mount('/public', StaticFiles(directory=PUBLIC_DIR, html=True), name='public')
-
-@app.get('/')
-async def get_root():
-    return FileResponse(PUBLIC_DIR / 'index.html')
-
-@app.get('/client')
-@authorization
-async def get_sub(request: Request):
-    return await xui.get_by_tgid(request.state.telegram_user['id'])
-
-@app.get('/tariffs')
-async def get_tariffs():
-    return await get_all_tafiffs()
-
-@app.get('/settings')
-async def get_settings():
-    return await get_all_settings()
-
+app.include_router(root_router)
 
 @app.exception_handler(ForeseenException)
 def forseen_exception_handler(request: Request, exc: ForeseenException):
