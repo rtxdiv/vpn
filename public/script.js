@@ -98,7 +98,7 @@ async function getSettings () {
         displaySettings({ error: true })
     }
 }
-window.prepareBuy = async ({ uname, months = null }) => {
+async function prepareBuy ({ uname, months = null }) {
     openPopup()
     const resp = await fetch('/payment/buy', {
         method: 'POST',
@@ -118,6 +118,7 @@ window.prepareBuy = async ({ uname, months = null }) => {
         disaplyPopup({ error: await resp.text() })
     }
 }
+window.prepareBuy = prepareBuy
 
 
 const main = async () => {
