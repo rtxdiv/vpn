@@ -208,6 +208,13 @@ function addButton(elem, url = null) {
         if (link) telegram.openLink(link)
     })
 }
+function scrollXTo(id) {
+    document.querySelector(id).scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest'
+    })
+}
+
 function openPopup({ action, id = null }) {
     if (popupIsOpened) return
     console.log(`${action}: ${id}`)
@@ -229,18 +236,13 @@ function closePopup(event) {
         popupIsOpened = false
     }
 }
+
 function showBtnResult({ elem, error = false, message }) {
-    const btn = elem.querySelector('.overflow')
-    btn.textContent = message
-    btn.classList.add(error? 'error' : 'success')
-    btn.classList.remove('animated')
+    const overflow = elem.querySelector('.overflow')
+    overflow.textContent = message
+    overflow.classList.add(error? 'error' : 'success')
+    overflow.classList.remove('animated')
     requestAnimationFrame(() => {
-        btn.classList.add('animated')
-    })
-}
-function scrollXTo(id) {
-    document.querySelector(id).scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest'
+        overflow.classList.add('animated')
     })
 }

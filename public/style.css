@@ -115,22 +115,21 @@ body {
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    top: 0;
+                    left: 0;
                     height: 100%;
-                    width: 0;
-                    right: 0;
-                    transition: 0.2s ease-in-out;
-                    overflow: hidden;
-                    border-radius: 7px;
-                    background: #35425c;
+                    width: 100%;
+                    pointer-events: none;
+                    opacity: 0;
                 }
                 .success {
                     background: #008771 !important;
                 }
                 .error {
-                    background: #8a4646 !important;
+                    background: #974545 !important;
                 }
                 .animated {
-                    animation: btnOverflowEnable 1.5s ease-in-out forwards;
+                    animation: 3s btnOverflowEnable;
                 }
             }
         }
@@ -282,7 +281,6 @@ body {
     display: none;
 }
 
-
 #popup-bg {
     display: none;
     position: fixed;
@@ -399,10 +397,10 @@ body {
 
 
 @keyframes btnOverflowEnable {
-    0% { width: 0%; }
-    20% { width: 100%; }
-    80% { width: 100%; }
-    100% { width: 0%; }
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
 }
 
 red { color: rgb(225, 67, 67); }
