@@ -48,7 +48,7 @@ body {
     padding: 23px;
     border-radius: 10px;
     background: linear-gradient(45deg, #161E31, #242f47);
-    background-color: #151f31;
+    background: #151f31 !important;
     color: var(--def-text-color);
     width: 100%;
 }
