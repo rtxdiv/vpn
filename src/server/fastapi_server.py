@@ -5,7 +5,7 @@ from root import ROOT_DIR
 from src.database.database_service import *
 from src.utils.exceptions import *
 from src.utils.logger_client import error_log
-from controllers.root_controller import root_router
+from .controllers.root_controller import root_router
 
 
 PUBLIC_DIR = ROOT_DIR / 'public'
