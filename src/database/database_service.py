@@ -37,7 +37,6 @@ async def get_tariff_and_price(session: AsyncSession, uname: str, months: Option
     if not tariff: raise ForeseenException
     periods = (await session.scalars(
         select(AllowedPeriods)
-        .where(AllowedPeriods.months == months)
         .order_by(AllowedPeriods.months)
     )).all()
     

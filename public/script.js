@@ -115,7 +115,7 @@ async function prepareBuy ({ uname, months = null }) {
         const body = await resp.json()
         disaplyPopup({ data: body })
     } else {
-        disaplyPopup({ error: await resp.text() })
+        disaplyPopup({ error: await resp.text()["detail"] })
     }
 }
 
