@@ -44,6 +44,7 @@ let popupIsOpened = false
 
 const getClient = async () => {
     const resp = await fetch('/client', {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Telegram ${telegram.initData}`
@@ -63,6 +64,7 @@ const getClient = async () => {
 }
 const getTariffs = async () => {
     const resp = await fetch('/tariffs', {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         }
@@ -78,6 +80,7 @@ const getTariffs = async () => {
 }
 const getSettings = async () => {
     const resp = await fetch('/settings', {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         }

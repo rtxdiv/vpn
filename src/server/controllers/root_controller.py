@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, APIRouter
+from fastapi import Request, APIRouter
 from fastapi.responses import FileResponse
 from src.utils.auth_guard import authorization
 from src.xui.xui_client import xui
@@ -14,15 +14,16 @@ root_router = APIRouter(prefix='')
 async def get_root():
     return FileResponse(PUBLIC_DIR / 'index.html')
 
-@root_router.get('/client')
+@root_router.post('/client')
 @authorization
 async def get_sub(request: Request):
+    print(type(request.state.telegram_user['id']))
     return await xui.get_by_tgid(request.state.telegram_user['id'])
 
-@root_router.get('/tariffs')
+@root_router.post('/tariffs')
 async def get_tariffs():
     return await get_all_tafiffs()
 
-@root_router.get('/settings')
+@root_router.post('/settings')
 async def get_settings():
     return await get_all_settings()

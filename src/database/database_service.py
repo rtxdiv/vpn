@@ -14,3 +14,7 @@ async def get_all_settings(session: AsyncSession):
     settings = await session.execute(select(Settings))
     settings_list = settings.scalars().all()
     return { setting.key: setting.value for setting in settings_list }
+
+@database_session
+async def get_user_periods(session: AsyncSession, id: any):
+    pass
