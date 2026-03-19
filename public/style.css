@@ -244,7 +244,7 @@ body {
     height: 40px;
     aspect-ratio: 1/1;
     background: #253049;
-    border-radius: 5px;
+    border-radius: 7px;
     cursor: pointer;
 
     > img {
