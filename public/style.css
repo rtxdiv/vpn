@@ -1,6 +1,7 @@
 :root {
     --def-text-color: #becad5;
     --header-text-color: #7189ad;
+    --link-text-color: #6a99aa;
     --container-max-width: 800px;
     --container-width: 92%;
     --scroll-margin: max(4vw, calc((100vw - 800px) / 2));
@@ -167,6 +168,7 @@ body {
         display: none;
         align-items: center;
         height: 38px;
+        color: var(--link-text-color);
     }
 }
 #tariffs {
@@ -232,6 +234,7 @@ body {
     height: 40px;
     aspect-ratio: 1/1;
     background: #202a44;
+    background: #0a1222;
     border-radius: 7px;
     cursor: pointer;
 
@@ -407,9 +410,6 @@ green { color: #009e77; }
 def { color: var(--def-text-color); }
 
 a[href]:link {
-    color: var(--header-text-color);
+    color: var(--link-text-color);
     cursor: pointer;
-}
-a[href]:active, a[href]:hover {
-    color: #5172a5;
 }
