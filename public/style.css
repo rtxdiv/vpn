@@ -97,11 +97,12 @@ body {
     }
     #client-settings {
         justify-content: space-between;
+
         .top {
             display: flex;
             flex-direction: column;
             justify-self: center;
-            gap: 7px;
+            gap: 9px;
 
             .rect-btn  {
                 position: relative;
@@ -259,7 +260,7 @@ body {
     background: #35425c;
     justify-content: center;
     align-items: center;
-    border-radius: 5px;
+    border-radius: 7px;
     cursor: pointer;
 }
 
