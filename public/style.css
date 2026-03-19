@@ -82,6 +82,7 @@ body {
                 font-weight: 800;
                 margin: 4px 0 12px 0;
                 color: var(--header-text-color);
+                text-decoration: underline;
             }
             .devices, .date {
                 margin: 2px 0;
