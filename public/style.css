@@ -330,6 +330,7 @@ body {
             flex-direction: column;
             gap: 10px;
             margin: 10px 0;
+            
 
             #popup-text {
                 font-size: 17px;
@@ -347,8 +348,16 @@ body {
             }
 
             label {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
                 position: relative;
                 padding-left: 50px;
+                height: 45px;
+                border-radius: 5px;
+                background: #35425c;
+                cursor: pointer;
+                box-sizing: border-box;
             }
 
             label::before {
