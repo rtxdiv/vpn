@@ -378,7 +378,7 @@ body {
                 border-radius: 50%;
                 background-color: transparent;
                 box-sizing: border-box;
-                transition: background-color 0.2s, border-color 0.2s;
+                transition: 0.15s;
             }
 
             label:has(input[type="radio"]:checked)::before {
