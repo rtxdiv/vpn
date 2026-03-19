@@ -241,7 +241,7 @@ function showBtnResult({ elem, error = false, message }) {
     console.log(error)
     const overflow = elem.querySelector('.overflow')
     overflow.classList.add(error? 'error' : 'success')
-    overflow.textContent = message ?? error? 'Ошибка' : 'Успешно'
+    overflow.textContent = message? message : error? 'Ошибка' : 'Успешно'
     overflow.classList.remove('animated')
     requestAnimationFrame(() => {
         overflow.classList.add('animated')
