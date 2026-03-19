@@ -69,7 +69,6 @@ body {
 
     #client-info {
         justify-content: space-between;
-        background: linear-gradient(125deg, #2d3953, #161E31);
 
         .top {
             display: flex;
@@ -163,7 +162,7 @@ body {
     flex-direction: column;
     margin-top: 10px;
     border-radius: 10px;
-    background: linear-gradient(45deg, #161E31, #272f44);
+    background: var(--block-background-color);
     padding: 15px;
     box-sizing: border-box;
     gap: 15px;
