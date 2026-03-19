@@ -171,7 +171,13 @@ body {
         flex-direction: row;
         align-items: center;
         justify-content: start;
-        height: 50px;
+        height: 40px;
+    }
+    > div:first-of-type {
+        padding-top: 23px;
+    }
+    > div:last-of-type {
+        padding-bottom: 23px;
     }
 }
 #tariffs {
