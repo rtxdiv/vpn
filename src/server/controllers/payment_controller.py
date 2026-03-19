@@ -6,8 +6,8 @@ from src.utils.exceptions import *
 
 payment_router = APIRouter(prefix='/payment')
 
-@authorization
 @payment_router.post('/buy')
+@authorization
 async def prepare_buy(request: Request):
     for_pay = False
     id = request.state.telegram_user['id']
