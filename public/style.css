@@ -81,9 +81,7 @@ body {
                 font-size: 32px;
                 font-weight: 800;
                 margin: 4px 0 12px 0;
-                color: var(--header-text-color);
-                text-decoration: underline;
-                text-decoration-thickness: 2px;
+                color: #f0f0f0;
             }
             .devices, .date {
                 margin: 2px 0;
