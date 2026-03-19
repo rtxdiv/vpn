@@ -129,7 +129,7 @@ body {
                     background: #974545 !important;
                 }
                 .animated {
-                    animation: 3s btnOverflowEnable;
+                    animation: 2s btnOverflowEnable;
                 }
             }
         }
