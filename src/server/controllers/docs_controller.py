@@ -6,4 +6,4 @@ docs_router = APIRouter(prefix='/docs')
 
 @docs_router.get('/{document}')
 async def get_docs(document: str):
-    return { document }
+    print(document)
