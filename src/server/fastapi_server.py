@@ -11,7 +11,7 @@ from .controllers.payment_controller import payment_router
 
 PUBLIC_DIR = ROOT_DIR / 'public'
 
-app = FastAPI()
+app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
 app.mount('/public', StaticFiles(directory=PUBLIC_DIR, html=True), name='public')
 app.include_router(root_router)
 app.include_router(payment_router)
