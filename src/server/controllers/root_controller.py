@@ -3,10 +3,8 @@ from fastapi.responses import FileResponse
 from src.utils.auth_guard import authorization
 from src.xui.xui_client import xui
 from src.database.database_service import *
-from root import ROOT_DIR
+from root import PUBLIC_DIR
 
-
-PUBLIC_DIR = ROOT_DIR / 'public'
 
 root_router = APIRouter(prefix='')
 
