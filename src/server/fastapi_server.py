@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 from root import ROOT_DIR
@@ -20,15 +20,9 @@ app.include_router(docs_router)
 
 @app.exception_handler(ForeseenException)
 def forseen_exception_handler(request: Request, exc: ForeseenException):
-    return JSONResponse(
-        status_code=400,
-        content={'detail': str(exc)}
-    )
+    raise HTTPException(status_code=400, detail=str(exc))
 
 @app.exception_handler(Exception)
 def forseen_exception_handler(request: Request, exc: Exception):
     error_log.error(exc)
-    return JSONResponse(
-        status_code=500,
-        content={'detail': 'Ошибка сервера'}
-    )
+    raise HTTPException(status_code=500, detail='Ошибка сервера')
