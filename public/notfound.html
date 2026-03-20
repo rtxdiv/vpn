@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ошибка сервера</title>
+</head>
+<body>
+    
+    <div class="container">
+        <div id="title">Страница не найдена</div>
+        <div id="info">Документ с такм именем не найден на сервере</div>
+        <div id="text">Проверьте URL ссылки или попробуйте позже</div>
+        <button id="support" onclick="location.href='https://t.me/rtdVpn'">Поддержка</button>
+    </div>
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: monospace;
+            color: #becad5;
+            background: linear-gradient(90deg, #161E31);
+        }
+        .container {
+            width: 80%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+
+            #title {
+                text-align: center;
+                font-size: 24px;
+                font-weight: 600;
+                padding: 40px 0;
+                border-bottom: 2px #becad5 solid;
+                margin-bottom: 25px;
+            }
+            #info {
+                font-size: 17px;
+                margin-bottom: 20px;
+                color: #7189ad;
+            }
+            #info:empty {
+                display: none;
+            }
+            #text {
+                font-size: 17px;
+                margin-bottom: 20px;
+            }
+            #text:empty {
+                display: none;
+            }
+            #support {
+                margin-top: 10px;
+                width: 100%;
+                max-width: 190px;
+                cursor: pointer;
+                background: linear-gradient(90deg, #394c6e, #34456a);
+                height: 42px;
+                border: none;
+                outline: none;
+                color: #becad5;
+                font-size: 17px;
+                font-weight: 500;
+                letter-spacing: 0.5px;
+                border-left: 1px #becad5 solid;
+                border-bottom: 1px #becad5 solid;
+            }
+            #support:hover {
+                color: #e9e9e9;
+            }
+        }
+    </style>
+</body>
+</html>
