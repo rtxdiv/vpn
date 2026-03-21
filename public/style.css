@@ -353,7 +353,7 @@ body {
                     flex-direction: row;
                     align-items: center;
                     position: relative;
-                    padding-left: 45px;
+                    padding-left: 50px;
                     height: 45px;
                     border-radius: 7px;
                     background: #313d55;
@@ -387,7 +387,7 @@ body {
                 }
                 .discount {
                     margin-left: 10px;
-                    color: #de1b73;
+                    color: #f41d7e;
                     font-size: 15px;
                 }
             }

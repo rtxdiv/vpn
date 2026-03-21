@@ -234,7 +234,7 @@ function disaplyPopup({ data = false, error = false }) {
             popupRadiogroup.innerHTML += `
                 <label>
                     <input type="radio" name="popup-option" value="${period.months}" ${ period.months == data.months? 'checked' : null } onchange="prepareBuy({ uname: '${data.tariff.uname}', months: ${period.months} })">
-                    <span><a class="months">${period.months} мес.</a><a class="discount">-${period.discount * 100}%</a></span>
+                    <span><a class="months">${period.months} мес.</a>${period.discound? <a class="discount">-${period.discount * 100}%</a> : null}</span>
                 </label>
             `
         })
