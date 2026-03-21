@@ -313,10 +313,10 @@ function copySubLink() {
 }
 
 function openLicense() {
-    telegram.openLink('/license')
+    telegram.openLink('/docs/license')
 }
 function openTerms() {
-    telegram.openLink('/terms')
+    telegram.openLink('docs/terms')
 }
 function openPayments() {
     telegram.openLink('/payments')
