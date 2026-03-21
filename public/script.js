@@ -239,6 +239,7 @@ function disaplyPopup({ data = false, error = false }) {
             `
         })
         popupButton.innerHTML = `Создать платёж: ${data.total}₽ (СБП)`
+        popupButton.innerHTML = popupButton.innerHTML
         popupButton.addEventListener('click', function (event) {
             if (!popupAgreement.ckecked) {
                 alert('Примите лицензионное соглашение и политику использования')
