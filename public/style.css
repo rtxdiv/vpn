@@ -380,7 +380,7 @@ body {
             }
 
             > label {
-                font-size: 15px;
+                font-size: 14px;
                 margin: 5px 0;
                 display: flex;
                 flex-direction: row;
@@ -390,9 +390,11 @@ body {
                     text-decoration: underline;
                 }
                 > input[type="checkbox"] {
-                    width: 15px;
-                    height: 15px;
+                    width: 17px;
+                    height: 17px;
                     accent-color: #007b70;
+                    margin: 0;
+                    margin-right: 5px;
                 }
             }
 
