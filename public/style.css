@@ -382,6 +382,8 @@ body {
             > label {
                 font-size: 15px;
                 margin: 5px 0;
+                box-sizing: border-box;
+                padding-left: 3px;
 
                 a {
                     text-decoration: underline;
