@@ -388,6 +388,8 @@ body {
                 margin-bottom: 20px;
                 box-sizing: border-box;
                 padding-left: 2px;
+                display: flex;
+                align-items: center;
 
                 a {
                     text-decoration: underline;
@@ -396,7 +398,6 @@ body {
                     accent-color: #007b70;
                     margin: 0;
                     margin-right: 10px;
-                    padding-bottom: 10px;
                     transform: scale(1.2);
                 }
             }
