@@ -397,7 +397,7 @@ body {
                 > input[type="checkbox"] {
                     accent-color: #007b70;
                     margin: 0;
-                    margin-right: 10px;
+                    margin-right: 20px;
                     transform: scale(1.2);
                 }
             }
