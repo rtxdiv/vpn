@@ -311,3 +311,13 @@ function copySubLink() {
         showBtnResult({ elem: clientSettingsCopy, error: true })
     })
 }
+
+function openLicense() {
+    telegram.openLink('/license')
+}
+function openTerms() {
+    telegram.openLink('/terms')
+}
+function openPayments() {
+    telegram.openLink('/payments')
+}

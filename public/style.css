@@ -381,6 +381,9 @@ body {
 
             > label {
                 font-size: 15px;
+                a {
+                    text-decoration: underline;
+                }
                 > input[type="checkbox"] {
                     accent-color: #007b70;
                 }
