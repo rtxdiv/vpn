@@ -390,6 +390,7 @@ body {
                 padding-left: 2px;
                 display: flex;
                 align-items: center;
+                gap: 7px;
 
                 a {
                     text-decoration: underline;
@@ -397,8 +398,7 @@ body {
                 > input[type="checkbox"] {
                     accent-color: #007b70;
                     margin: 0;
-                    margin-right: 7px;
-                    margin-bottom: 7px;
+                    flex-shrink: 0; 
                     transform: scale(1.1);
                 }
             }
