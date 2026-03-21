@@ -194,9 +194,11 @@ function displayTariffs({ tariffs = false, error = false }) {
                         <a class="traffic">Трафик: ${tariff.traffic==0? 'бесконечно' : tariff.traffic + " Gb" }</a>
                         <a class="price">${tariff.price}₽<span class="note"> / мес.</span></a>
                     </div>
-                    <div class="bottom">
-                        <div class="rect-btn" onclick="prepareBuy({ uname: '${tariff.uname}' })">Купить</div>
-                    </div>
+                    ${ user? `
+                        <div class="bottom">
+                            <div class="rect-btn" onclick="prepareBuy({ uname: '${tariff.uname}' })">Купить</div>
+                        </div>
+                    ` : '' }
                 </div>
             `
         })
