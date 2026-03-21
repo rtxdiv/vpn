@@ -388,7 +388,6 @@ body {
                 margin-bottom: 20px;
                 box-sizing: border-box;
                 padding-left: 2px;
-                vertical-align: center;
 
                 a {
                     text-decoration: underline;
@@ -396,11 +395,9 @@ body {
                 > input[type="checkbox"] {
                     accent-color: #007b70;
                     margin: 0;
-                    margin-bottom: 7px;
-                    transform: scale(1.1);
-                }
-                > span {
                     margin-left: 7px;
+                    padding-bottom: 7px;
+                    transform: scale(1.1);
                 }
             }
 
