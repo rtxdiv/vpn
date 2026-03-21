@@ -380,18 +380,18 @@ body {
             }
 
             > label {
-                font-size: 14px;
+                font-size: 15px;
                 margin: 5px 0;
 
                 a {
                     text-decoration: underline;
                 }
                 > input[type="checkbox"] {
-                    width: 17px;
-                    height: 17px;
                     accent-color: #007b70;
                     margin: 0;
-                    margin-right: 10px;
+                    margin-right: 7px;
+                    margin-bottom: 7px;
+                    transform: scale(1.1);
                 }
             }
 
