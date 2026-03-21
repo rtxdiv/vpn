@@ -316,8 +316,8 @@ function openLicense() {
     telegram.openLink('/docs/license')
 }
 function openTerms() {
-    telegram.openLink('docs/terms')
+    if (confirm('Отркыть условия использования?')) telegram.openLink('docs/terms')
 }
 function openPayments() {
-    telegram.openLink('/payments')
+    if (confirm('Отркыть политику конфиденциальности?')) telegram.openLink('/payments')
 }
