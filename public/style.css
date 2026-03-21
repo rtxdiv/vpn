@@ -387,6 +387,8 @@ body {
                     text-decoration: underline;
                 }
                 > input[type="checkbox"] {
+                    width: 20px;
+                    height: 20px;
                     accent-color: #007b70;
                 }
             }
