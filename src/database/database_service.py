@@ -47,4 +47,9 @@ async def get_tariff_and_price(session: AsyncSession, uname: str, months: Option
     if not period: raise ForeseenException
     total = round(tariff.price * period.months * (1 - period.discount))
     return (tariff, periods, total, period.months)
-    
+
+@database_session
+async def get_sub_url(session: AsyncSession) -> str:
+    setting = await session.scalar(select(Settings).where(Settings.key == 'sub_url'))
+    if not setting: raise Exception
+    return setting.value

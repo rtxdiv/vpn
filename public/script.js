@@ -25,6 +25,7 @@ const popupText = document.querySelector('#popup-content .text')
 const popupRadiogroup = document.querySelector('#popup-content .radiogroup')
 const popupButton = document.querySelector('#popup-content .button')
 const popupError = document.querySelector('#popup-error')
+const popupAgreement = document.querySelector('#popup-agreement')
 
 
 popupBg.addEventListener('click', closePopup)
@@ -98,7 +99,11 @@ async function getSettings () {
         displaySettings({ error: true })
     }
 }
-async function prepareBuy ({ uname, months = null }) {
+async function prepareBuy ({ uname, months = null, for_pay = false }) {
+    if (for_pay) {
+        alert('В разработке...')
+        return
+    }
     openPopup()
     const resp = await fetch('/payment/buy', {
         method: 'POST',
@@ -108,7 +113,8 @@ async function prepareBuy ({ uname, months = null }) {
         },
         body: JSON.stringify({
             uname: uname,
-            months: months
+            months: months,
+            for_pay: for_pay
         })
     })
     if (resp.ok) {
@@ -227,12 +233,23 @@ function disaplyPopup({ data = false, error = false }) {
         data.periods.forEach(period => {
             popupRadiogroup.innerHTML += `
                 <label>
-                    <input type="radio" name="popup-option" value="${period.months}" ${ period.months == data.months? 'checked' : null } onchange="prepareBuy({ uname: '${data.tariff.uname}', months: this.value })">
+                    <input type="radio" name="popup-option" value="${period.months}" ${ period.months == data.months? 'checked' : null } onchange="prepareBuy({ uname: '${data.tariff.uname}', months: ${period.months} })">
                     <span>${period.months} мес.</span>
                 </label>
             `
         })
-        popupButton.innerHTML = `Оплатить ${data.total}₽ (СБП)`
+        popupButton.innerHTML = `Создать платёж: ${data.total}₽ (СБП)`
+        popupButton.addEventListener('click', function (event) {
+            if (!popupAgreement.ckecked) {
+                alert('Примите лицензионное соглашение и политику использования')
+                return
+            }
+            prepareBuy({
+                uname: data.tariff.uname,
+                months: data.months,
+                for_pay: true
+            })
+        })
         popupContent.style.display = 'flex'
 
     } else {

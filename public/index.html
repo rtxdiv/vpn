@@ -25,10 +25,13 @@
                 <a class="date"></a>
             </div>
             <div class="bottom">
-                <div class="settings sqare-btn" onclick="scrollXTo('#client-settings')">
+                <div class="sqare-btn" onclick="window.location.href='/payments'">
+                    <img src="public/img/payments.png">
+                </div>
+                <div class="sqare-btn" onclick="scrollXTo('#client-settings')">
                     <img src="public/img/settings.png">
                 </div>
-                <div class="history sqare-btn" onclick="scrollXTo('#client-periods')">
+                <div class="sqare-btn" onclick="scrollXTo('#client-periods')">
                     <img src="public/img/history.png">
                 </div>
             </div>
@@ -104,6 +107,10 @@
                 <a class="title"></a>
                 <a class="text"></a>
                 <div class="radiogroup"></div>
+                <label>
+                    <input type="checkbox" id="popup-agreement">
+                    <span>Я принимаю <a href="/docs/license">лицензионное соглашение</a> и <a href="/docs/terms">политику использования</a></span>
+                </label>
                 <div class="button"></div>
             </div>
             <div id="popup-error"><a class="message"></a></div>

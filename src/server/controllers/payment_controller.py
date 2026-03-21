@@ -1,4 +1,6 @@
 from fastapi import Request, APIRouter, HTTPException
+from fastapi.responses import FileResponse
+from root import PUBLIC_DIR
 from src.utils.auth_guard import authorization
 from src.database.database_service import *
 from src.utils.exceptions import *
@@ -7,10 +9,14 @@ from ..dto.payment_buy_dto import BuyDto
 
 payment_router = APIRouter(prefix='/payment')
 
+@payment_router.get('/')
+@authorization
+async def get_payments(request: Request):
+    return FileResponse(PUBLIC_DIR / 'payments.html')
+
 @payment_router.post('/buy')
 @authorization
 async def prepare_buy(request: Request, dto: BuyDto):
-    for_pay = False
     pay_link = None
     id = request.state.telegram_user['id']
 

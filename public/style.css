@@ -379,6 +379,13 @@ body {
                 }
             }
 
+            > label {
+                font-size: 15px;
+                > input[type="checkbox"] {
+                    accent-color: #007b70;
+                }
+            }
+
             .button {
                 width: 100%;
                 height: 45px;
