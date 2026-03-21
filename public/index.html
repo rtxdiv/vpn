@@ -25,7 +25,7 @@
                 <a class="date"></a>
             </div>
             <div class="bottom">
-                <div class="sqare-btn" onclick="window.location.href='/payments'">
+                <div class="sqare-btn" onclick="telegram.openlink('/payments')">
                     <img src="public/img/payments.png">
                 </div>
                 <div class="sqare-btn" onclick="scrollXTo('#client-settings')">
@@ -109,7 +109,7 @@
                 <div class="radiogroup"></div>
                 <label>
                     <input type="checkbox" id="popup-agreement">
-                    <span>Я принимаю <a href="/docs/license">лицензионное соглашение</a> и <a href="/docs/terms">политику использования</a></span>
+                    <span>Я принимаю <a onclick="telegram.openlink('/docs/license')">лицензионное соглашение</a> и <a onclick="telegram.openlink('/docs/terms')">политику использования</a></span>
                 </label>
                 <div class="button"></div>
             </div>
