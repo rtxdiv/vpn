@@ -240,7 +240,7 @@ function disaplyPopup({ data = false, error = false }) {
         })
         popupButton.innerHTML = `Создать платёж: ${data.total}₽ (СБП)`
         popupButton.innerHTML = popupButton.innerHTML
-        popupButton.addEventListener('click', function (event) {
+        popupButton.onclick = function() {
             if (!popupAgreement.ckecked) {
                 alert('Примите лицензионное соглашение и политику использования')
                 return
@@ -250,7 +250,7 @@ function disaplyPopup({ data = false, error = false }) {
                 months: data.months,
                 for_pay: true
             })
-        })
+        }
         popupContent.style.display = 'flex'
 
     } else {

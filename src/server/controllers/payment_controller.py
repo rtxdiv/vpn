@@ -10,8 +10,7 @@ from ..dto.payment_buy_dto import BuyDto
 payment_router = APIRouter(prefix='/payments')
 
 @payment_router.get('/')
-@authorization
-async def get_payments(request: Request):
+async def get_payments():
     return FileResponse(PUBLIC_DIR / 'payments.html')
 
 @payment_router.post('/buy')
