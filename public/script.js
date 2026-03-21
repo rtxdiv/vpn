@@ -145,7 +145,7 @@ function displayClient({ user = false, error = false, authorization = true }) {
         return
     }
     if (!authorization) {
-        clientError.querySelector('.message').innerHTML = 'Запустите приложение через Telegram, чтобы получить информацию о подписке'
+        clientError.querySelector('.message').innerHTML = 'Запустите приложение через Telegram, чтобы авторизоваться'
         clientError.style.display = 'flex'
         addButton(supportBlock, settings.support_url)
         return
