@@ -397,7 +397,7 @@ body {
                     margin: 0;
                     margin-right: 7px;
                     margin-bottom: 7px;
-
+                    transform: scale(1.1);
                 }
             }
 
