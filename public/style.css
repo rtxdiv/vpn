@@ -284,7 +284,7 @@ body {
 }
 
 #popup-bg {
-    display: flex;
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -310,7 +310,7 @@ body {
         transition: 0.2s ease-in-out;
 
         #popup-content {
-            display: none;
+            display: flex;
             flex-direction: column;
             width: 100%;
 
