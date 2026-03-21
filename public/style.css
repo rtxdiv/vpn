@@ -384,7 +384,7 @@ body {
             }
 
             > label {
-                font-size: 15px;
+                font-size: 16px;
                 margin-bottom: 20px;
                 box-sizing: border-box;
                 padding-left: 2px;
@@ -395,9 +395,9 @@ body {
                 > input[type="checkbox"] {
                     accent-color: #007b70;
                     margin: 0;
-                    margin-right: 7px;
-                    padding-bottom: 7px;
-                    transform: scale(1.1);
+                    margin-right: 8px;
+                    padding-bottom: 8px;
+                    transform: scale(1.2);
                 }
             }
 
