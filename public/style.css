@@ -398,6 +398,10 @@ body {
                     margin-right: 7px;
                     margin-bottom: 7px;
                     transform: scale(1.1);
+                    vertical-align: middle;
+                }
+                > span {
+                    vertical-align: middle;
                 }
             }
 
