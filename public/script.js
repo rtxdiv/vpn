@@ -105,7 +105,7 @@ async function prepareBuy ({ uname, months = null, for_pay = false }) {
         return
     }
     openPopup()
-    const resp = await fetch('/payment/buy', {
+    const resp = await fetch('/payments/buy', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

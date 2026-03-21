@@ -7,7 +7,7 @@ from src.utils.exceptions import *
 from ..dto.payment_buy_dto import BuyDto
 
 
-payment_router = APIRouter(prefix='/payment')
+payment_router = APIRouter(prefix='/payments')
 
 @payment_router.get('/')
 @authorization
