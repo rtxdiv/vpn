@@ -313,7 +313,6 @@ function copySubLink() {
 }
 
 function openLicense() {
-    telegram.openLink('/docs/license')
     if (confirm('Отркыть лицензионное соглашение?')) telegram.openLink('/docs/license')
 }
 function openTerms() {
