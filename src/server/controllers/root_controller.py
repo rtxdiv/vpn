@@ -24,3 +24,7 @@ async def get_tariffs():
 @root_router.post('/settings')
 async def get_settings():
     return await get_all_settings()
+
+@root_router.post('1plat.txt')
+async def get_1plat():
+    return FileResponse(PUBLIC_DIR / '1plat.txt')
