@@ -26,6 +26,6 @@ async def get_settings():
     return await get_all_settings()
 
 #1Plat Verification
-@root_router.get('1plat.txt')
+@root_router.get('/1plat.txt')
 async def get_1plat():
     return FileResponse(PUBLIC_DIR / '1plat.txt')
