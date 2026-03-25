@@ -5,7 +5,6 @@ import uvicorn
 from src.server.fastapi_server import app
 from src.xui.xui_client import xui
 from src.bot.bot_server import bot, dp
-from src.bot.bot_commands import commands_router
 
 
 async def main():
@@ -13,7 +12,6 @@ async def main():
     server = uvicorn.Server(config)
     await xui.login()
     await bot.delete_webhook(drop_pending_updates=True)
-    dp.include_router(commands_router)
 
     await asyncio.gather(
         server.serve(),
