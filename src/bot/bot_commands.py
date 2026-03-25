@@ -1,4 +1,5 @@
 import time
+from aiogram import Router
 from aiogram.filters import Command, CommandObject
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.enums import ParseMode
@@ -6,10 +7,11 @@ from src.utils.exceptions import *
 from src.xui.xui_client import xui
 from src.utils.logger_client import info_log, error_log
 from src.database.database_service import get_sub_url
-from bot_server import bot, dp
+from bot_server import bot
 
+commands_router = Router()
 
-@dp.message(Command('activate'))
+@commands_router.message(Command('activate'))
 async def cmd_activate(ctx: Message, command: CommandObject):
     if command.args != 'PROMO-30': return
 
@@ -49,7 +51,7 @@ async def cmd_activate(ctx: Message, command: CommandObject):
         await ctx.answer('Ошибка сервера')
         error_log.error(str(e))
 
-@dp.message(Command('update'))
+@commands_router.message(Command('update'))
 async def cmd_reset(ctx: Message, command: CommandObject):
     try:
         await xui.reset_sub_id(command.args)
@@ -61,7 +63,7 @@ async def cmd_reset(ctx: Message, command: CommandObject):
         await ctx.answer('Ошибка сервера')
         error_log.error(str(e))
 
-# @dp.message(Command('enable'))
+# @commands_router.message(Command('enable'))
 async def cmd_enable(ctx: Message, command: CommandObject):
     try:
         ### await xui.enable_client(command.args, )
@@ -78,7 +80,7 @@ async def cmd_enable(ctx: Message, command: CommandObject):
         await ctx.answer('Ошибка сервера')
         error_log.error(str(e))
 
-@dp.message(Command('disable_message'))
+@commands_router.message(Command('disable_message'))
 async def cmd_enable(ctx: Message, command: CommandObject):
     try:
         message = '❗ *Доступ к PROMO-подписке приосановлен администратором*\n'
