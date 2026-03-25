@@ -1,6 +1,6 @@
 import os
 from aiogram import Bot, Dispatcher
-from .bot_commands import commands_router
+from src.bot.bot_commands import commands_router
 
 
 TOKEN = os.environ['MAIN_BOT_TOKEN']
