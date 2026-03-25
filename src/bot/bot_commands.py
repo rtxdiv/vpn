@@ -7,7 +7,7 @@ from src.utils.exceptions import *
 from src.xui.xui_client import xui
 from src.utils.logger_client import info_log, error_log
 from src.database.database_service import get_sub_url
-from src.bot.bot_server import bot
+from bot_server import bot
 
 commands_router = Router()
 
