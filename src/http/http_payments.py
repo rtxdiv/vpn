@@ -15,13 +15,24 @@ async def create_payment():
     async with session.post(
         url=f'{base_url}/api/merchant/order/create/by-api',
         json=payload
-    ) as response:
-        print(f"-- RESPONSE STATUS: {response.status} {response.reason}", flush=True)
+    ) as resp:
+        print(f"RESPONSE STATUS: {resp.status} {resp.reason}", flush=True)
         try:
-            data = await response.json()
-            print("--  RESPONSE BODY (JSON):", flush=True)
-            print(json.dumps(data, ensure_ascii=False, indent=2), flush=True)
+            data = await resp.json()
+            print(f'RESPONSE (josn):\n{json.dumps(data, ensure_ascii=False, indent=2)}', flush=True)
         except:
-            text = await response.text()
-            print("-- RESPONSE BODY (TEXT):", flush=True)
-            print(text, flush=True)
+            text = await resp.text()
+            print(f'RESPONSE (text):\n{text}', flush=True)
+
+
+async def get_shop_info():
+    session = get_session()
+    async with session.get(
+        url=f'{base_url}/api/shop/info/by-api',
+    ) as resp:
+        try:
+            data = await resp.json()
+            print(f'RESPONSE (josn):\n{json.dumps(data, ensure_ascii=False, indent=2)}', flush=True)
+        except:
+            text = await resp.text()
+            print(f'RESPONSE (text):\n{text}', flush=True)

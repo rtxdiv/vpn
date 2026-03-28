@@ -8,7 +8,7 @@ from src.xui.xui_client import xui
 from src.utils.logger_client import info_log, error_log
 from src.database.database_service import get_sub_url
 from src.bot.bot_server import bot
-from src.http.http_payments import create_payment
+from src.http.http_payments import create_payment, get_shop_info
 
 
 commands_router = Router()
@@ -55,8 +55,17 @@ async def cmd_activate(ctx: Message, command: CommandObject):
 
 @commands_router.message(Command('pay'))
 async def cmd_pay(ctx: Message):
+    if ctx.from_user.username != 'rtxdiv': return
     print('------ /pay')
     await create_payment()
+    await ctx.answer('Лог создан')
+
+@commands_router.message(Command('status'))
+async def cmd_pay(ctx: Message):
+    if ctx.from_user.username != 'rtxdiv': return
+    print('------ /status')
+    await get_shop_info()
+    await ctx.answer('Лог создан')
 
 @commands_router.message(Command('update'))
 async def cmd_reset(ctx: Message, command: CommandObject):
