@@ -16,13 +16,12 @@ async def create_payment():
         url=f'{base_url}/api/merchant/order/create/by-api',
         json=payload
     ) as resp:
-        print(f"RESPONSE STATUS: {resp.status} {resp.reason}", flush=True)
         try:
             data = await resp.json()
-            print(f'RESPONSE (josn):\n{json.dumps(data, ensure_ascii=False, indent=2)}', flush=True)
+            print(f'RESP:\n{json.dumps(data, ensure_ascii=False, indent=2)}', flush=True)
         except:
             text = await resp.text()
-            print(f'RESPONSE (text):\n{text}', flush=True)
+            print(f'ERROR:\n{text}', flush=True)
 
 
 async def get_shop_info():
@@ -32,7 +31,7 @@ async def get_shop_info():
     ) as resp:
         try:
             data = await resp.json()
-            print(f'RESPONSE (josn):\n{json.dumps(data, ensure_ascii=False, indent=2)}', flush=True)
+            print(f'RESP:\n{json.dumps(data, ensure_ascii=False, indent=2)}', flush=True)
         except:
             text = await resp.text()
-            print(f'RESPONSE (text):\n{text}', flush=True)
+            print(f'ERROR:\n{text}', flush=True)
