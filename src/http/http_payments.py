@@ -17,12 +17,12 @@ async def create_payment():
         url=f'{base_url}/api/merchant/order/create/by-api',
         json=payload
     ) as response:
-        print(f"← RESPONSE STATUS: {response.status} {response.reason}")
+        print(f"-- RESPONSE STATUS: {response.status} {response.reason}")
         try:
             data = await response.json()
-            print("← RESPONSE BODY (JSON):")
+            print("--  RESPONSE BODY (JSON):")
             print(json.dumps(data, ensure_ascii=False, indent=2))
-        except (aiohttp.ContentTypeError, json.JSONDecodeError):
+        except:
             text = await response.text()
-            print("← RESPONSE BODY (TEXT):")
+            print("-- RESPONSE BODY (TEXT):")
             print(text)

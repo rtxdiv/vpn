@@ -8,7 +8,7 @@ async def init_http_session():
     global session
     if session is None:
         session = aiohttp.ClientSession(
-            timeout=aiohttp.ClientTimeout(total=60),
+            timeout=aiohttp.ClientTimeout(total=15),
             headers={
                 'Content-Type': 'application/json',
                 'x-shop': os.environ['SHOP_ID'],
