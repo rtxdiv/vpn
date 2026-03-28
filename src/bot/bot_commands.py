@@ -55,8 +55,8 @@ async def cmd_activate(ctx: Message, command: CommandObject):
 
 @commands_router.message(Command('pay'))
 async def cmd_pay(ctx: Message):
-    await ctx.answer('/pay')
     print('------ /pay')
+    await ctx.answer('/pay')
     await create_payment()
 
 @commands_router.message(Command('update'))
