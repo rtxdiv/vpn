@@ -16,14 +16,11 @@ async def main():
     register_routers()
 
     await init_http_session()
-    try:
-        await asyncio.gather(
-            server.serve(),
-            asyncio.create_task(dp.start_polling(bot)),
-            return_exceptions=True
-        )
-    finally:
-        await close_http_session()
+    await asyncio.gather(
+        server.serve(),
+        asyncio.create_task(dp.start_polling(bot)),
+        return_exceptions=True
+    )
 
 if __name__ == '__main__':
     asyncio.run(main())

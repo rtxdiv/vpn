@@ -1,6 +1,5 @@
 from .http_client import get_session
 import json
-import aiohttp
 
 
 base_url = 'https://1plat.cash'
