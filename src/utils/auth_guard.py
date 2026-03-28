@@ -27,7 +27,7 @@ def authorization(func):
         init_data = auth[9:]
         try:
             user = validate(init_data)
-            print(f'Auth passed: { user["id"] }')
+            print(f'Auth passed: { user["id"] }', flush=True)
             request.state.telegram_user = user
         except TelegramAuthError as e:
             raise HTTPException(status_code=403, detail=str(e))

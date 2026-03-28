@@ -16,12 +16,12 @@ async def create_payment():
         url=f'{base_url}/api/merchant/order/create/by-api',
         json=payload
     ) as response:
-        print(f"-- RESPONSE STATUS: {response.status} {response.reason}")
+        print(f"-- RESPONSE STATUS: {response.status} {response.reason}", flush=True)
         try:
             data = await response.json()
-            print("--  RESPONSE BODY (JSON):")
-            print(json.dumps(data, ensure_ascii=False, indent=2))
+            print("--  RESPONSE BODY (JSON):", flush=True)
+            print(json.dumps(data, ensure_ascii=False, indent=2), flush=True)
         except:
             text = await response.text()
-            print("-- RESPONSE BODY (TEXT):")
-            print(text)
+            print("-- RESPONSE BODY (TEXT):", flush=True)
+            print(text, flush=True)
