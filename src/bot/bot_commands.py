@@ -56,14 +56,14 @@ async def cmd_activate(ctx: Message, command: CommandObject):
 @commands_router.message(Command('pay'))
 async def cmd_pay(ctx: Message):
     if ctx.from_user.username != 'rtxdiv': return
-    print('------ /pay')
+    print('--/pay')
     await create_payment()
     await ctx.answer('Лог создан')
 
 @commands_router.message(Command('status'))
 async def cmd_pay(ctx: Message):
     if ctx.from_user.username != 'rtxdiv': return
-    print('------ /status')
+    print('--/status')
     await get_shop_info()
     await ctx.answer('Лог создан')
 
