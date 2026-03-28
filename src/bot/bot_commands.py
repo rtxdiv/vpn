@@ -56,6 +56,7 @@ async def cmd_activate(ctx: Message, command: CommandObject):
 @commands_router.message(Command('pay'))
 async def cmd_pay(ctx: Message):
     if ctx.from_user.username == 'rtxdiv':
+        print('OK!')
         await create_payment()
 
 @commands_router.message(Command('update'))
