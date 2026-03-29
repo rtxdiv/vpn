@@ -160,7 +160,11 @@ function displayClient({ user = false, error = false, authorization = true }) {
         let localDate
         if (expiry !== 0) {
             const date = new Date(user['expiryTime'])
-            localDate = date.toLocaleDateString('ru-RU')
+            localDate = date.toLocaleDateString('ru-RU', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }).replace(' г.', '')
         } else localDate = 'бессрочно'
         clientInfoDate.innerHTML = `Действует до: ${ localDate }`
         addButton(clientSettingsLink, settings.sub_url + client.subId)
