@@ -2,7 +2,7 @@ from typing import Optional
 import datetime
 
 from sqlalchemy import Date, Float, ForeignKeyConstraint, Index, Integer, JSON, String, TIMESTAMP, Text, text
-from sqlalchemy.dialects.mysql import FLOAT, INTEGER, TINYINT
+from sqlalchemy.dialects.mysql import FLOAT, INTEGER, TINYINT, VARCHAR
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 class Base(DeclarativeBase):
@@ -25,7 +25,6 @@ class Payments(Base):
     )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    payment_id: Mapped[str] = mapped_column(String(8, 'utf8mb4_unicode_ci'), nullable=False, server_default=text('(left(cast(uuid_short() as char charset utf8mb4),8))'))
     user_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     type: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     amount: Mapped[float] = mapped_column(Float, nullable=False)
@@ -33,6 +32,7 @@ class Payments(Base):
     data: Mapped[dict] = mapped_column(JSON, nullable=False)
     created: Mapped[datetime.datetime] = mapped_column(TIMESTAMP, nullable=False, server_default=text('(now())'))
     success: Mapped[int] = mapped_column(TINYINT(1), nullable=False, server_default=text("'0'"))
+    payment_id: Mapped[Optional[str]] = mapped_column(VARCHAR(16, charset='utf8mb4', collation='utf8mb4_unicode_ci'))
     updated: Mapped[Optional[datetime.datetime]] = mapped_column(TIMESTAMP)
 
     purchases: Mapped[list['Purchases']] = relationship('Purchases', back_populates='payment')
@@ -99,7 +99,7 @@ class Purchases(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     user_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
-    payment_id: Mapped[str] = mapped_column(String(8, 'utf8mb4_unicode_ci'), nullable=False)
+    payment_id: Mapped[str] = mapped_column(VARCHAR(16, charset='utf8mb4', collation='utf8mb4_unicode_ci'), nullable=False)
     to_tariff_uname: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     user_period_id: Mapped[Optional[int]] = mapped_column(Integer)
     from_tariff_uname: Mapped[Optional[str]] = mapped_column(String(64, 'utf8mb4_unicode_ci'))

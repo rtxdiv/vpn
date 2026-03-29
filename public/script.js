@@ -13,6 +13,7 @@ const clientSettingsLink = document.querySelector('#client-settings .link')
 const tariffsBlock = document.querySelector('#tariffs')
 const tariffsError = document.querySelector('#tariffs-error')
 
+const helpBlock = document.querySelector('#help')
 const paymentsBlock = document.querySelector('#help-payments')
 const aboutBlock = document.querySelector('#help-about')
 const tutorialBlock = document.querySelector('#help-tutorial')
@@ -137,6 +138,7 @@ main()
 
 function displayClient({ user = false, error = false, authorization = true }) {
     console.log(user)
+    helpBlock.style.display = 'flex'
     if (error) {
         clientError.querySelector('.message').innerHTML = 'Ошибка при загрузке подписки'
         clientError.classList.add('error-block')

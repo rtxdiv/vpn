@@ -149,7 +149,7 @@ body {
     margin-top: var(--container-middle-margin);
 }
 #help {
-    display: flex;
+    display: none;
     margin-top: 10px;
     padding-top: 9px;
     padding-bottom: 9px;
