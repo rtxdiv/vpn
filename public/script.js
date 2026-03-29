@@ -112,7 +112,7 @@ async function prepareBuy ({ uname, months = null, for_pay = false }) {
             'Authorization': `Telegram ${telegram.initData}`
         },
         body: JSON.stringify({
-            uname: uname,
+            to_tariff_uname: uname,
             months: months,
             for_pay: for_pay
         })
