@@ -247,7 +247,7 @@ function disaplyPopup({ data = false, error = false }) {
                 return
             }
             prepareBuy({
-                uname: data.tariff.uname,
+                to_tariff_uname: data.tariff.uname,
                 months: data.months,
                 for_pay: true
             })
