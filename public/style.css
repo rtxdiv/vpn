@@ -24,8 +24,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: "PT Sans Caption", sans-serif;
     font-family: "Commissioner", sans-serif;
+    letter-spacing: 2px;
     color: var(--def-text-color);
     user-select: none;
     -webkit-user-select: none;
@@ -87,7 +87,6 @@ body {
             }
             .devices, .date {
                 margin: 2px 0;
-                letter-spacing: 2px;
             }
         }
         .bottom {
