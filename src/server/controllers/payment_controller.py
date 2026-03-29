@@ -16,17 +16,13 @@ async def get_payments():
 @payment_router.post('/buy')
 @authorization
 async def prepare_buy(request: Request, dto: BuyDto):
-    print(f"to_tariff_uname: {dto.to_tariff_uname}", flush=True)
-    print(f"months: {dto.months}", flush=True)
-    print(f"for_pay: {dto.for_pay}", flush=True)
-
     type = 'Buy'
     pay_link = None
     id = request.state.telegram_user['id']
 
     try:
         starts = await get_user_periods_end(id=id)
-        (tariff, periods, total, months) = await get_tariff_and_price(uname=dto.uname, months=dto.months)
+        (tariff, periods, total, months) = await get_tariff_and_price(uname=dto.to_tariff_uname, months=dto.months)
         return {
             'tariff': tariff,
             'periods': periods,
