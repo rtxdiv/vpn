@@ -16,6 +16,7 @@ async def get_payments():
 @payment_router.post('/buy')
 @authorization
 async def prepare_buy(request: Request, dto: BuyDto):
+    type = 'Buy'
     pay_link = None
     id = request.state.telegram_user['id']
 

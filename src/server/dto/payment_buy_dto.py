@@ -2,13 +2,11 @@ from pydantic import BaseModel, Field
 from typing import Optional
 
 class BuyDto(BaseModel):
-    type: str = 'Buy'
     to_tariff_uname: str = Field(..., min_length=1)
     months: Optional[int] = Field(None)
     for_pay: bool = Field(default=False)
 
 class UpgradeDto(BaseModel):
-    type: str = 'Upgrade'
     user_period_id: Optional[int] = Field(None)
     from_tariff_uname: str = Field(..., min_length=1)
     to_tariff_uname: str = Field(..., min_length=1)
