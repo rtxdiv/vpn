@@ -168,7 +168,7 @@ function displayClient({ user = false, error = false, authorization = true }) {
                 year: 'numeric'
             }).replace(' г.', '')
         } else localDate = 'бессрочно'
-        clientInfoDate.innerHTML = `До: ${ localDate }`
+        clientInfoDate.innerHTML = `Действует до: ${ localDate }`
         addButton(paymentsBlock, settings.payments_url)
         addButton(tutorialBlock, settings.tutorial_url)
         addButton(supportBlock, settings.support_url)
