@@ -314,11 +314,8 @@ function copySubLink() {
     })
 }
 
-function openLicense() {
-    if (confirm('Отркыть лицензионное соглашение?')) telegram.openLink('/docs/license')
-}
-function openTerms() {
-    if (confirm('Отркыть условия использования?')) telegram.openLink('docs/terms')
+function openOffer() {
+    if (confirm('Отркыть публичную оферту?')) telegram.openLink('docs/offer')
 }
 function openPayments() {
     telegram.openLink('/payments')

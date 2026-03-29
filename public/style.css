@@ -392,24 +392,6 @@ body {
                 }
             }
 
-            > label {
-                font-size: 15px;
-                margin-bottom: 20px;
-                box-sizing: border-box;
-                padding-left: 2px;
-
-                a {
-                    text-decoration: underline;
-                }
-                > input[type="checkbox"] {
-                    accent-color: #007b70;
-                    margin: 0;
-                    margin-right: 8px;
-                    margin-bottom: 8px;
-                    transform: scale(1.2);
-                }
-            }
-
             .button {
                 width: 100%;
                 height: 45px;
@@ -419,6 +401,16 @@ body {
                 color: #c3cfdb;
                 background: #007b70;
                 border-radius: 7px;
+            }
+
+            label {
+                font-size: 15px;
+                margin-top: 10px;
+                box-sizing: border-box;
+                padding-left: 2px;
+                a {
+                    text-decoration: underline;
+                }
             }
         }
 
