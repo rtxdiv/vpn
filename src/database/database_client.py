@@ -8,7 +8,13 @@ PASSWORD = os.environ['MYSQL_PASSWORD']
 DATABASE = os.environ['MYSQL_DATABASE']
 DB_URL = f'mysql+aiomysql://{USER}:{PASSWORD}@{HOST}/{DATABASE}'
 
-engine = create_async_engine(url=DB_URL)
+engine = create_async_engine(
+    url=DB_URL,
+    pool_pre_ping=True,
+    pool_recycle=28000,
+    pool_size=5,
+    max_overflow=5
+)
 
 AsyncSessionLocal = async_sessionmaker(
     engine,
