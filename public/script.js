@@ -13,6 +13,7 @@ const clientSettingsLink = document.querySelector('#client-settings .link')
 const tariffsBlock = document.querySelector('#tariffs')
 const tariffsError = document.querySelector('#tariffs-error')
 
+const paymentsBlock = document.querySelector('#help-payments')
 const aboutBlock = document.querySelector('#help-about')
 const tutorialBlock = document.querySelector('#help-tutorial')
 const supportBlock = document.querySelector('#help-support')
@@ -140,6 +141,7 @@ function displayClient({ user = false, error = false, authorization = true }) {
         clientError.querySelector('.message').innerHTML = 'Ошибка при загрузке подписки'
         clientError.classList.add('error-block')
         clientError.style.display = 'flex'
+        addButton(paymentsBlock, settings.payments_url)
         addButton(aboutBlock, settings.about_url)
         addButton(supportBlock, settings.support_url)
         return
@@ -167,9 +169,10 @@ function displayClient({ user = false, error = false, authorization = true }) {
             }).replace(' г.', '')
         } else localDate = 'бессрочно'
         clientInfoDate.innerHTML = `До: ${ localDate }`
-        addButton(clientSettingsLink, settings.sub_url + client.subId)
+        addButton(paymentsBlock, settings.payments_url)
         addButton(tutorialBlock, settings.tutorial_url)
         addButton(supportBlock, settings.support_url)
+        addButton(clientSettingsLink, settings.sub_url + client.subId)
 
     } else {
         clientError.querySelector('.message').innerHTML = 'У вас ещё нет подписки'
@@ -320,7 +323,4 @@ function copySubLink() {
 
 function openOffer() {
     if (confirm('Отркыть публичную оферту?')) telegram.openLink('docs/offer')
-}
-function openPayments() {
-    telegram.openLink('/payments')
 }

@@ -142,17 +142,6 @@ body {
             margin-top: 20px;
         }
     }
-    #client-periods {
-        justify-content: space-between;
-
-        .bottom {
-            display: flex;
-            flex-direction: row;
-            justify-content: start;
-            gap: 8px;
-            margin-top: 30px;
-        }
-    }
 }
 #client-error {
     display: none;
@@ -165,7 +154,7 @@ body {
     padding-top: 9px;
     padding-bottom: 9px;
 
-    #help-about, #help-tutorial, #help-support {
+    #help-payments, #help-about, #help-tutorial, #help-support {
         display: none;
         align-items: center;
         height: 36px;
