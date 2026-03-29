@@ -25,7 +25,7 @@ class Payments(Base):
     )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    payment_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
+    payment_id: Mapped[str] = mapped_column(String(8, 'utf8mb4_unicode_ci'), nullable=False, server_default=text('(left(cast(uuid_short() as char charset utf8mb4),8))'))
     user_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     type: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     amount: Mapped[float] = mapped_column(Float, nullable=False)
@@ -99,7 +99,7 @@ class Purchases(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     user_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
-    payment_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
+    payment_id: Mapped[str] = mapped_column(String(8, 'utf8mb4_unicode_ci'), nullable=False)
     to_tariff_uname: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     user_period_id: Mapped[Optional[int]] = mapped_column(Integer)
     from_tariff_uname: Mapped[Optional[str]] = mapped_column(String(64, 'utf8mb4_unicode_ci'))
