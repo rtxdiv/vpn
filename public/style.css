@@ -87,6 +87,7 @@ body {
             }
             .devices, .date {
                 margin: 2px 0;
+                letter-spacing: 2px;
             }
         }
         .bottom {
