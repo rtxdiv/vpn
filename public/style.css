@@ -403,7 +403,7 @@ body {
                 border-radius: 7px;
             }
 
-            label {
+            .offer {
                 font-size: 15px;
                 margin-top: 10px;
                 box-sizing: border-box;
