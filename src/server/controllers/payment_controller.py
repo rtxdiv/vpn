@@ -16,6 +16,10 @@ async def get_payments():
 @payment_router.post('/buy')
 @authorization
 async def prepare_buy(request: Request, dto: BuyDto):
+    print(f"to_tariff_uname: {dto.to_tariff_uname}, type: {type(dto.to_tariff_uname)}", flush=True)
+    print(f"months: {dto.months}, type: {type(dto.months)}", flush=True)
+    print(f"for_pay: {dto.for_pay}, type: {type(dto.for_pay)}", flush=True)
+
     type = 'Buy'
     pay_link = None
     id = request.state.telegram_user['id']

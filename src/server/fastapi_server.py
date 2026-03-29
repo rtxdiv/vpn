@@ -1,8 +1,6 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
-from pydantic import ValidationError
-from starlette import status
 from root import ROOT_DIR
 from src.database.database_service import *
 from src.utils.exceptions import *
@@ -28,10 +26,3 @@ def forseen_exception_handler(request: Request, exc: ForeseenException):
 def forseen_exception_handler(request: Request, exc: Exception):
     error_log.error(exc)
     raise HTTPException(status_code=500, detail='Ошибка сервера')
-
-@app.exception_handler(ValidationError)
-async def validation_exception_handler(request: Request, exc: ValidationError):
-    return JSONResponse(
-        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-        content={"detail": exc.errors()}
-    )
