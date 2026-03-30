@@ -101,5 +101,6 @@ async def cmd_enable(ctx: Message):
             data={'to_tariff_uname': 'fn-solo', 'months': 2}
         )
         await ctx.answer('Платёж создан')
-    except:
+    except Exception as exc:
+        print(exc, flush=True)
         await ctx.answer('Ошибка')
