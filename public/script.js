@@ -140,6 +140,7 @@ const main = async () => {
     await getSettings()
     await getClient()
     await getTariffs()
+    await getPeriods()
 }
 main()
 

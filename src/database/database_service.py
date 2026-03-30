@@ -38,8 +38,8 @@ async def get_payment_info(session: AsyncSession, uname: str, months: int) -> Pa
     tariff = await session.scalar(select(Tariffs).where(Tariffs.uname == uname))
     if not tariff: raise ForeseenException('Тариф не найден')
     periods = (await session.scalars(
-        select(AllowedPeriods)
-        .order_by(AllowedPeriods.months)
+        select(PaymentPeriods)
+        .order_by(PaymentPeriods.months)
     )).all()
     if (len(period)) == 0: raise ForeseenException('Нет периодов для покупки')
     
