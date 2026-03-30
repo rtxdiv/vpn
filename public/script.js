@@ -230,7 +230,7 @@ function displayPeriods(periods) {
         periods.forEach(period => {
             popupRadiogroup.innerHTML += `
                 <label>
-                    <input type="radio" name="popup-option" value="${period.months}" onchange="getBuy({ to_tariff_uname: '${popupUname.value}', months: ${period.months} })">
+                    <input type="radio" name="popup-option" value="${period.months}" onchange="getBuy({ uname: '${popupUname.value}', months: ${period.months} })">
                     <span><a class="months">${period.months} мес.</a>${period.discount? `<a class="discount">-${period.discount * 100}%</a>` : ''}</span>
                 </label>
             `
