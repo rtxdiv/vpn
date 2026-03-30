@@ -16,13 +16,13 @@ async def get_payments():
 @payment_router.post('/buy')
 @authorization
 async def get_buy(request: Request, dto: BuyDto):
-    type = 'Buy'
     id = request.state.telegram_user['id']
     
     try:
+        print('GET INFO', flush=True)
         starts = await get_user_periods_end(id=id)
         info: PaymentInfo = await get_payment_info(uname=dto.to_tariff_uname, months=dto.months)
-        print(info.title, flush=True)
+        print(info, flush=True)
         return {
             'title': info.title,
             'periods': info.periods,
