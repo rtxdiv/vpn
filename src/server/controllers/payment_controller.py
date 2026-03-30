@@ -22,6 +22,7 @@ async def get_buy(request: Request, dto: BuyDto):
     try:
         starts = await get_user_periods_end(id=id)
         info: PaymentInfo = await get_payment_info(uname=dto.to_tariff_uname, months=dto.months)
+        print(info.title, flush=True)
         return {
             'title': info.title,
             'periods': info.periods,
