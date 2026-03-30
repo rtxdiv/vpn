@@ -291,7 +291,9 @@ function openPopup() {
     if (popupIsOpened) return
     popupBg.style.display = 'flex'
     requestAnimationFrame(() => {
-        popup.classList.add('opened')
+        requestAnimationFrame(() => {
+            popup.classList.add('opened')
+        })
     })
     document.body.style.overflow = 'hidden'
     history.pushState({ popup: true }, '', location.href)
