@@ -124,9 +124,9 @@ async function getBuy(months = 0) {
     })
     if (resp.ok) {
         const body = await resp.json()
-        displayPopup({ info: body })
+        displayBuy({ info: body })
     } else {
-        displayPopup({ error: (await resp.json()).detail })
+        displayBuy({ error: (await resp.json()).detail })
     }
 }
 async function setupBuy(uname) {
@@ -241,7 +241,7 @@ function displayPeriods(periods) {
         })
     popupRadiogroup.children[0].querySelector('input').checked = true
 }
-function displayPopup({ info = false, error = false }) {
+function displayBuy({ info = false, error = false }) {
     popupContent.style.display = 'none'
     popupError.style.display = 'none'
     if (!paymentPeriods) {
@@ -290,6 +290,7 @@ function scrollXTo(id) {
 function openPopup() {
     if (popupIsOpened) return
     popupBg.style.display = 'flex'
+    popupContent.style.display = 'none'
     requestAnimationFrame(() => {
         popup.classList.add('opened')
     })
