@@ -68,7 +68,7 @@ async function getClient() {
         displayClient({ user: body })
 
     } else {
-        alert(await resp.text()['detail'])
+        alert((await resp.text())['detail'])
         displayClient({ error: 'Текст' })
     }
 }
