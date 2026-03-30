@@ -112,7 +112,7 @@ async function getPeriods() {
 }
 async function getBuy({ uname, months = 0 }) {
     popupUname.value = uname
-    console.log(popupUname.value)
+    alert(popupUname.value)
     openPopup()
     const resp = await fetch('/payments/buy', {
         method: 'POST',
