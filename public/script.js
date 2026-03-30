@@ -112,8 +112,8 @@ async function getPeriods() {
 }
 async function getBuy({ uname, months = 0 }) {
     popupUname.value = uname
-    alert(popupUname.value)
     openPopup()
+    await getPeriods()
     const resp = await fetch('/payments/buy', {
         method: 'POST',
         headers: {
@@ -138,7 +138,6 @@ const main = async () => {
     await getSettings()
     await getClient()
     await getTariffs()
-    await getPeriods()
 }
 main()
 
