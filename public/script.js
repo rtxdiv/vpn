@@ -248,8 +248,8 @@ function displayPeriods(periods) {
         })
     popupRadiogroup.children[0].querySelector('input').checked = true
 }
-async function displayPopup({ info = false, error = false }) {
-    // popupContent.style.display = 'none'
+function displayPopup({ info = false, error = false }) {
+    popupContent.style.display = 'none'
     popupError.style.display = 'none'
     if (!paymentPeriods) {
         popupError.querySelector('.message').innerHTML = `Не удалось загрузить доступные периоды для оплаты`
