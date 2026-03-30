@@ -68,7 +68,7 @@ async function getClient() {
         displayClient({ user: body })
 
     } else {
-        displayClient({ error: await resp.text()["detail"] })
+        displayClient({ error: await resp.text() })
     }
 }
 async function getTariffs() {
@@ -128,7 +128,7 @@ async function getBuy({ uname, months = null }) {
         const body = await resp.json()
         displayPopup({ info: body })
     } else {
-        displayPopup({ error: await resp.text()["detail"] })
+        displayPopup({ error: await resp.text() })
     }
 }
 
@@ -142,21 +142,15 @@ const main = async () => {
 main()
 
 
-function displayClient({ user = false, error = false, authorization = true }) {
+function displayClient({ user = false, error = false }) {
     console.log(user)
     helpBlock.style.display = 'flex'
     if (error) {
-        clientError.querySelector('.message').innerHTML = 'Ошибка при загрузке подписки'
+        clientError.querySelector('.message').innerHTML = error
         clientError.classList.add('error-block')
         clientError.style.display = 'flex'
         addButton(paymentsBlock, settings.payments_url)
         addButton(aboutBlock, settings.about_url)
-        addButton(supportBlock, settings.support_url)
-        return
-    }
-    if (!authorization) {
-        clientError.querySelector('.message').innerHTML = `Запустите приложение через <a href=${settings.bot_url}>Telegram бота</a>, чтобы авторизоваться`
-        clientError.style.display = 'flex'
         addButton(supportBlock, settings.support_url)
         return
     }
