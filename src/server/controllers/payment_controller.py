@@ -17,8 +17,6 @@ async def get_payments():
 @authorization
 async def get_buy(request: Request, dto: BuyDto):
     id = request.state.telegram_user['id']
-    print(dto.to_tariff_uname, flush=True)
-    print(dto.months, flush=True)
     starts = await get_user_periods_end(id=id)
     info: PaymentInfo = await get_payment_info(uname=dto.to_tariff_uname, months=dto.months)
     return {

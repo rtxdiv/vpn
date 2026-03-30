@@ -1,6 +1,8 @@
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
+from starlette import status
 from root import ROOT_DIR
 from src.database.database_service import *
 from src.utils.exceptions import *
@@ -26,3 +28,15 @@ def forseen_exception_handler(request: Request, exc: ForeseenException):
 def forseen_exception_handler(request: Request, exc: Exception):
     error_log.error(exc)
     raise HTTPException(status_code=500, detail='Ошибка сервера')
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    # exc.errors() содержит список всех ошибок
+    return JSONResponse(
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        content={
+            "status": "error",
+            "message": "Ошибка валидации данных",
+            "details": exc.errors()  # Здесь будут детали: какое поле и почему не подошло
+        },
+    )

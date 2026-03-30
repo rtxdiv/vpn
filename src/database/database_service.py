@@ -35,7 +35,6 @@ async def get_user_periods_end(session: AsyncSession, id: any) -> str:
 
 @database_session
 async def get_payment_info(session: AsyncSession, uname: str, months: int) -> PaymentInfo:
-    print('get_payment_info', flush=True)
     tariff = await session.scalar(select(Tariffs).where(Tariffs.uname == uname))
     if not tariff: raise ForeseenException('Тариф не найден')
     periods = (await session.scalars(
@@ -49,8 +48,6 @@ async def get_payment_info(session: AsyncSession, uname: str, months: int) -> Pa
     else:
         period = [item for item in periods if item.months == months][0]
     total = round(tariff.price * period.months * (1 - period.discount))
-
-    print('get_payment_info OK', flush=True)
 
     return PaymentInfo(
         title=tariff.name,
