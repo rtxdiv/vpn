@@ -262,7 +262,7 @@ function displayBuy({ info = false, error = false }) {
         popupButton.onclick = function() {
             alert('В разработке...')
         }
-        popupContent.style.display = 'flex'
+        // popupContent.style.display = 'flex'
         openPopup()
     } else {
         popupError.querySelector('.message').innerHTML = 'Ошибка загрузки данных'
