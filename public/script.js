@@ -226,11 +226,12 @@ function displaySettings({ settings = false, error = false }) {
     }
 }
 function displayPeriods(periods) {
+    console.log(periods)
     popupRadiogroup.innerHTML = ''
         periods.forEach(period => {
             popupRadiogroup.innerHTML += `
                 <label>
-                    <input type="radio" name="popup-option" value="${period.months}" onchange="getBuy({ uname: '${popupUname.value}', months: ${period.months} })">
+                    <input type="radio" name="popup-option" value="${period.months}" onchange="getBuy({ uname: '${document.querySelector('#popup-content .uname').value}', months: ${period.months} })">
                     <span><a class="months">${period.months} мес.</a>${period.discount? `<a class="discount">-${period.discount * 100}%</a>` : ''}</span>
                 </label>
             `
