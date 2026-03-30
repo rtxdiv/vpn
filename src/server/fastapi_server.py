@@ -31,12 +31,12 @@ def forseen_exception_handler(request: Request, exc: Exception):
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
-    # exc.errors() содержит список всех ошибок
+    print(exc.errors())
     return JSONResponse(
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
         content={
-            "status": "error",
-            "message": "Ошибка валидации данных",
-            "details": exc.errors()  # Здесь будут детали: какое поле и почему не подошло
+            'status': 'error',
+            'message': 'Ошибка валидации данных',
+            'details': exc.errors()
         },
     )
