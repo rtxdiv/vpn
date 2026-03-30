@@ -110,10 +110,7 @@ async function getPeriods() {
         displayPeriods(body)
     }
 }
-async function getBuy({ uname, months = 0 }) {
-    popupUname.value = uname
-    openPopup()
-    await getPeriods()
+async function getBuy({ months = 0 }) {
     const resp = await fetch('/payments/buy', {
         method: 'POST',
         headers: {
@@ -121,7 +118,7 @@ async function getBuy({ uname, months = 0 }) {
             'Authorization': `Telegram ${telegram.initData}`
         },
         body: JSON.stringify({
-            to_tariff_uname: uname,
+            to_tariff_uname: popupUname.value,
             months: months
         })
     })
@@ -131,6 +128,12 @@ async function getBuy({ uname, months = 0 }) {
     } else {
         displayPopup({ error: (await resp.json()).detail })
     }
+}
+async function setupBuy(uname) {
+    popupUname.value = uname
+    openPopup()
+    await getPeriods()
+    await getBuy()
 }
 
 
@@ -204,7 +207,7 @@ function displayTariffs({ tariffs = false, error = false }) {
                         <a class="price">${tariff.price}₽<span class="note"> / мес.</span></a>
                     </div>
                     <div class="bottom">
-                        <div class="rect-btn" onclick="getBuy({ uname: '${tariff.uname}', months: 0 })">Купить</div>
+                        <div class="rect-btn" onclick="setupBuy('${tariff.uname}')">Купить</div>
                     </div>
                 </div>
             `
