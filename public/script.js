@@ -249,7 +249,7 @@ function displayPeriods(periods) {
     popupRadiogroup.children[0].querySelector('input').checked = true
 }
 async function displayPopup({ info = false, error = false }) {
-    popupContent.style.display = 'none'
+    // popupContent.style.display = 'none'
     popupError.style.display = 'none'
     if (!paymentPeriods) {
         popupError.querySelector('.message').innerHTML = `Не удалось загрузить доступные периоды для оплаты`
@@ -271,6 +271,10 @@ async function displayPopup({ info = false, error = false }) {
             alert('В разработке...')
         }
         popupContent.style.display = 'flex'
+    } else {
+        popupError.querySelector('.message').innerHTML = 'Ошибка загрузки данных'
+        popupError.style.display = 'flex'
+        return
     }
 }
 
