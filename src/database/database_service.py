@@ -1,16 +1,11 @@
-import json
-
 from src.database.database_client import database_session
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, desc
 from src.database.models import *
-from datetime import datetime, timedelta
+from datetime import timedelta
 from src.utils.exceptions import *
 from src.utils.hashids_client import hashids
-from src.server.dto.payment_buy_dto import BuyDto
-
-
-months = ["", "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"]
+from src.utils.payment_info import PaymentInfo
 
 
 @database_session
@@ -23,6 +18,10 @@ async def get_all_settings(session: AsyncSession) -> list[Settings]:
     return { setting.key: setting.value for setting in settings }
 
 @database_session
+async def get_all_allowed_periods(session: AsyncSession) -> list[PaymentPeriods]:
+    return (await session.scalars(select(PaymentPeriods))).all()
+
+@database_session
 async def get_user_periods_end(session: AsyncSession, id: any) -> str:
     last_period = await session.scalar(
         select(UserPeriods)
@@ -32,28 +31,32 @@ async def get_user_periods_end(session: AsyncSession, id: any) -> str:
     )
     if not last_period: return 'сегодня'
     end_date = last_period.starts + timedelta(days=last_period.days)
-    return f'{end_date.day} {months[end_date.month]} {end_date.year}'
+    return end_date
 
 @database_session
-async def get_tariff_and_price(session: AsyncSession, uname: str, months: Optional[int] = None) -> Optional[float]:
+async def get_payment_info(session: AsyncSession, uname: str, months: int) -> PaymentInfo:
     tariff = await session.scalar(select(Tariffs).where(Tariffs.uname == uname))
-    if not tariff: raise ForeseenException
+    if not tariff: raise ForeseenException('Тариф не найден')
     periods = (await session.scalars(
         select(AllowedPeriods)
         .order_by(AllowedPeriods.months)
     )).all()
+    if (len(period)) == 0: raise ForeseenException('Нет периодов для покупки')
     
-    period = None
     if not months:
         period = periods[0]
     else:
         period = [item for item in periods if item.months == months][0]
-    if not period: raise ForeseenException
     total = round(tariff.price * period.months * (1 - period.discount))
-    return (tariff, periods, total, period.months)
+
+    return PaymentInfo(
+        title=tariff.name,
+        periods=periods,
+        total=total
+    )
 
 @database_session
-async def create_payment(session: AsyncSession, user_id: int, type: str, amount: float, currency: str, data: BuyDto):
+async def create_payment(session: AsyncSession, user_id: int, type: str, amount: float, currency: str, data: dict):
     payment = Payments(
         user_id=user_id,
         type=type,

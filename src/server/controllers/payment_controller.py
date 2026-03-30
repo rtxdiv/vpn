@@ -13,24 +13,20 @@ payment_router = APIRouter(prefix='/payments')
 async def get_payments():
     return FileResponse(PUBLIC_DIR / 'payments.html')
 
-@payment_router.post('/buy')
+@payment_router.get('/buy')
 @authorization
-async def prepare_buy(request: Request, dto: BuyDto):
+async def get_buy(request: Request, dto: BuyDto):
     type = 'Buy'
-    pay_link = None
     id = request.state.telegram_user['id']
-
+    
     try:
         starts = await get_user_periods_end(id=id)
-        (tariff, periods, total, months) = await get_tariff_and_price(uname=dto.to_tariff_uname, months=dto.months)
+        info: PaymentInfo = await get_payment_info(uname=dto.to_tariff_uname, months=dto.months)
         return {
-            'tariff': tariff,
-            'periods': periods,
+            'title': info.title,
+            'periods': info.periods,
             'starts': starts,
-            'months': months,
-            'total': total,
-            'pay_link': pay_link
+            'total': info.total
         }
-    
-    except ForeseenException:
-        raise HTTPException(status_code=400, detail='Выбранный тариф или период не предусмотрен')
+    except Exception:
+        return ForeseenException('Ошибка загрузки данных')

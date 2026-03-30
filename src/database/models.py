@@ -9,8 +9,8 @@ class Base(DeclarativeBase):
     pass
 
 
-class AllowedPeriods(Base):
-    __tablename__ = 'allowed_periods'
+class PaymentPeriods(Base):
+    __tablename__ = 'payment_periods'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     days: Mapped[int] = mapped_column(INTEGER(unsigned=True), nullable=False)

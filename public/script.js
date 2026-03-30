@@ -26,8 +26,8 @@ const popupTitle = document.querySelector('#popup-content .title')
 const popupText = document.querySelector('#popup-content .text')
 const popupRadiogroup = document.querySelector('#popup-content .radiogroup')
 const popupButton = document.querySelector('#popup-content .button')
+const popupUname = document.querySelector('#popup-content .uname')
 const popupError = document.querySelector('#popup-error')
-const popupAgreement = document.querySelector('#popup-agreement')
 
 
 popupBg.addEventListener('click', closePopup)
@@ -50,12 +50,13 @@ telegram.expand()
 let client
 let tariffs
 let settings
+let paymentPeriods
 let popupIsOpened = false
 
 
-async function getClient () {
+async function getClient() {
     const resp = await fetch('/client', {
-        method: 'POST',
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Telegram ${telegram.initData}`
@@ -73,9 +74,9 @@ async function getClient () {
         displayClient({ error: true })
     }
 }
-async function getTariffs () {
+async function getTariffs() {
     const resp = await fetch('/tariffs', {
-        method: 'POST',
+        method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
     if (resp.ok) {
@@ -87,9 +88,9 @@ async function getTariffs () {
         displayTariffs({ error: true })
     }
 }
-async function getSettings () {
+async function getSettings() {
     const resp = await fetch('/settings', {
-        method: 'POST',
+        method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
     if (resp.ok) {
@@ -101,29 +102,36 @@ async function getSettings () {
         displaySettings({ error: true })
     }
 }
-async function prepareBuy ({ uname, months = null, for_pay = false }) {
-    if (for_pay) {
-        alert('В разработке...')
-        return
+async function getPeriods() {
+    const resp = await fetch('/paymentPeriods', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    if (resp.ok) {
+        const body = await resp.json()
+        paymentPeriods = body
+        displayPeriods(body)
     }
+}
+async function getBuy({ uname, months = null }) {
+    popupUname.value = uname
     openPopup()
     const resp = await fetch('/payments/buy', {
-        method: 'POST',
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Telegram ${telegram.initData}`
         },
         body: JSON.stringify({
             to_tariff_uname: uname,
-            months: months,
-            for_pay: for_pay
+            months: months
         })
     })
     if (resp.ok) {
         const body = await resp.json()
-        disaplyPopup({ data: body })
+        displayPopup({ info: body })
     } else {
-        disaplyPopup({ error: await resp.text()["detail"] })
+        displayPopup({ error: await resp.text()["detail"] })
     }
 }
 
@@ -205,7 +213,7 @@ function displayTariffs({ tariffs = false, error = false }) {
                     </div>
                     ${ client? `
                         <div class="bottom">
-                            <div class="rect-btn" onclick="prepareBuy({ uname: '${tariff.uname}' })">Купить</div>
+                            <div class="rect-btn" onclick="getBuy({ uname: '${tariff.uname}', months: 0 })">Купить</div>
                         </div>
                     ` : '' }
                 </div>
@@ -227,45 +235,41 @@ function displaySettings({ settings = false, error = false }) {
         settingsMessage.style.display = 'flex'
     }
 }
-function disaplyPopup({ data = false, error = false }) {
-    popupContent.style.display = 'none'
-    popupError.style.display = 'none'
-    if (error) {
-        popupError.querySelector('.message').innerHTML = `Ошибка: ${error}`
-        popupError.style.display = 'flex'
-        return
-    }
-    if (data) {
-        popupTitle.innerHTML = data.tariff.name
-        popupText.innerHTML = `
-            Начнется: ${data.starts}
-        `
-        popupRadiogroup.innerHTML = ''
-        data.periods.forEach(period => {
+function displayPeriods(periods) {
+    popupRadiogroup.innerHTML = ''
+        periods.forEach(period => {
             popupRadiogroup.innerHTML += `
                 <label>
-                    <input type="radio" name="popup-option" value="${period.months}" ${ period.months == data.months? 'checked' : '' } onchange="prepareBuy({ uname: '${data.tariff.uname}', months: ${period.months} })">
+                    <input type="radio" name="popup-option" value="${period.months}" onchange="getBuy({ uname: '${popupUname.value}', months: ${period.months} })">
                     <span><a class="months">${period.months} мес.</a>${period.discount? `<a class="discount">-${period.discount * 100}%</a>` : ''}</span>
                 </label>
             `
         })
-        popupButton.innerHTML = `Создать платёж: ${data.total}₽`
+    popupRadiogroup.children[0].querySelector('input').checked = true
+}
+async function displayPopup({ info = false, error = false }) {
+    popupContent.style.display = 'none'
+    popupError.style.display = 'none'
+    if (!paymentPeriods) {
+        popupError.querySelector('.message').innerHTML = `Не удалось загрузить доступные периоды для оплаты`
+        popupError.style.display = 'flex'
+        return
+    }
+    if (error) {
+        popupError.querySelector('.message').innerHTML = error
+        popupError.style.display = 'flex'
+        return
+    }
+    if (info) {
+        popupTitle.innerHTML = info.title
+        popupText.innerHTML = `
+            Начнется: ${info.starts}
+        `
+        popupButton.innerHTML = `Создать платёж: ${info.total}₽`
         popupButton.onclick = function() {
-            if (!popupAgreement.checked) {
-                alert('Примите лицензионное соглашение и политику использования')
-                return
-            }
-            prepareBuy({
-                to_tariff_uname: data.tariff.uname,
-                months: data.months,
-                for_pay: true
-            })
+            alert('В разработке...')
         }
         popupContent.style.display = 'flex'
-
-    } else {
-        popupError.querySelector('.message').innerHTML = `Ошибка при получении данных`
-        popupError.style.display = 'flex'
     }
 }
 

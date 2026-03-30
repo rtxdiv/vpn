@@ -1,5 +1,5 @@
 from init_data_py import InitData
-from src.utils.exceptions import TelegramAuthError
+from src.utils.exceptions import ForeseenException, TelegramAuthError
 from fastapi import Request, HTTPException
 from functools import wraps
 import os
@@ -19,10 +19,8 @@ def authorization(func):
     async def wrapper(*args, **kwargs):
         request: Request = kwargs['request'] or None
         auth: str = request.headers.get('Authorization')
-        if not auth:
-            raise HTTPException(status_code=401, detail='Missing Authorization header')
-        if not auth.startswith('Telegram '):
-            raise HTTPException(status_code=401, detail='Invalid Authorization format. Use: Telegram <init_data>')
+        if not auth or not auth.startswith('Telegram '):
+            raise ForeseenException('Необходима авторизация')
 
         init_data = auth[9:]
         try:
@@ -30,7 +28,7 @@ def authorization(func):
             print(f'Auth passed: { user["id"] }', flush=True)
             request.state.telegram_user = user
         except TelegramAuthError as e:
-            raise HTTPException(status_code=403, detail=str(e))
+            raise ForeseenException('Ошибка авторизации')
 
         return await func(*args, **kwargs)
     return wrapper

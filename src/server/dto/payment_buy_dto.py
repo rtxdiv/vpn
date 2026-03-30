@@ -3,8 +3,7 @@ from typing import Optional
 
 class BuyDto(BaseModel):
     to_tariff_uname: str = Field(..., min_length=1)
-    months: Optional[int] = Field(None)
-    for_pay: bool = Field(default=False)
+    months: int = Field(...)
 
 
 # ПУТЬ ЗАПРОСА НА ПОКУПКУ И АПГРЕЙД:
