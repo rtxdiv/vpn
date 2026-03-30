@@ -133,6 +133,7 @@ async function setupBuy(uname) {
     popupUname.value = uname
     await getPeriods()
     await getBuy()
+    openPopup()
 }
 
 
@@ -262,8 +263,7 @@ function displayBuy({ info = false, error = false }) {
         popupButton.onclick = function() {
             alert('В разработке...')
         }
-        // popupContent.style.display = 'flex'
-        openPopup()
+        popupContent.style.display = 'flex'
     } else {
         popupError.querySelector('.message').innerHTML = 'Ошибка загрузки данных'
         popupError.style.display = 'flex'
