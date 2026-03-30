@@ -68,8 +68,7 @@ async function getClient() {
         displayClient({ user: body })
 
     } else {
-        alert(await resp.text())
-        displayClient({ error: 'Текст' })
+        displayClient({ error: (await resp.json()).detail })
     }
 }
 async function getTariffs() {
@@ -129,7 +128,7 @@ async function getBuy({ uname, months = null }) {
         const body = await resp.json()
         displayPopup({ info: body })
     } else {
-        displayPopup({ error: await resp.text()['detail'] })
+        displayPopup({ error: (await resp.json()).detail })
     }
 }
 
