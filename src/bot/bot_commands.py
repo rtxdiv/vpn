@@ -98,7 +98,7 @@ async def cmd_enable(ctx: Message):
             type='Buy',
             amount=66,
             currency='RUB',
-            data={'to_tariff_uname': 'fn-solo', 'months': 1}
+            data={'to_tariff_uname': 'fn-solo', 'months': 2}
         )
         await ctx.answer('Платёж создан')
     except:
