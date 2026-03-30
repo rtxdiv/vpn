@@ -1,9 +1,13 @@
+import json
+
 from src.database.database_client import database_session
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, desc
 from src.database.models import *
 from datetime import datetime, timedelta
 from src.utils.exceptions import *
+from src.utils.hashids_client import hashids
+from src.server.dto.payment_buy_dto import BuyDto
 
 
 months = ["", "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"]
@@ -49,7 +53,16 @@ async def get_tariff_and_price(session: AsyncSession, uname: str, months: Option
     return (tariff, periods, total, period.months)
 
 @database_session
-async def get_sub_url(session: AsyncSession) -> str:
-    setting = await session.scalar(select(Settings).where(Settings.key == 'sub_url'))
-    if not setting: raise Exception
-    return setting.value
+async def create_payment(session: AsyncSession, user_id: str, type: str, amount: float, currency: str, data: BuyDto):
+    payment = Payments(user_id, type, amount, currency, json.dumps(data))
+    session.add(payment)
+    await session.flush()
+    payment.payment_id = hashids.encode(payment.id)
+    await session.commit()
+
+
+# @database_session
+# async def get_sub_url(session: AsyncSession) -> str:
+#     setting = await session.scalar(select(Settings).where(Settings.key == 'sub_url'))
+#     if not setting: raise Exception
+#     return setting.value

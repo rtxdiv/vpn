@@ -6,7 +6,7 @@ from aiogram.enums import ParseMode
 from src.utils.exceptions import *
 from src.xui.xui_client import xui
 from src.utils.logger_client import info_log, error_log
-from src.database.database_service import get_sub_url
+from src.database.database_service import create_payment
 from src.bot.bot_server import bot
 
 
@@ -19,27 +19,23 @@ async def cmd_activate(ctx: Message, command: CommandObject):
     days = 30
     message = f'*Вы получили бесплатную подписку на {days} дней!*\n'
     message += '\n*Как активировать?*\n'
-    message += '1. Откройте подписку и нажмите на QR-код, чтобы скопировать ссылку на конфигурацию\n'
+    message += '1. Откройте приложение > Настрйоки (⚙️) и скопируйте ссылку на конфигурацию\n'
     message += '2. Скачайте любой VPN клиент (v2RayRun на Android)\n'
     message += '3. В приложении найдите кнопку добавления конфигурации\n'
     message += '4. Добавьте скопированную ссылку или отсканируйте QR-код (пункт 1)\n'
-    subscription = None
 
     try:
-        sub_url = await get_sub_url()
         client = await xui.get_by_tgid(ctx.from_user.id)
         if not client:
             expiry = int(time.time() * 1000) + (days * 24 * 60 * 60 * 1000)
             new_client = await xui.create_client(ctx.from_user.id, 1, expiry, 'PROMO-30')
             info_log.info(f'[NEW PROMO-30 USER] id: {ctx.from_user.id} | username: {ctx.from_user.username} | first_name: {ctx.from_user.first_name} | last_name: {ctx.from_user.last_name}')
-            subscription = f'{sub_url}{new_client.sub_id}'
         else:
             message = '*У вас уже есть подписка!*\n'
-            subscription = f'{sub_url}{client.sub_id}'
 
         keyboard = InlineKeyboardMarkup(
             inline_keyboard=[
-                [InlineKeyboardButton(text='Подписка', url=subscription)]
+                [InlineKeyboardButton(text='Приложение', url='vapp.rtxdiv.ru')]
             ]
         )
         message += '\n🗳️ Поучаствуйте в голосовании: @rtdVpn\n💚 По всем вопросам: @rtxdiv'
@@ -92,3 +88,18 @@ async def cmd_enable(ctx: Message, command: CommandObject):
     except Exception as e:
         await ctx.answer(f'Произошла ошибка: {e}')
         print(e)
+
+@commands_router.message(Command('pay'))
+async def cmd_enable(ctx: Message):
+    if ctx.from_user.username != 'rtxdiv': return
+    try:
+        await create_payment(
+            user_id=ctx.from_user.id,
+            type='Buy',
+            amount=66,
+            currency='RUB',
+            data={'to_tariff_uname': 'fn-solo', 'months': 1}
+        )
+        await ctx.answer('Платёж создан')
+    except:
+        await ctx.answer('Ошибка')

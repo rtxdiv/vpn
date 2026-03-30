@@ -6,12 +6,6 @@ class BuyDto(BaseModel):
     months: Optional[int] = Field(None)
     for_pay: bool = Field(default=False)
 
-class UpgradeDto(BaseModel):
-    user_period_id: Optional[int] = Field(None)
-    from_tariff_uname: str = Field(..., min_length=1)
-    to_tariff_uname: str = Field(..., min_length=1)
-    for_pay: bool = Field(default=False)
-
 
 # ПУТЬ ЗАПРОСА НА ПОКУПКУ И АПГРЕЙД:
 # FastAPI сервер (DTO) -> 
