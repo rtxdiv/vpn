@@ -131,8 +131,8 @@ async function getBuy(months = 0) {
 }
 async function setupBuy(uname) {
     popupUname.value = uname
-    await getPeriods()
     await getBuy()
+    popupRadiogroup.children[0].querySelector('input').checked = true
     openPopup()
 }
 
@@ -141,6 +141,7 @@ const main = async () => {
     await getSettings()
     await getClient()
     await getTariffs()
+    await getPeriods()
 }
 main()
 
@@ -239,7 +240,6 @@ function displayPeriods(periods) {
                 </label>
             `
         })
-    popupRadiogroup.children[0].querySelector('input').checked = true
 }
 function displayBuy({ info = false, error = false }) {
     popupContent.style.display = 'none'
