@@ -13,7 +13,7 @@ payment_router = APIRouter(prefix='/payments')
 async def get_payments():
     return FileResponse(PUBLIC_DIR / 'payments.html')
 
-@payment_router.get('/buy')
+@payment_router.post('/buy')
 @authorization
 async def get_buy(request: Request, dto: BuyDto):
     type = 'Buy'

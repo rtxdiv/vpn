@@ -114,7 +114,7 @@ async function getBuy({ uname, months = null }) {
     popupUname.value = uname
     openPopup()
     const resp = await fetch('/payments/buy', {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Telegram ${telegram.initData}`
