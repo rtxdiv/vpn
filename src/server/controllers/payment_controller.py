@@ -28,4 +28,4 @@ async def get_buy(request: Request, dto: BuyDto):
             'total': info.total
         }
     except Exception:
-        return ForeseenException('Ошибка загрузки данных')
+        raise ForeseenException('Ошибка загрузки данных')

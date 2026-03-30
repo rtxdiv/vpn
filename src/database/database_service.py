@@ -42,7 +42,7 @@ async def get_payment_info(session: AsyncSession, uname: str, months: int) -> Pa
         select(PaymentPeriods)
         .order_by(PaymentPeriods.months)
     )).all()
-    if (len(period)) == 0: raise ForeseenException('Нет периодов для покупки')
+    if (len(periods)) == 0: raise ForeseenException('Нет периодов для покупки')
     
     if not months:
         period = periods[0]
