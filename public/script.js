@@ -131,7 +131,6 @@ async function getBuy(months = 0) {
 }
 async function setupBuy(uname) {
     popupUname.value = uname
-    openPopup()
     await getPeriods()
     await getBuy()
 }
@@ -264,6 +263,7 @@ function displayBuy({ info = false, error = false }) {
             alert('В разработке...')
         }
         popupContent.style.display = 'flex'
+        openPopup()
     } else {
         popupError.querySelector('.message').innerHTML = 'Ошибка загрузки данных'
         popupError.style.display = 'flex'
@@ -290,7 +290,6 @@ function scrollXTo(id) {
 function openPopup() {
     if (popupIsOpened) return
     popupBg.style.display = 'flex'
-    popupContent.style.display = 'none'
     requestAnimationFrame(() => {
         popup.classList.add('opened')
     })
