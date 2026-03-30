@@ -126,8 +126,6 @@ async function getBuy({ uname, months = 0 }) {
     })
     if (resp.ok) {
         const body = await resp.json()
-        alert(body.title)
-        alert(body['title'])
         displayPopup({ info: body })
     } else {
         displayPopup({ error: (await resp.json()).detail })
