@@ -66,12 +66,9 @@ async function getClient() {
         const body = await resp.json()
         client = body
         displayClient({ user: body })
-        
-    } else if (resp.status == 401) {
-        displayClient({ authorization: false })
 
     } else {
-        displayClient({ error: true })
+        displayClient({ error: await resp.text()["detail"] })
     }
 }
 async function getTariffs() {

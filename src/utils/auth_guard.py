@@ -1,6 +1,6 @@
 from init_data_py import InitData
 from src.utils.exceptions import ForeseenException, TelegramAuthError
-from fastapi import Request, HTTPException
+from fastapi import Request
 from functools import wraps
 import os
 
@@ -20,7 +20,7 @@ def authorization(func):
         request: Request = kwargs['request'] or None
         auth: str = request.headers.get('Authorization')
         if not auth or not auth.startswith('Telegram '):
-            raise ForeseenException('Необходима авторизация')
+            raise ForeseenException('Необходима авторизация через <a href="https://t.me/rtdVpn/app">Telegram</a>')
 
         init_data = auth[9:]
         try:
