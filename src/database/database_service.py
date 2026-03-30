@@ -64,6 +64,7 @@ async def create_payment(session: AsyncSession, user_id: int, type: str, amount:
     session.add(payment)
     await session.flush()
     payment.payment_id = hashids.encode(payment.id)
+    payment.updated = None
     await session.commit()
 
 
