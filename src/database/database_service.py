@@ -53,8 +53,14 @@ async def get_tariff_and_price(session: AsyncSession, uname: str, months: Option
     return (tariff, periods, total, period.months)
 
 @database_session
-async def create_payment(session: AsyncSession, user_id: str, type: str, amount: float, currency: str, data: BuyDto):
-    payment = Payments(user_id, type, amount, currency, json.dumps(data))
+async def create_payment(session: AsyncSession, user_id: int, type: str, amount: float, currency: str, data: BuyDto):
+    payment = Payments(
+        user_id=user_id,
+        type=type,
+        amount=amount,
+        currency=currency,
+        data=data
+    )
     session.add(payment)
     await session.flush()
     payment.payment_id = hashids.encode(payment.id)
