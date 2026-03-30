@@ -145,6 +145,7 @@ main()
 function displayClient({ user = false, error = false }) {
     console.log(user)
     helpBlock.style.display = 'flex'
+    alert(error)
     if (error) {
         clientError.querySelector('.message').innerHTML = error
         clientError.classList.add('error-block')
