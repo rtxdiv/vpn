@@ -110,7 +110,7 @@ async function getPeriods() {
         displayPeriods(body)
     }
 }
-async function getBuy({ months = 0 }) {
+async function getBuy(months = 0) {
     const resp = await fetch('/payments/buy', {
         method: 'POST',
         headers: {
@@ -234,7 +234,7 @@ function displayPeriods(periods) {
         periods.forEach(period => {
             popupRadiogroup.innerHTML += `
                 <label>
-                    <input type="radio" name="popup-option" value="${period.months}" onchange="getBuy({ uname: document.querySelector("#popup-content .uname").value, months: ${period.months} })">
+                    <input type="radio" name="popup-option" value="${period.months}" onchange="getBuy(${period.months})">
                     <span><a class="months">${period.months} мес.</a>${period.discount? `<a class="discount">-${period.discount * 100}%</a>` : ''}</span>
                 </label>
             `
