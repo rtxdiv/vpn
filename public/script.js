@@ -110,7 +110,7 @@ async function getPeriods() {
         displayPeriods(body)
     }
 }
-async function getBuy({ uname, months = null }) {
+async function getBuy({ uname, months = 0 }) {
     popupUname.value = uname
     openPopup()
     const resp = await fetch('/payments/buy', {
@@ -126,6 +126,7 @@ async function getBuy({ uname, months = null }) {
     })
     if (resp.ok) {
         const body = await resp.json()
+        alert(body)
         displayPopup({ info: body })
     } else {
         displayPopup({ error: (await resp.json()).detail })
