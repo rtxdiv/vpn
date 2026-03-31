@@ -18,7 +18,7 @@ async def get_payments():
 async def get_buy(request: Request, dto: BuyDto):
     id = request.state.telegram_user['id']
     starts = await get_user_periods_end(id=id)
-    info: PaymentInfo = await get_payment_info(uname=dto.to_tariff_uname, months=dto.months)
+    info: PaymentInfo = await prepare_buy(user_id=id, uname=dto.to_tariff, months=dto.months)
     return {
         'title': info.title,
         'periods': info.periods,

@@ -27,6 +27,7 @@ class Payments(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     user_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     type: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
+    title: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     amount: Mapped[float] = mapped_column(Float, nullable=False)
     currency: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     data: Mapped[dict] = mapped_column(JSON, nullable=False)

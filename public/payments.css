@@ -1,0 +1,45 @@
+:root {
+    --def-text-color: #b5c0ca;
+    --side-text-color: #708297;
+    --header-text-color: #6277ac;
+    --link-text-color: #407eb4;
+    --container-max-width: 800px;
+    --container-width: 92%;
+    --scroll-margin: max(4vw, calc((100vw - 800px) / 2));
+    --container-large-margin: 20px;
+    --container-middle-margin: 15px;
+    --container-mini-magin: 10px;
+    --def-font-size: 18px;
+    --block-background-color: linear-gradient(45deg, #192135, #1b243a);
+}
+html {
+    scroll-padding-top: var(--container-middle-margin);
+    scroll-behavior: smooth;
+}
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+body {
+    background: #0a1222;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Commissioner", sans-serif;
+    word-spacing: 2px;
+    color: var(--def-text-color);
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+    margin: 0;
+    font-size: var(--def-font-size);
+    padding-bottom: 30px;
+    color: var(--def-text-color);
+
+    > * {
+        margin-top: var(--container-large-margin);
+    }
+}
+.container {
+    width: var(--container-width) !important;
+    max-width: var(--container-max-width) !important;
+}

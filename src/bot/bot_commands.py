@@ -6,7 +6,7 @@ from aiogram.enums import ParseMode
 from src.utils.exceptions import *
 from src.xui.xui_client import xui
 from src.utils.logger_client import info_log, error_log
-from src.database.database_service import create_payment
+from src.database.database_service import prepare_buy
 from src.bot.bot_server import bot
 
 
@@ -93,12 +93,11 @@ async def cmd_enable(ctx: Message, command: CommandObject):
 async def cmd_enable(ctx: Message):
     if ctx.from_user.username != 'rtxdiv': return
     try:
-        await create_payment(
+        await prepare_buy(
             user_id=ctx.from_user.id,
-            type='Buy',
-            amount=66,
-            currency='RUB',
-            data={'to_tariff_uname': 'fn-solo', 'months': 2}
+            uname='fn-solo',
+            months=2,
+            pay=True
         )
         await ctx.answer('Платёж создан')
     except Exception as exc:

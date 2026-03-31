@@ -1,9 +1,11 @@
 from pydantic import BaseModel, Field
-from typing import Optional
 
 class BuyDto(BaseModel):
-    to_tariff_uname: str = Field(..., min_length=1)
+    to_tariff: str = Field(..., min_length=1)
     months: int = Field(...)
+
+    class Config:
+        extra = 'ignore'
 
 
 # ПУТЬ ЗАПРОСА НА ПОКУПКУ И АПГРЕЙД:

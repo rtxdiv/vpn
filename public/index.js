@@ -118,7 +118,7 @@ async function getBuy(months = 0) {
             'Authorization': `Telegram ${telegram.initData}`
         },
         body: JSON.stringify({
-            to_tariff_uname: popupUname.value,
+            to_tariff: popupUname.value,
             months: months
         })
     })
