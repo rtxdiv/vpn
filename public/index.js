@@ -111,6 +111,7 @@ async function getPeriods() {
     }
 }
 async function getBuy(months = 0) {
+    popupButton.onclick = `payBuy(${months})`
     const resp = await fetch('/payments/buy', {
         method: 'POST',
         headers: {
@@ -134,6 +135,9 @@ async function setupBuy(uname) {
     await getBuy()
     popupRadiogroup.children[0].querySelector('input').checked = true
     openPopup()
+}
+async function payBuy(months) {
+    alert(months)
 }
 
 
@@ -260,9 +264,6 @@ function displayBuy({ info = false, error = false }) {
             Начнется: ${info.starts}
         `
         popupButton.innerHTML = `Создать платёж: ${info.total}₽`
-        popupButton.onclick = function() {
-            alert('В разработке...')
-        }
         popupContent.style.display = 'flex'
     } else {
         popupError.querySelector('.message').innerHTML = 'Ошибка загрузки данных'

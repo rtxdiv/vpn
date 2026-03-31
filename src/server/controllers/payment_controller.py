@@ -1,5 +1,5 @@
 from fastapi import Request, APIRouter, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from root import PUBLIC_DIR
 from src.utils.auth_guard import authorization
 from src.database.database_service import *
@@ -25,3 +25,10 @@ async def get_buy(request: Request, dto: BuyDto):
         'starts': starts,
         'total': info.total
     }
+
+@payment_router.post('/buy/pay')
+@authorization
+async def pay_buy(request: Request, dto: BuyDto):
+    id = request.state.telegram_user['id']
+    payment_id: str = await prepare_buy(user_id=id, uname=dto.to_tariff, months=dto.months, pay=True)
+    return RedirectResponse(url=f'https://vapp.rtxdiv.ru/payments?id={payment_id}')
