@@ -146,7 +146,8 @@ async function payBuy(months) {
         body: JSON.stringify({
             to_tariff: popupUname.value,
             months: months
-        })
+        }),
+        redirect: 'manual'
     })
     if (resp.ok) {
         if (resp.redirected) telegram.openLink(resp.url)
