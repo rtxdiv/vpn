@@ -111,7 +111,7 @@ async function getPeriods() {
     }
 }
 async function getBuy(months = 0) {
-    popupButton.onclick = `payBuy(${months})`
+    popupButton.onclick = payBuy(months)
     const resp = await fetch('/payments/buy', {
         method: 'POST',
         headers: {
