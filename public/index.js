@@ -137,7 +137,23 @@ async function setupBuy(uname) {
     openPopup()
 }
 async function payBuy(months) {
-    alert(months)
+    const resp = await fetch('/payments/buy/pay', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Telegram ${telegram.initData}`
+        },
+        body: JSON.stringify({
+            to_tariff: popupUname.value,
+            months: months
+        })
+    })
+    if (resp.ok) {
+        if (resp.redirected) telegram.openLink(resp.url)
+
+    } else {
+        alert('Произошла ошибка. Попробуйте ещё раз или обратитесь в поддержку')
+    }
 }
 
 
