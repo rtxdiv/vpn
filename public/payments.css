@@ -243,3 +243,8 @@ body {
 yellow { color: #b47e00; }
 green { color: #009185; }
 def { color: var(--def-text-color); }
+
+a[href]:link {
+    color: var(--link-text-color);
+    cursor: pointer;
+}
