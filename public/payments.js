@@ -1,6 +1,9 @@
 const paymentsError = document.querySelector('#payments-error')
 const paymentsBlock = document.querySelector('#payments')
 
+const popupBg = document.querySelector('#popup-bg')
+const popup = document.querySelector('#popup')
+
 popupBg.addEventListener('click', closePopup)
 window.addEventListener('popstate', function(event) {
     if (popupIsOpened) {
