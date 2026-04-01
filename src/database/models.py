@@ -1,7 +1,7 @@
 from typing import Optional
 import datetime
 
-from sqlalchemy import Date, Float, ForeignKeyConstraint, Index, Integer, JSON, String, TIMESTAMP, Text, text
+from sqlalchemy import Date, DateTime, Float, ForeignKeyConstraint, Index, Integer, JSON, String, Text, text
 from sqlalchemy.dialects.mysql import FLOAT, INTEGER, TINYINT, VARCHAR
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
@@ -29,12 +29,12 @@ class Payments(Base):
     type: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     title: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     amount: Mapped[float] = mapped_column(Float, nullable=False)
-    currency: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), server_default='₽', nullable=False)
+    currency: Mapped[str] = mapped_column(VARCHAR(64, charset='utf8mb4', collation='utf8mb4_unicode_ci'), nullable=False, server_default=text("'₽'"))
     data: Mapped[dict] = mapped_column(JSON, nullable=False)
-    created: Mapped[datetime.datetime] = mapped_column(TIMESTAMP, nullable=False, server_default=text('(now())'))
+    created: Mapped[datetime.datetime] = mapped_column(DateTime, nullable=False, server_default=text('(now())'))
     success: Mapped[int] = mapped_column(TINYINT(1), nullable=False, server_default=text("'0'"))
     payment_id: Mapped[Optional[str]] = mapped_column(VARCHAR(16, charset='utf8mb4', collation='utf8mb4_unicode_ci'))
-    updated: Mapped[Optional[datetime.datetime]] = mapped_column(TIMESTAMP)
+    updated: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime)
 
     purchases: Mapped[list['Purchases']] = relationship('Purchases', back_populates='payment')
 
@@ -63,8 +63,8 @@ class Tariffs(Base):
     enabled: Mapped[int] = mapped_column(TINYINT(1), nullable=False, server_default=text("'1'"))
 
     user_periods: Mapped[list['UserPeriods']] = relationship('UserPeriods', back_populates='tariffs')
-    purchases_from_tariff_uname: Mapped[list['Purchases']] = relationship('Purchases', foreign_keys='[Purchases.from_tariff_uname]', back_populates='tariffs')
-    purchases_to_tariff_uname: Mapped[list['Purchases']] = relationship('Purchases', foreign_keys='[Purchases.to_tariff_uname]', back_populates='tariffs_')
+    purchases_from_tariff: Mapped[list['Purchases']] = relationship('Purchases', foreign_keys='[Purchases.from_tariff]', back_populates='tariffs')
+    purchases_to_tariff: Mapped[list['Purchases']] = relationship('Purchases', foreign_keys='[Purchases.to_tariff]', back_populates='tariffs_')
 
 
 class UserPeriods(Base):
@@ -79,7 +79,7 @@ class UserPeriods(Base):
     tariff_uname: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     days: Mapped[int] = mapped_column(INTEGER(unsigned=True), nullable=False)
     used: Mapped[int] = mapped_column(TINYINT(1), nullable=False, server_default=text("'0'"))
-    starts: Mapped[datetime.date] = mapped_column(Date, nullable=False)
+    starts: Mapped[datetime.date] = mapped_column(Date, nullable=False, server_default=text('(now())'))
 
     tariffs: Mapped['Tariffs'] = relationship('Tariffs', back_populates='user_periods')
     purchases: Mapped[list['Purchases']] = relationship('Purchases', back_populates='user_period')
@@ -88,24 +88,24 @@ class UserPeriods(Base):
 class Purchases(Base):
     __tablename__ = 'purchases'
     __table_args__ = (
-        ForeignKeyConstraint(['from_tariff_uname'], ['tariffs.uname'], onupdate='CASCADE', name='from_tariff_uname_fk'),
+        ForeignKeyConstraint(['from_tariff'], ['tariffs.uname'], onupdate='CASCADE', name='from_tariff_fk'),
         ForeignKeyConstraint(['payment_id'], ['payments.payment_id'], onupdate='CASCADE', name='payment_id_fk'),
-        ForeignKeyConstraint(['to_tariff_uname'], ['tariffs.uname'], onupdate='CASCADE', name='to_tariff_uname_fk'),
+        ForeignKeyConstraint(['to_tariff'], ['tariffs.uname'], onupdate='CASCADE', name='to_tariff_fk'),
         ForeignKeyConstraint(['user_period_id'], ['user_periods.id'], onupdate='CASCADE', name='user_period_fk'),
-        Index('from_tariff_uname_fk', 'from_tariff_uname'),
+        Index('from_tariff_uname_fk', 'from_tariff'),
         Index('payment_id_fk', 'payment_id'),
-        Index('to_tariff_uname_fk', 'to_tariff_uname'),
+        Index('to_tariff_uname_fk', 'to_tariff'),
         Index('user_period_fk', 'user_period_id')
     )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     user_id: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     payment_id: Mapped[str] = mapped_column(VARCHAR(16, charset='utf8mb4', collation='utf8mb4_unicode_ci'), nullable=False)
-    to_tariff_uname: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
+    to_tariff: Mapped[str] = mapped_column(VARCHAR(64, charset='utf8mb4', collation='utf8mb4_unicode_ci'), nullable=False)
     user_period_id: Mapped[Optional[int]] = mapped_column(Integer)
-    from_tariff_uname: Mapped[Optional[str]] = mapped_column(String(64, 'utf8mb4_unicode_ci'))
+    from_tariff: Mapped[Optional[str]] = mapped_column(VARCHAR(64, charset='utf8mb4', collation='utf8mb4_unicode_ci'))
 
-    tariffs: Mapped[Optional['Tariffs']] = relationship('Tariffs', foreign_keys=[from_tariff_uname], back_populates='purchases_from_tariff_uname')
+    tariffs: Mapped[Optional['Tariffs']] = relationship('Tariffs', foreign_keys=[from_tariff], back_populates='purchases_from_tariff')
     payment: Mapped['Payments'] = relationship('Payments', back_populates='purchases')
-    tariffs_: Mapped['Tariffs'] = relationship('Tariffs', foreign_keys=[to_tariff_uname], back_populates='purchases_to_tariff_uname')
+    tariffs_: Mapped['Tariffs'] = relationship('Tariffs', foreign_keys=[to_tariff], back_populates='purchases_to_tariff')
     user_period: Mapped[Optional['UserPeriods']] = relationship('UserPeriods', back_populates='purchases')
