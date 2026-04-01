@@ -106,7 +106,9 @@ async function getPeriods() {
     if (resp.ok) {
         const body = await resp.json()
         paymentPeriods = body
-        displayPeriods(body)
+        displayPeriods({ periods: body })
+    } else {
+        displayPeriods({ error: (await resp.json()).detail })
     }
 }
 async function getBuy(months = 0) {
@@ -273,6 +275,7 @@ function displayPeriods({ periods = false, error = false }) {
                 </label>
             `
         })
+        popupRadiogroup.style.display = 'flex'
     } else {
         popupError.querySelector('.message').innerHTML = 'В данный момент нет доступных периодов для оплаты'
         popupError.style.display = 'flex'
