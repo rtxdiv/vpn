@@ -43,3 +43,45 @@ body {
     width: var(--container-width) !important;
     max-width: var(--container-max-width) !important;
 }
+.block {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 23px;
+    border-radius: 10px;
+    background: var(--block-background-color);
+    color: var(--def-text-color);
+    width: 100%;
+    gap: 5px;
+
+    .top, .bottom {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .title {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--header-text-color);
+    }
+    .total {
+        font-size: 22px;
+        font-weight: 600;
+        color: var(--def-text-color);
+    }
+    .status {
+        font-size: 15px;
+    }
+    .date {
+        font-size: 15px;
+        color: var(--side-text-color);
+    }
+}
+
+#payments {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

@@ -12,6 +12,57 @@
 </head>
 <body>
 
+    <div class="container" id="title">Мои платежи</div>
+
+    <div class="block container" id="payments-error"><a class="message"></a></div>
+
+    <div class="container" id="payments">
+        <div class="block">
+            <div class="top">
+                <a class="title">SOLO, 1 мес.</a>
+                <a class="total">100₽</a>
+            </div>
+            <div class="bottom">
+                <a class="status">Ожидание</a>
+                <a class="date">12 марта, 13:56</a>
+            </div>
+        </div>
+        <div class="block">
+            <div class="top">
+                <a class="title">SOLO, 1 мес.</a>
+                <a class="total">100₽</a>
+            </div>
+            <div class="bottom">
+                <a class="status">Ожидание</a>
+                <a class="date">12 марта, 13:56</a>
+            </div>
+        </div>
+        <div class="block">
+            <div class="top">
+                <a class="title">SOLO, 1 мес.</a>
+                <a class="total">100₽</a>
+            </div>
+            <div class="bottom">
+                <a class="status">Ожидание</a>
+                <a class="date">12 марта, 13:56</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="popup-bg">
+        <div id="popup">
+            <div id="popup-content">
+                <input type="text" class="uname">
+                <a class="title"></a>
+                <a class="text"></a>
+                <div class="radiogroup"></div>
+                <div class="button"></div>
+                <span class="offer">Создавая платёж, вы принимаете <a onclick="openOffer()">публичную оферту</a></span>
+            </div>
+            <div id="popup-error"><a class="message"></a></div>
+        </div>
+    </div>
+
     <script src="public/telegram-web-app.js"></script>
     <script src="public/payments.js"></script>
 </body>

@@ -82,7 +82,6 @@ async def prepare_buy(session: AsyncSession, user_id: int, uname: str, months: i
             type='Buy',
             title=title,
             amount=total,
-            currency='RUB',
             data=payment_data.model_dump()
         )
         return payment_id
