@@ -36,6 +36,10 @@ async def get_user_periods_end(session: AsyncSession, id: any) -> str:
 
 
 @database_session
+async def get_all_payments(session: AsyncSession, user_id: int) -> list[Payments]:
+    return (await session.scalars(select(Payments).where(Payments.user_id == user_id))).all()
+
+@database_session
 async def create_payment(session: AsyncSession, user_id: int, type: str, title: str, amount: float, currency: str, data: dict) -> str:
     payment = Payments(
         user_id=user_id,

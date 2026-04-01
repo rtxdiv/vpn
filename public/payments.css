@@ -53,6 +53,9 @@ body {
     color: var(--def-text-color);
     width: 100%;
 }
+.error-block {
+    background: linear-gradient(45deg, #a96d6d6f, #ae828251) !important;
+}
 
 #title {
     font-size: 22px;
@@ -92,6 +95,9 @@ body {
             color: var(--side-text-color);
         }
     }
+}
+#payments-error {
+    display: none;
 }
 
 #popup-bg {
@@ -232,3 +238,8 @@ body {
         transform: translateY(0%) !important;
     }
 }
+
+
+yellow { color: #b47e00; }
+green { color: #009185; }
+def { color: var(--def-text-color); }

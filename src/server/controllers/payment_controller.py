@@ -10,8 +10,14 @@ from ..dto.payment_buy_dto import BuyDto
 payment_router = APIRouter(prefix='/payments')
 
 @payment_router.get('/')
-async def get_payments():
+async def get_root():
     return FileResponse(PUBLIC_DIR / 'payments.html')
+
+@payment_router.post('/')
+@authorization
+async def get_payments(request: Request):
+    id = request.state.telegram_user['id']
+    return await get_all_payments()
 
 @payment_router.post('/buy')
 @authorization

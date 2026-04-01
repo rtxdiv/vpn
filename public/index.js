@@ -1,4 +1,3 @@
-// imports
 const settingsMessage = document.querySelector('#settings-message')
 
 const clientBlock = document.querySelector('#client')
@@ -65,7 +64,7 @@ async function getClient() {
     if (resp.ok) {
         const body = await resp.json()
         client = body
-        displayClient({ user: body })
+        displayClient({ client: body })
 
     } else {
         displayClient({ error: (await resp.json()).detail })
@@ -167,8 +166,8 @@ const main = async () => {
 main()
 
 
-function displayClient({ user = false, error = false }) {
-    console.log(user)
+function displayClient({ client = false, error = false }) {
+    console.log(client)
     helpBlock.style.display = 'flex'
     if (error) {
         clientError.querySelector('.message').innerHTML = error
@@ -179,16 +178,16 @@ function displayClient({ user = false, error = false }) {
         addButton(supportBlock, settings.support_url)
         return
     }
-    if (user) {
+    if (client) {
         clientBlock.style.display = 'flex'
-        clientInfoStatus.innerHTML = user['enable']? '<green>Активна</green>' : '<red>Неактивна</red>'
-        clientInfoName.innerHTML = `${ user["comment"] }`
-        clientInfoDevices.innerHTML = `Устройства: ${ user['limitIp'] == 0? 'бесконечно' : user['limitIp'] }`
+        clientInfoStatus.innerHTML = client['enable']? '<green>Активна</green>' : '<red>Неактивна</red>'
+        clientInfoName.innerHTML = `${ client["comment"] }`
+        clientInfoDevices.innerHTML = `Устройства: ${ client['limitIp'] == 0? 'бесконечно' : client['limitIp'] }`
 
-        const expiry = user['expiryTime']
+        const expiry = client['expiryTime']
         let localDate
         if (expiry !== 0) {
-            const date = new Date(user['expiryTime'])
+            const date = new Date(client['expiryTime'])
             localDate = date.toLocaleDateString('ru-RU', {
                 day: 'numeric',
                 month: 'long',
@@ -216,7 +215,7 @@ function displayTariffs({ tariffs = false, error = false }) {
         tariffsError.display = 'flex'
         return
     }
-    if (tariffs) {
+    if (tariffs && tariffs.length != 0) {
         tariffs.forEach(tariff => {
             if (client && tariff.uname == client["comment"]) clientInfoName.innerHTML = tariff.name
             tariffsBlock.innerHTML += `
@@ -235,6 +234,10 @@ function displayTariffs({ tariffs = false, error = false }) {
             `
         })
         tariffsBlock.style.display = 'flex'
+    } else {
+        tariffsError.querySelector('.message').innerHTML = 'В данный момент нет доступных тарифов для оплаты'
+        tariffsError.display = 'flex'
+        return
     }
 }
 function displaySettings({ settings = false, error = false }) {
@@ -250,9 +253,16 @@ function displaySettings({ settings = false, error = false }) {
         settingsMessage.style.display = 'flex'
     }
 }
-function displayPeriods(periods) {
+function displayPeriods({ periods = false, error = false }) {
     console.log(periods)
-    popupRadiogroup.innerHTML = ''
+    if (error) {
+        popupError.querySelector('.message').innerHTML = error
+        popupError.classList.add('error-block')
+        popupError.style.display = 'flex'
+        return
+    }
+    if (periods && periods.length != 0) {
+        popupRadiogroup.innerHTML = ''
         periods.forEach(period => {
             popupRadiogroup.innerHTML += `
                 <label>
@@ -261,15 +271,16 @@ function displayPeriods(periods) {
                 </label>
             `
         })
+    } else {
+        popupError.querySelector('.message').innerHTML = 'В данный момент нет доступных периодов для оплаты'
+        popupError.style.display = 'flex'
+        return
+    }
 }
 function displayBuy({ info = false, error = false }) {
     popupContent.style.display = 'none'
     popupError.style.display = 'none'
-    if (!paymentPeriods) {
-        popupError.querySelector('.message').innerHTML = `Не удалось загрузить доступные периоды для оплаты`
-        popupError.style.display = 'flex'
-        return
-    }
+    if (!paymentPeriods || paymentPeriods.length == 0) return
     if (error) {
         popupError.querySelector('.message').innerHTML = error
         popupError.style.display = 'flex'
@@ -277,11 +288,18 @@ function displayBuy({ info = false, error = false }) {
     }
     if (info) {
         popupTitle.innerHTML = info.title
+        const date = new Date(info.starts)
+        const localDate = date.toLocaleDateString('ru-RU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        }).replace(' г.', '')
         popupText.innerHTML = `
-            Начнется: ${info.starts}
+            Начнется: ${localDate}
         `
         popupButton.innerHTML = `Создать платёж: ${info.total}₽`
         popupContent.style.display = 'flex'
+
     } else {
         popupError.querySelector('.message').innerHTML = 'Ошибка загрузки данных'
         popupError.style.display = 'flex'
