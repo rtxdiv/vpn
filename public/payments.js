@@ -44,7 +44,7 @@ async function getPayments() {
 
 
 const main = async () => {
-    // main
+    await getPayments()
 }
 main()
 
