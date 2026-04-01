@@ -29,7 +29,7 @@ class Payments(Base):
     type: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     title: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     amount: Mapped[float] = mapped_column(Float, nullable=False)
-    currency: Mapped[str] = mapped_column(VARCHAR(64, charset='utf8mb4', collation='utf8mb4_unicode_ci'), nullable=False, server_default=text("'₽'"), insert_default=False)
+    currency: Mapped[str] = mapped_column(VARCHAR(64, charset='utf8mb4', collation='utf8mb4_unicode_ci'), nullable=False, server_default=text("'₽'"), insert_default=None)
     data: Mapped[dict] = mapped_column(JSON, nullable=False)
     created: Mapped[datetime.datetime] = mapped_column(DateTime, nullable=False, server_default=text('(now())'))
     success: Mapped[int] = mapped_column(TINYINT(1), nullable=False, server_default=text("'0'"))
