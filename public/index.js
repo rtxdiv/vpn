@@ -147,13 +147,13 @@ async function payBuy(months) {
             to_tariff: popupUname.value,
             months: months
         }),
-        redirect: 'manual'
     })
     if (resp.ok) {
-        if (resp.redirected) telegram.openLink(resp.url)
+        const body = await resp.json()
+        telegram.openLink(body.url)
 
     } else {
-        alert('Произошла ошибка. Попробуйте ещё раз или обратитесь в поддержку')
+        alert(`Произошла ошибка: ${(await resp.json()).detail}`)
     }
 }
 
