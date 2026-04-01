@@ -132,7 +132,9 @@ async function getBuy(months = 0) {
 async function setupBuy(uname) {
     popupUname.value = uname
     await getBuy()
-    popupRadiogroup.children[0].querySelector('input').checked = true
+    try {
+        popupRadiogroup.children[0].querySelector('input').checked = true
+    } catch {}
     openPopup()
 }
 async function payBuy(months) {
