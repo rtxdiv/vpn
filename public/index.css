@@ -159,6 +159,7 @@ body {
         align-items: center;
         height: 36px;
         color: var(--side-text-color);
+        cursor: pointer;
     }
 }
 #tariffs {

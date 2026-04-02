@@ -66,7 +66,8 @@ body {
         aspect-ratio: 1/1;
         height: 20px;
         padding: 6px;
-        opacity: 0.9;
+        opacity: 0.7;
+        cursor: pointer;
     }
     a {
         font-size: 22px;
