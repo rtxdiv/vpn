@@ -153,7 +153,9 @@ async function payBuy(months) {
     })
     if (resp.ok) {
         const body = await resp.json()
-        window.location.href = settings.payments_url + body.payment_id
+        const link = new URL(settings.payments_url)
+        link.searchParams.set('id', body.payment_id)
+        window.location.href = link.toString()
 
     } else {
         alert(`Произошла ошибка: ${(await resp.json()).detail}`)
@@ -312,8 +314,12 @@ function displayBuy({ info = false, error = false }) {
     }
 }
 
-function addLink(elem, url) {
-    elem.onclick = () => { window.location.href = url }
+function addLink(elem, url, params = {}) {
+    const link = new URL(url)
+    Object.entries(params).forEach(([key, value]) => {
+        link.params.set(key.toString(), value.toString())
+    })
+    elem.onclick = () => { window.location.href = link.toString() }
     elem.style.display = 'flex'
 }
 function addButton(elem, url = null) {
