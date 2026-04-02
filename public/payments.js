@@ -125,13 +125,13 @@ function displayPayment({ payment = false, error = false }) {
     }
     if (payment) {
         popupContent.style.display = 'flex'
-        openPopup()
 
     } else {
         popupError.querySelector('.message').innerHTML = 'Ошибка загрузки данных'
         popupError.style.display = 'flex'
         return
     }
+    openPopup()
 }
 
 function addLink(elem, url) {
