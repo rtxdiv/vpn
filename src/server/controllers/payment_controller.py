@@ -13,12 +13,21 @@ payment_router = APIRouter(prefix='/payments')
 async def get_root():
     return FileResponse(PUBLIC_DIR / 'payments.html')
 
-@payment_router.post('/')
+# page gets
+@payment_router.get('/getAll')
 @authorization
 async def get_payments(request: Request):
     id = request.state.telegram_user['id']
     return await get_all_payments(id)
 
+@payment_router.get('/get')
+@authorization
+async def get_payment(request: Request):
+    id = request.state.telegram_user['id']
+    return
+
+
+# payment api
 @payment_router.post('/buy')
 @authorization
 async def get_buy(request: Request, dto: BuyDto):

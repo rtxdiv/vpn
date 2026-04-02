@@ -25,8 +25,8 @@ let popupIsOpened = false
 
 
 async function getPayments() {
-    const resp = await fetch('/payments', {
-        method: 'POST',
+    const resp = await fetch('/payments/getAll', {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Telegram ${telegram.initData}`
