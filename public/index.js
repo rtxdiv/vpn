@@ -153,7 +153,7 @@ async function payBuy(months) {
     })
     if (resp.ok) {
         const body = await resp.json()
-        telegram.openTelegramLink(body.url)
+        window.location.href = body
 
     } else {
         alert(`Произошла ошибка: ${(await resp.json()).detail}`)
