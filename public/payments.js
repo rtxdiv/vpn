@@ -62,7 +62,7 @@ function displayPayments({ payments = false, error = false }) {
             const date = new Date(payment.created+'Z')
             const localDate = date.toLocaleDateString('ru-RU', {
                 day: 'numeric',
-                month: 'narrow',
+                month: 'short',
                 year: 'numeric',
                 hour: '2-digit',
                 minute: '2-digit'
