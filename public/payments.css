@@ -158,18 +158,19 @@ body {
                 padding-left: 2px;
             }
             .amount {
-                font-size: 20px;
+                font-size: 22px;
                 margin-bottom: 25px;
                 color: var(--def-text-color);
                 box-sizing: border-box;
                 padding-left: 2px;
                 text-decoration: underline;
+                text-decoration-thickness: 1px;
             }
             .group {
                 display: flex;
                 flex-direction: column;
-                gap: 5px;
-                margin-bottom: 20px;
+                gap: 4px;
+                margin-bottom: 22px;
 
                 .copy {
                     width: 100%;
