@@ -149,11 +149,11 @@ async function payBuy(months) {
         body: JSON.stringify({
             to_tariff: popupUname.value,
             months: months
-        }),
+        })
     })
     if (resp.ok) {
         const body = await resp.json()
-        window.location.href = body.url
+        window.location.href = settings.payments_url + body.payment_id
 
     } else {
         alert(`Произошла ошибка: ${(await resp.json()).detail}`)
@@ -177,7 +177,7 @@ function displayClient({ client = false, error = false }) {
         clientError.querySelector('.message').innerHTML = error
         clientError.classList.add('error-block')
         clientError.style.display = 'flex'
-        addButton(paymentsBlock, settings.payments_url)
+        paymentsBlock.onclick = () => { window.location.href = settings.payments_url }
         addButton(aboutBlock, settings.about_url)
         addButton(supportBlock, settings.support_url)
         return

@@ -38,5 +38,5 @@ async def pay_buy(request: Request, dto: BuyDto):
     id = request.state.telegram_user['id']
     payment_id: str = await prepare_buy(user_id=id, uname=dto.to_tariff, months=dto.months, pay=True)
     return {
-        'url': f'/payments?id={payment_id}'
+        'payment_id': payment_id
     }
