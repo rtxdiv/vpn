@@ -1,7 +1,7 @@
 from typing import Optional
 import datetime
 
-from sqlalchemy import Date, Float, ForeignKeyConstraint, Index, Integer, JSON, String, TIMESTAMP, Text, text
+from sqlalchemy import Date, DateTime, Float, ForeignKeyConstraint, Index, Integer, JSON, String, Text, text
 from sqlalchemy.dialects.mysql import FLOAT, INTEGER, TINYINT, VARCHAR
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
@@ -31,10 +31,10 @@ class Payments(Base):
     amount: Mapped[float] = mapped_column(Float, nullable=False)
     currency: Mapped[str] = mapped_column(VARCHAR(64, charset='utf8mb4', collation='utf8mb4_unicode_ci'), nullable=False, server_default=text("'₽'"))
     data: Mapped[dict] = mapped_column(JSON, nullable=False)
-    created: Mapped[datetime.datetime] = mapped_column(TIMESTAMP, nullable=False, server_default=text('(now())'))
+    created: Mapped[datetime.datetime] = mapped_column(DateTime, nullable=False, server_default=text('(now())'))
     success: Mapped[int] = mapped_column(TINYINT(1), nullable=False, server_default=text("'0'"))
     payment_id: Mapped[Optional[str]] = mapped_column(VARCHAR(16, charset='utf8mb4', collation='utf8mb4_unicode_ci'))
-    updated: Mapped[Optional[datetime.datetime]] = mapped_column(TIMESTAMP)
+    updated: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime)
 
     purchases: Mapped[list['Purchases']] = relationship('Purchases', back_populates='payment')
 
