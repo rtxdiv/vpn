@@ -196,7 +196,7 @@ function displayClient({ client = false, error = false }) {
             const date = new Date(client['expiryTime'])
             localDate = date.toLocaleDateString('ru-RU', {
                 day: 'numeric',
-                month: 'long',
+                month: 'short',
                 year: 'numeric'
             }).replace(' г.', '')
         } else localDate = 'бессрочно'
@@ -298,7 +298,7 @@ function displayBuy({ info = false, error = false }) {
         const date = new Date(info.starts)
         const localDate = date.toLocaleDateString('ru-RU', {
             day: 'numeric',
-            month: 'long',
+            month: 'short',
             year: 'numeric'
         }).replace(' г.', '')
         popupText.innerHTML = `
