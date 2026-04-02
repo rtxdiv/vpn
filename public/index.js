@@ -298,7 +298,9 @@ function displayBuy({ info = false, error = false }) {
         const localDate = date.toLocaleDateString('ru-RU', {
             day: 'numeric',
             month: 'short',
-            year: 'numeric'
+            year: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric'
         }).replace(' г.', '')
         popupText.innerHTML = `
             Начнется: ${localDate}
