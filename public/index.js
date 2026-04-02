@@ -188,7 +188,7 @@ function displayClient({ client = false, error = false }) {
         clientBlock.style.display = 'flex'
         clientInfoStatus.innerHTML = client['enable']? '<green>Активна</green>' : '<red>Неактивна</red>'
         clientInfoName.innerHTML = `${ client["comment"] }`
-        clientInfoDevices.innerHTML = `Устройства: ${ client['limitIp'] == 0? 'бесконечно' : client['limitIp'] }`
+        clientInfoDevices.innerHTML = `Устройства: ${ client.limitIp == 0? 'бесконечно' : client.limitIp }`
 
         const expiry = client['expiryTime']
         let localDate
