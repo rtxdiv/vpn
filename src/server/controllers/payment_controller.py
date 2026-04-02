@@ -17,7 +17,7 @@ async def get_root():
 @authorization
 async def get_payments(request: Request):
     id = request.state.telegram_user['id']
-    return await get_all_payments()
+    return await get_all_payments(id)
 
 @payment_router.post('/buy')
 @authorization
