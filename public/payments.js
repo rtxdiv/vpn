@@ -3,6 +3,7 @@ const paymentsBlock = document.querySelector('#payments')
 
 const popupBg = document.querySelector('#popup-bg')
 const popup = document.querySelector('#popup')
+const popupContent = document.querySelector('#popup-content')
 const popupError = document.querySelector('#popup-error')
 const popupTitle = document.querySelector('#popup-content .title')
 const popupAmount = document.querySelector('#popup-content .amount')
