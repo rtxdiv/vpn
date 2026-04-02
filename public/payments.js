@@ -57,7 +57,7 @@ function displayPayments({ payments = false, error = false }) {
         paymentsError.style.display = 'flex'
         return
     }
-    if (payments || payments.length != 0) {
+    if (payments && payments.length != 0) {
         payments.forEach(payment => {
             const date = new Date(payment.created)
             const localDate = date.toLocaleDateString('ru-RU', {
@@ -83,6 +83,7 @@ function displayPayments({ payments = false, error = false }) {
     } else {
         paymentsError.querySelector('.message').innerHTML = 'У вас ещё нет созданных платежей'
         paymentsError.style.display = 'flex'
+        return
     }
 }
 
