@@ -52,7 +52,7 @@ async function getPayments() {
     }
 }
 async function getPayment(id) {
-    const resp = await fetch(`/payments/get/${id}`, {
+    const resp = await fetch(`/payments/get?id=${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
