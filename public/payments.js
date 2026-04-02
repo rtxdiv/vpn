@@ -41,7 +41,7 @@ async function getPayments() {
         displayPayments({ error: (await resp.json()).detail })
     }
 }
-async function getPayment(id = 'default') {
+async function getPayment(id) {
     alert(id)
     return
     const resp = await fetch('/payments/get', {
@@ -90,7 +90,7 @@ function displayPayments({ payments = false, error = false }) {
                 minute: '2-digit'
             }).replace(' г.', '')
             paymentsBlock.innerHTML += `
-                <div class="block" onclick="getPayment()">
+                <div class="block" onclick="getPayment('${payment.payment_id}')">
                     <div class="top">
                         <a class="title">${payment.title}</a>
                         <a class="total">${payment.amount}${payment.currency}</a>
