@@ -84,6 +84,10 @@ body {
     .block {
         gap: 12px;
 
+        .payment-id {
+            display: none;
+        }
+
         .top, .bottom {
             display: flex;
             flex-direction: row;

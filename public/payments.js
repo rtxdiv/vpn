@@ -41,6 +41,28 @@ async function getPayments() {
         displayPayments({ error: (await resp.json()).detail })
     }
 }
+async function getPayment(id) {
+    alert(id)
+    return
+    const resp = await fetch('/payments/get', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Telegram ${telegram.initData}`
+        },
+        body: JSON.stringify({
+            payment_id: id,
+        })
+    })
+    if (resp.ok) {
+        const body = await resp.json()
+        client = body
+        displayPayments({ payments: body })
+
+    } else {
+        displayPayments({ error: (await resp.json()).detail })
+    }
+}
 
 
 const main = async () => {
@@ -68,7 +90,7 @@ function displayPayments({ payments = false, error = false }) {
                 minute: '2-digit'
             }).replace(' г.', '')
             paymentsBlock.innerHTML += `
-                <div class="block">
+                <div class="block" onclick="getPayment(${payment.payment_id})">
                     <div class="top">
                         <a class="title">${payment.title}</a>
                         <a class="total">${payment.amount}${payment.currency}</a>
