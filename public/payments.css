@@ -58,9 +58,19 @@ body {
 }
 
 #title {
-    font-size: 22px;
-    font-weight: 600;
-    margin-left: 2px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    img {
+        aspect-ratio: 1/1;
+        height: 20px;
+    }
+    a {
+        font-size: 22px;
+        font-weight: 600;
+        margin-left: 2px;
+    }
 }
 #payments {
     display: flex;
