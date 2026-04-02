@@ -47,7 +47,7 @@ body {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    padding: 15px;
+    padding: 10px;
     border-radius: 10px;
     background: var(--block-background-color);
     color: var(--def-text-color);
