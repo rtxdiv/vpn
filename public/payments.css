@@ -160,7 +160,7 @@ body {
             .amount {
                 font-size: 20px;
                 margin-bottom: 30px;
-                color: var(--def-text-color);
+                color: var(--side-text-color);
                 box-sizing: border-box;
                 padding-left: 2px;
                 font-weight: 500;
