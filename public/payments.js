@@ -86,7 +86,10 @@ function displayPayments({ payments = false, error = false }) {
     }
 }
 
-
+function addLink(elem, url) {
+    elem.onclick = () => { window.location.href = url }
+    elem.style.display = 'flex'
+}
 function scrollXTo(id) {
     document.querySelector(id).scrollIntoView({
         behavior: 'smooth',

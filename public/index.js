@@ -177,7 +177,7 @@ function displayClient({ client = false, error = false }) {
         clientError.querySelector('.message').innerHTML = error
         clientError.classList.add('error-block')
         clientError.style.display = 'flex'
-        paymentsBlock.onclick = () => { window.location.href = settings.payments_url }
+        addLink(paymentsBlock, settings.payments_url)
         addButton(aboutBlock, settings.about_url)
         addButton(supportBlock, settings.support_url)
         return
@@ -199,7 +199,7 @@ function displayClient({ client = false, error = false }) {
             }).replace(' г.', '')
         } else localDate = 'бессрочно'
         clientInfoDate.innerHTML = `Действует до: ${ localDate }`
-        paymentsBlock.onclick = () => { window.location.href = settings.payments_url }
+        addLink(paymentsBlock, settings.payments_url)
         addButton(tutorialBlock, settings.tutorial_url)
         addButton(supportBlock, settings.support_url)
         addButton(clientSettingsLink, settings.sub_url + client.subId)
@@ -312,7 +312,10 @@ function displayBuy({ info = false, error = false }) {
     }
 }
 
-
+function addLink(elem, url) {
+    elem.onclick = () => { window.location.href = url }
+    elem.style.display = 'flex'
+}
 function addButton(elem, url = null) {
     elem.style.display = 'flex'
     elem.style.cursor = 'pointer'
