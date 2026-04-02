@@ -6,7 +6,7 @@ from src.utils.exceptions import *
 from src.utils.hashids_client import hashids
 from src.utils.payment_info import PaymentInfo
 from src.server.dto.payment_buy_dto import BuyDto
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 
 @database_session
@@ -28,7 +28,7 @@ async def get_user_periods_end(session: AsyncSession, user_id: str) -> str:
         select(UserPeriods)
         .where(UserPeriods.user_id == user_id)
     )
-    if not last_period: return 'сегодня'
+    if not last_period: return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     end_date = last_period.starts + timedelta(days=last_period.days)
     return end_date
 
