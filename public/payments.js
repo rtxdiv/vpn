@@ -124,6 +124,12 @@ function displayPayment({ payment = false, error = false }) {
         return
     }
     if (payment) {
+        popupTitle.innerHTML = payment.title
+        popupAmount.innerHTML = `К оплате: ${payment.amount}<green>${payment.currency}</green>`
+        popupDetails.innerHTML = payment.settings.payment_details
+        popupDetailsComment.innerHTML = payment.settings.payment_comment
+        popupPaymentId.innerHTML = `${payment.settings.payment_id_prefix}${payment.paymentId}`
+        if (payment.settings.payment_message) popupMessage.innerHTML = payment.settings.payment_message
         popupContent.style.display = 'flex'
 
     } else {

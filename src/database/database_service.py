@@ -51,13 +51,16 @@ async def get_user_payment(session: AsyncSession, user_id: str, payment_id: str)
     return payment
 
 @database_session
-async def get_payment_settings(session: AsyncSession) -> list[Settings]:
-    return (await session.scalars(select(Settings).where(
-        Settings.key == 'payment_details',
-        Settings.key == 'payment_comment',
-        Settings.key == 'payment_id_prefix',
-        Settings.key == 'payment_message'
+async def get_payment_settings(session: AsyncSession) -> dict:
+    settings = (await session.scalars(select(Settings).where(
+        Settings.key.in_([
+            'payment_details', 
+            'payment_comment', 
+            'payment_id_prefix', 
+            'payment_message'
+        ])
     ))).all()
+    return {setting.key: setting.value for setting in settings}
 
 @database_session
 async def create_payment(session: AsyncSession, user_id: str, type: str, title: str, amount: float, data: dict, currency: str | None = None) -> str:

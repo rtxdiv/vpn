@@ -27,6 +27,7 @@ async def get_payment(request: Request, payment_id: str):
     payment: Payments = await get_user_payment(user_id=user_id, payment_id=payment_id)
     payment_settings = await get_payment_settings()
     return {
+        'paymentId': payment.payment_id,
         'title': payment.title,
         'amount': payment.amount,
         'currency': payment.currency,
