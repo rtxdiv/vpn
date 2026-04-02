@@ -123,6 +123,8 @@ function displayPayment({ payment = false, error = false }) {
         return
     }
     if (payment) {
+        popupContent.style.display = 'flex'
+        openPopup()
 
     } else {
         popupError.querySelector('.message').innerHTML = 'Ошибка загрузки данных'
