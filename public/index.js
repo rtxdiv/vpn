@@ -199,7 +199,7 @@ function displayClient({ client = false, error = false }) {
             }).replace(' г.', '')
         } else localDate = 'бессрочно'
         clientInfoDate.innerHTML = `Действует до: ${ localDate }`
-        addButton(paymentsBlock, settings.payments_url)
+        paymentsBlock.onclick = () => { window.location.href = settings.payments_url }
         addButton(tutorialBlock, settings.tutorial_url)
         addButton(supportBlock, settings.support_url)
         addButton(clientSettingsLink, settings.sub_url + client.subId)
