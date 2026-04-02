@@ -191,6 +191,7 @@ body {
                 padding: 10px;
                 box-sizing: border-box;
                 font-size: 15px;
+                color: var(--side-text-color);
                 background: #3b3b35;
                 border: 1px #60603d solid;
                 border-radius: 7px;
