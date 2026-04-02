@@ -125,7 +125,7 @@ function displayPayment({ payment = false, error = false }) {
     }
     if (payment) {
         popupTitle.innerHTML = payment.title
-        popupAmount.innerHTML = `К оплате: ${payment.amount}<green>${payment.currency}</green>`
+        popupAmount.innerHTML = `К оплате: <green>${payment.amount}${payment.currency}</green>`
         popupDetails.innerHTML = payment.settings.payment_details
         popupDetailsComment.innerHTML = payment.settings.payment_comment
         popupPaymentId.innerHTML = `${payment.settings.payment_id_prefix}${payment.paymentId}`
