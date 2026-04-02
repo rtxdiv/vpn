@@ -61,6 +61,7 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-bottom: 10px;
 
     img {
         aspect-ratio: 1/1;
