@@ -20,7 +20,10 @@ AsyncSessionLocal = async_sessionmaker(
     engine,
     class_=AsyncSession,
     expire_on_commit=False,
-    autoflush=False
+    autoflush=False,
+    connect_args={
+        'init_command': "SET time_zone = '+00:00'"
+    }
 )
 
 def database_session(func):
