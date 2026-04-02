@@ -167,8 +167,8 @@ body {
             .group {
                 display: flex;
                 flex-direction: column;
-                gap: 8px;
-                margin: 8px 0;
+                gap: 6px;
+                margin-bottom: 8px;
 
                 .copy {
                     width: 100%;
@@ -179,16 +179,17 @@ body {
                     border-radius: 7px;
                 }
                 a {
-                    font-size: var(--def-font-size);
+                    font-size: 16px;
                 }
             }
             .message {
                 width: 100%;
                 padding: 10px;
                 font-size: 15px;
-                background: #797046;
-                border: 1px #9e9048 solid;
+                background: #797046a4;
+                border: 1px #9e90489a solid;
                 border-radius: 7px;
+                margin-top: 10px;
             }
         }
 
