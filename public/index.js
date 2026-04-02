@@ -295,13 +295,14 @@ function displayBuy({ info = false, error = false }) {
     if (info) {
         popupTitle.innerHTML = info.title
         const date = new Date(info.starts)
-        const localDate = date.toLocaleDateString('ru-RU', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric'
-        }).replace(' г.', '')
+        const currDate = new Date()
+        const localDate = date == currDate.setHours(0,0,0,0)
+            ? 'сегодня'
+            : date.toLocaleDateString('ru-RU', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            }).replace(' г.', '')
         popupText.innerHTML = `
             Начнется: ${localDate}
         `
