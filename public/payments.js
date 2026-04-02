@@ -71,6 +71,9 @@ async function getPayment(id) {
 
 
 const main = async () => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const id = urlParams.get('id')
+    if (id) await getPayment(id)
     await getPayments()
 }
 main()

@@ -20,11 +20,11 @@ async def get_payments(request: Request):
     user_id = request.state.telegram_id
     return await get_all_payments(user_id)
 
-@payment_router.get('/get/{payment_id}')
+@payment_router.get('/get')
 @authorization
-async def get_payment(request: Request, payment_id: str):
+async def get_payment(request: Request, id: str):
     user_id = request.state.telegram_id
-    payment: Payments = await get_user_payment(user_id=user_id, payment_id=payment_id)
+    payment: Payments = await get_user_payment(user_id=user_id, payment_id=id)
     payment_settings = await get_payment_settings()
     return {
         'paymentId': payment.payment_id,
