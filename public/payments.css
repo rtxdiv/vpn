@@ -163,6 +163,7 @@ body {
                 color: var(--def-text-color);
                 box-sizing: border-box;
                 padding-left: 2px;
+                text-decoration: underline;
             }
             .group {
                 display: flex;
@@ -173,7 +174,9 @@ body {
                 .copy {
                     width: 100%;
                     padding: 12px;
+                    box-sizing: border-box;
                     font-size: var(--def-font-size);
+                    color: var(--side-text-color);
                     background: #20293f;
                     border: 1px #2d3a58 solid;
                     border-radius: 7px;
@@ -186,6 +189,7 @@ body {
             .message {
                 width: 100%;
                 padding: 10px;
+                box-sizing: border-box;
                 font-size: 15px;
                 background: #3b3b35;
                 border: 1px #60603d solid;
