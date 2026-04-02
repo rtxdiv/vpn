@@ -27,7 +27,6 @@ async def get_buy(request: Request, dto: BuyDto):
     info: PaymentInfo = await prepare_buy(user_id=id, uname=dto.to_tariff, months=dto.months)
     return {
         'title': info.title,
-        'periods': info.periods,
         'starts': starts,
         'total': info.total
     }

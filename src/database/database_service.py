@@ -62,20 +62,24 @@ async def create_payment(session: AsyncSession, user_id: int, type: str, title: 
 async def prepare_buy(session: AsyncSession, user_id: int, uname: str, months: int, pay: bool = False) -> PaymentInfo | str:
     tariff = await session.scalar(select(Tariffs).where(Tariffs.uname == uname))
     if not tariff: raise ForeseenException('Тариф не найден')
-    periods = (await session.scalars(
-        select(PaymentPeriods)
-        .order_by(PaymentPeriods.months)
-    )).all()
-    if (len(periods)) == 0: raise ForeseenException('Нет периодов для покупки')
-    
     if not months:
-        period = periods[0]
+        period = await session.scalar(
+            select(PaymentPeriods)
+            .order_by(PaymentPeriods.months)
+            .limit(1)
+        )
     else:
-        period = next((item for item in periods if item.months == months), None)
+        period = await session.scalar(
+            select(PaymentPeriods)
+            .where(PaymentPeriods.months == months)
+        )
+    if not period:
+        raise ForeseenException('Нет периодов для покупки' if not months else 'Такой период для оплаты недоступен')
+
     total = round(tariff.price * period.months * (1 - period.discount))
 
     if pay:
-        title = f'{tariff.name}, {months} мес.'
+        title = f'{tariff.name}, {period.months} мес.'
 
         payment_data = BuyDto(
             to_tariff=tariff.uname,
@@ -92,7 +96,6 @@ async def prepare_buy(session: AsyncSession, user_id: int, uname: str, months: i
 
     return PaymentInfo(
         title=tariff.name,
-        periods=periods,
         total=total
     )
     

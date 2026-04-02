@@ -47,7 +47,7 @@ body {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    padding: 23px;
+    padding: 15px;
     border-radius: 10px;
     background: var(--block-background-color);
     color: var(--def-text-color);
@@ -240,7 +240,7 @@ body {
 }
 
 
-yellow { color: #b47e00; }
+yellow { color: #b48d00; }
 green { color: #009185; }
 def { color: var(--def-text-color); }
 
