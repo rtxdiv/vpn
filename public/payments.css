@@ -213,7 +213,7 @@ body {
 
 
 red { color: rgb(225, 67, 67); }
-yellow { color: #b48d00; }
+yellow { color: #8e8e61; }
 green { color: #009185; }
 def { color: var(--def-text-color); }
 
