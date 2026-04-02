@@ -119,7 +119,6 @@ function displayPayment({ payment = false, error = false }) {
     popupError.style.display = 'none'
     if (error) {
         popupError.querySelector('.message').innerHTML = error
-        popupError.classList.add('error-block')
         popupError.style.display = 'flex'
         openPopup()
         return

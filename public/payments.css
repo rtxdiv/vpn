@@ -158,7 +158,7 @@ body {
                 padding-left: 2px;
             }
             .amount {
-                font-size: 18px;
+                font-size: 20px;
                 margin-bottom: 25px;
                 color: var(--def-text-color);
                 box-sizing: border-box;
@@ -167,10 +167,12 @@ body {
             .group {
                 display: flex;
                 flex-direction: column;
+                gap: 8px;
+                margin: 8px 0;
 
                 .copy {
                     width: 100%;
-                    padding: 10px;
+                    padding: 12px;
                     font-size: var(--def-font-size);
                     background: #20293f;
                     border: 1px #39496f solid;
@@ -184,8 +186,8 @@ body {
                 width: 100%;
                 padding: 10px;
                 font-size: 15px;
-                background: #baa00e;
-                border: 1px #88750a solid;
+                background: #797046;
+                border: 1px #9e9048 solid;
                 border-radius: 7px;
             }
         }

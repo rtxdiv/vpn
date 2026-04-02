@@ -263,7 +263,6 @@ function displayPeriods({ periods = false, error = false }) {
     console.log(periods)
     if (error) {
         popupError.querySelector('.message').innerHTML = error
-        popupError.classList.add('error-block')
         popupError.style.display = 'flex'
         return
     }
