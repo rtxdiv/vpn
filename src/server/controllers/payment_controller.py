@@ -17,23 +17,30 @@ async def get_root():
 @payment_router.get('/getAll')
 @authorization
 async def get_payments(request: Request):
-    id = request.state.telegram_user['id']
-    return await get_all_payments(id)
+    user_id = request.state.telegram_id
+    return await get_all_payments(user_id)
 
-@payment_router.get('/get')
+@payment_router.get('/get/{payment_id}')
 @authorization
-async def get_payment(request: Request):
-    id = request.state.telegram_user['id']
-    return
+async def get_payment(request: Request, payment_id: str):
+    user_id = request.state.telegram_id
+    payment: Payments = await get_user_payment(user_id=user_id, payment_id=payment_id)
+    payment_settings = await get_payment_settings()
+    return {
+        'title': payment.title,
+        'amount': payment.amount,
+        'currency': payment.currency,
+        'settings': payment_settings
+    }
 
 
 # payment api
 @payment_router.post('/buy')
 @authorization
 async def get_buy(request: Request, dto: BuyDto):
-    id = request.state.telegram_user['id']
-    starts = await get_user_periods_end(id=id)
-    info: PaymentInfo = await prepare_buy(user_id=id, uname=dto.to_tariff, months=dto.months)
+    user_id = request.state.telegram_id
+    starts = await get_user_periods_end(user_id=user_id)
+    info: PaymentInfo = await prepare_buy(user_id=user_id, uname=dto.to_tariff, months=dto.months)
     return {
         'title': info.title,
         'starts': starts,
@@ -43,8 +50,8 @@ async def get_buy(request: Request, dto: BuyDto):
 @payment_router.post('/buy/pay')
 @authorization
 async def pay_buy(request: Request, dto: BuyDto):
-    id = request.state.telegram_user['id']
-    payment_id: str = await prepare_buy(user_id=id, uname=dto.to_tariff, months=dto.months, pay=True)
+    user_id = request.state.telegram_id
+    payment_id: str = await prepare_buy(user_id=user_id, uname=dto.to_tariff, months=dto.months, pay=True)
     return {
         'payment_id': payment_id
     }

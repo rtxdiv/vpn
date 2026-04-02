@@ -23,12 +23,10 @@ async def get_all_allowed_periods(session: AsyncSession) -> list[PaymentPeriods]
     return (await session.scalars(select(PaymentPeriods))).all()
 
 @database_session
-async def get_user_periods_end(session: AsyncSession, id: any) -> str:
+async def get_user_periods_end(session: AsyncSession, user_id: str) -> str:
     last_period = await session.scalar(
         select(UserPeriods)
-        .where(UserPeriods.user_id == str(id))
-        .order_by(desc(UserPeriods.starts))
-        .limit(1)
+        .where(UserPeriods.user_id == user_id)
     )
     if not last_period: return 'сегодня'
     end_date = last_period.starts + timedelta(days=last_period.days)
@@ -36,7 +34,7 @@ async def get_user_periods_end(session: AsyncSession, id: any) -> str:
 
 
 @database_session
-async def get_all_payments(session: AsyncSession, user_id: int) -> list[Payments]:
+async def get_all_payments(session: AsyncSession, user_id: str) -> list[Payments]:
     return (await session.scalars(
         select(Payments)
         .where(Payments.user_id == user_id)
@@ -44,7 +42,25 @@ async def get_all_payments(session: AsyncSession, user_id: int) -> list[Payments
     )).all()
 
 @database_session
-async def create_payment(session: AsyncSession, user_id: int, type: str, title: str, amount: float, data: dict, currency: str | None = None) -> str:
+async def get_user_payment(session: AsyncSession, user_id: str, payment_id: str) -> Payments:
+    payment = (await session.scalar(
+        select(Payments)
+        .where(Payments.user_id == user_id, Payments.payment_id == payment_id)
+    ))
+    if not payment: raise ForeseenException('Платёж не найден')
+    return payment
+
+@database_session
+async def get_payment_settings(session: AsyncSession) -> list[Settings]:
+    return (await session.scalars(select(Settings).where(
+        Settings.key == 'payment_details',
+        Settings.key == 'payment_comment',
+        Settings.key == 'payment_id_prefix',
+        Settings.key == 'payment_message'
+    ))).all()
+
+@database_session
+async def create_payment(session: AsyncSession, user_id: str, type: str, title: str, amount: float, data: dict, currency: str | None = None) -> str:
     payment = Payments(
         user_id=user_id,
         type=type,
@@ -63,7 +79,7 @@ async def create_payment(session: AsyncSession, user_id: int, type: str, title: 
 
 # payment types
 @database_session
-async def prepare_buy(session: AsyncSession, user_id: int, uname: str, months: int, pay: bool = False) -> PaymentInfo | str:
+async def prepare_buy(session: AsyncSession, user_id: str, uname: str, months: int, pay: bool = False) -> PaymentInfo | str:
     tariff = await session.scalar(select(Tariffs).where(Tariffs.uname == uname))
     if not tariff: raise ForeseenException('Тариф не найден')
     if not months:

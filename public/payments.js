@@ -3,6 +3,15 @@ const paymentsBlock = document.querySelector('#payments')
 
 const popupBg = document.querySelector('#popup-bg')
 const popup = document.querySelector('#popup')
+const popupError = document.querySelector('#popup-error')
+const popupTitle = document.querySelector('#popup-content .title')
+const popupAmount = document.querySelector('#popup-content .amount')
+const popupDetails = document.querySelector('#popup-content .details')
+const popupDetailsComment = document.querySelector('#popup-content .details-comment')
+const popupPaymentId = document.querySelector('#popup-content .paymentId')
+const popupPaymentIdComment = document.querySelector('#popup-content .paymentId-comment')
+const popupMessage = document.querySelector('#popup-content .message')
+ 
 
 popupBg.addEventListener('click', closePopup)
 window.addEventListener('popstate', function(event) {
@@ -42,25 +51,20 @@ async function getPayments() {
     }
 }
 async function getPayment(id) {
-    alert(id)
-    return
-    const resp = await fetch('/payments/get', {
-        method: 'POST',
+    const resp = await fetch(`/payments/get/${id}`, {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Telegram ${telegram.initData}`
-        },
-        body: JSON.stringify({
-            payment_id: id,
-        })
+        }
     })
     if (resp.ok) {
         const body = await resp.json()
         client = body
-        displayPayments({ payments: body })
+        displayPayment({ payment: body })
 
     } else {
-        displayPayments({ error: (await resp.json()).detail })
+        displayPayment({ error: (await resp.json()).detail })
     }
 }
 
@@ -105,6 +109,24 @@ function displayPayments({ payments = false, error = false }) {
     } else {
         paymentsError.querySelector('.message').innerHTML = 'У вас ещё нет созданных платежей'
         paymentsError.style.display = 'flex'
+        return
+    }
+}
+function displayPayment({ payment = false, error = false }) {
+    console.log(payment)
+    popupContent.style.display = 'none'
+    popupError.style.display = 'none'
+    if (error) {
+        popupError.querySelector('.message').innerHTML = error
+        popupError.classList.add('error-block')
+        popupError.style.display = 'flex'
+        return
+    }
+    if (payment) {
+
+    } else {
+        popupError.querySelector('.message').innerHTML = 'Ошибка загрузки данных'
+        popupError.style.display = 'flex'
         return
     }
 }

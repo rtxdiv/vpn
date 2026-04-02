@@ -20,15 +20,16 @@ def authorization(func):
         request: Request = kwargs['request'] or None
         auth: str = request.headers.get('Authorization')
         if not auth or not auth.startswith('Telegram '):
-            raise ForeseenException('Необходима авторизация через <a href="https://t.me/rtdVpn/app">Telegram</a>')
+            raise ForeseenException('Необходима авторизация через Telegram')
 
         init_data = auth[9:]
         try:
             user = validate(init_data)
             print(f'Auth passed: { user["id"] }', flush=True)
             request.state.telegram_user = user
-        except TelegramAuthError as e:
-            raise ForeseenException('Ошибка авторизации')
+            request.state.telegram_id = str(user['id'])
+        except TelegramAuthError as exc:
+            raise ForeseenException(f'Ошибка авторизации: {exc}')
 
         return await func(*args, **kwargs)
     return wrapper
