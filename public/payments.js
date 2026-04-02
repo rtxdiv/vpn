@@ -121,6 +121,7 @@ function displayPayment({ payment = false, error = false }) {
         popupError.querySelector('.message').innerHTML = error
         popupError.classList.add('error-block')
         popupError.style.display = 'flex'
+        openPopup()
         return
     }
     if (payment) {
@@ -129,7 +130,6 @@ function displayPayment({ payment = false, error = false }) {
     } else {
         popupError.querySelector('.message').innerHTML = 'Ошибка загрузки данных'
         popupError.style.display = 'flex'
-        return
     }
     openPopup()
 }
