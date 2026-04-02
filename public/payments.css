@@ -64,8 +64,8 @@ body {
 
     img {
         aspect-ratio: 1/1;
-        height: 22px;
-        margin: 0 7px;
+        height: 20px;
+        margin-right: 7px;
     }
     a {
         font-size: 22px;
