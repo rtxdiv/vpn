@@ -59,7 +59,7 @@ function displayPayments({ payments = false, error = false }) {
     }
     if (payments && payments.length != 0) {
         payments.forEach(payment => {
-            const date = new Date(payment.created)
+            const date = new Date(payment.created+'Z')
             const localDate = date.toLocaleDateString('ru-RU', {
                 day: 'numeric',
                 month: 'long',
