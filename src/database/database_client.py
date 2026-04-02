@@ -13,17 +13,17 @@ engine = create_async_engine(
     pool_pre_ping=True,
     pool_recycle=28000,
     pool_size=5,
-    max_overflow=5
+    max_overflow=5,
+    connect_args={
+        'init_command': "SET time_zone = '+00:00'"
+    }
 )
 
 AsyncSessionLocal = async_sessionmaker(
     engine,
     class_=AsyncSession,
     expire_on_commit=False,
-    autoflush=False,
-    connect_args={
-        'init_command': "SET time_zone = '+00:00'"
-    }
+    autoflush=False
 )
 
 def database_session(func):
