@@ -28,8 +28,9 @@ async def cmd_enable(ctx: Message):
         await xui.enable_client(
             user_id=str(ctx.from_user.id),
             limit_ip=5,
-            comment='ADMIN',
-            days=30
+            days=30,
+            reset=30,
+            comment='ADMIN'
         )
         await ctx.answer('Клиент активирован')
         
