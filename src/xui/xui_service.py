@@ -53,6 +53,7 @@ class XUIClient:
             expiry=expiry,
             comment=comment
         )
+        client.id = client.uuid
         client.enable = True
         client.limit_ip = limit_ip
         client.expiry_time = expiry
