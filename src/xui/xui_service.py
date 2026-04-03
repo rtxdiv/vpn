@@ -113,7 +113,6 @@ class XUIClient:
             raise UpdateClientException
 
 
-
     def days_to_expiry(self, days: int) -> int:
         current_date = datetime.today()
         expiry_date = current_date + timedelta(days=days)
