@@ -86,6 +86,7 @@ class XUIClient:
     
 
     async def create_client(self, user_id: str, limit_ip: int, expiry: int, comment: str) -> py3xui.Client:
+        print('CREATE', flush=True)
         if not user_id: raise GetTgIdException
         uuid4 = await self.get_new_uuid()
         new_client = py3xui.Client(
