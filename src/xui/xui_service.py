@@ -106,7 +106,7 @@ class XUIClient:
     
 
     async def update_client(self, uuid4: str, new_client: py3xui.Client):
-        error_log.error(new_client.flow)
+        new_client.flow = self._flow
         try: await self._api.client.update(uuid4, new_client)
         except Exception as exc:
             error_log.error(exc)
