@@ -2,6 +2,7 @@ from src.utils.exceptions import *
 import py3xui
 import uuid
 from src.utils.logger_client import error_log
+from datetime import datetime, timedelta
 
 
 class XUIClient:
@@ -43,10 +44,19 @@ class XUIClient:
         return client[0]
         
 
-    async def enable_client(self, user_id: str, expiry: int):
+    async def enable_client(self, user_id: str, limit_ip: int, comment: str, days: int):
         client = await self._api.client.get_by_email(user_id)
-        client.expiry_time = expiry
+        expiry = self.days_to_expiry(days)
+        if not client: await self.create_client(
+            user_id=user_id,
+            limit_ip=limit_ip,
+            expiry=expiry,
+            comment=comment
+        )
         client.enable = True
+        client.limit_ip = limit_ip
+        client.expiry_time = expiry
+        client.comment = comment
         await self.update_client(client.uuid, client)
 
 
@@ -60,14 +70,10 @@ class XUIClient:
 
 
     async def get_new_uuid(self) -> str:
-        attempts = 3
-        while attempts > 0:
-            attempts -= 1
-            uuid4 = str(uuid.uuid4())
-            client = await self.get_by_uuid(uuid4)
-            if (client): continue
-            return uuid4
-        raise GenerateUuidException
+        uuid4 = str(uuid.uuid4())
+        client = await self.get_by_uuid(uuid4)
+        if client: raise GetUuidException
+        return uuid4
 
 
     async def get_by_uuid(self, uuid: str) -> py3xui.Client:
@@ -103,3 +109,11 @@ class XUIClient:
         except Exception as exc:
             error_log.error(exc)
             raise UpdateClientException
+
+
+    def days_to_expiry(days: int) -> int:
+        current_date = datetime.today()
+        expiry_date = current_date + timedelta(days=days)
+        return expiry_date.timestamp() * 1000
+
+    

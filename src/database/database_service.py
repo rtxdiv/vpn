@@ -1,7 +1,7 @@
-from src.database.database_client import database_session
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, desc
-from src.database.models import *
+from .database_server import database_session
+from .models import *
 from src.utils.exceptions import *
 from src.utils.hashids_client import hashids
 from src.utils.payment_info import PaymentInfo
