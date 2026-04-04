@@ -183,21 +183,22 @@ body {
                     border-radius: 7px;
                     position: relative;
                     overflow: hidden;
-                }
-                .copy {
-                    position: absolute;
-                    left: 0;
-                    height: 100%;
-                    background: #20293f;
-                    display: flex;
-                    align-items: center;
-                    box-shadow: -7px 0px 7px 0px #20293f;
 
-                    > img {
-                        aspect-ratio: 1/1;
-                        height: 20px;
-                        padding: 7px;
-                        opacity: 0.7;
+                    .copy {
+                        position: absolute;
+                        left: 0;
+                        height: 100%;
+                        background: #20293f;
+                        display: flex;
+                        align-items: center;
+                        box-shadow: -7px 0px 7px 0px #20293f;
+
+                        > img {
+                            aspect-ratio: 1/1;
+                            height: 20px;
+                            padding: 7px;
+                            opacity: 0.7;
+                        }
                     }
                 }
                 a {
