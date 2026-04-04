@@ -68,7 +68,17 @@ async def get_payment_settings(session: AsyncSession) -> dict:
 
 @database_session
 async def create_payment(session: AsyncSession, user_id: str, type: str, title: str, amount: float, data: dict, currency: str | None = None) -> str:
-    payment = Payments(
+    payment: Payments = await session.scalar(select(Payments).where(
+        user_id=user_id,
+        type=type,
+        amount=amount,
+        currency=currency,
+        data=data,
+        success=False
+    ))
+    if payment: return payment.payment_id
+
+    new_payment = Payments(
         user_id=user_id,
         type=type,
         title=title,
@@ -76,11 +86,11 @@ async def create_payment(session: AsyncSession, user_id: str, type: str, title: 
         currency=currency,
         data=data
     )
-    session.add(payment)
+    session.add(new_payment)
     await session.flush()
-    payment.payment_id = hashids.encode(payment.id)
-    payment.updated = None
-    return payment.payment_id
+    new_payment.payment_id = hashids.encode(payment.id)
+    new_payment.updated = None
+    return new_payment.payment_id
 
 
 # payment types
@@ -106,7 +116,7 @@ async def prepare_buy(session: AsyncSession, user_id: str, uname: str, months: i
         .where(UserPeriods.user_id == user_id)
         .order_by(desc(UserPeriods.starts))
     )
-    if (last_period):
+    if last_period:
         starts = last_period.starts + timedelta(days=last_period.days)
     else:
         starts = datetime.now(timezone.utc).date()
