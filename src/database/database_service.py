@@ -1,5 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, desc
+from sqlalchemy.orm import joinedload
 from .database_server import database_session
 from .models import *
 from src.utils.exceptions import *
@@ -125,6 +126,7 @@ async def process_buy(session: AsyncSession, payment: Payments):
     last_used_period = await session.scalar(select(UserPeriods)
         .where(UserPeriods.user_id == payment.user_id, UserPeriods.used == True)
         .order_by(desc(UserPeriods.starts))
+        .options(joinedload(UserPeriods.tariffs))
     )
     last_period = await session.scalar(select(UserPeriods)
         .where(UserPeriods.user_id == payment.user_id)
@@ -159,7 +161,7 @@ async def process_buy(session: AsyncSession, payment: Payments):
     else:
         await xui.enable_client(
             user_id=payment.user_id,
-            limit_ip=last_used_period.tariffs,
+            limit_ip=last_used_period.tariffs.devices,
             reset=data.months * 30
         )
 
