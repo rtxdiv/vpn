@@ -6,9 +6,21 @@ from src.utils.exceptions import *
 from src.xui.xui_client import xui
 from src.utils.logger_client import error_log
 from src.bot.bot_server import bot
+from src.database.database_service import *
 
 
 commands_router = Router()
+
+@commands_router.message(Command('process'))
+async def cmd_process(ctx: Message, command: CommandObject):
+    try:
+        await process_payment(payment_id=command.args)
+        
+    except ForeseenException as e:
+        await ctx.answer(str(e))
+    except Exception as e:
+        await ctx.answer('Ошибка сервера')
+        error_log.error(str(e))
 
 @commands_router.message(Command('update'))
 async def cmd_reset(ctx: Message, command: CommandObject):
