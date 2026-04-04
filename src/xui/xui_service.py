@@ -63,11 +63,10 @@ class XUIClient:
 
 
     async def renew_client(self, user_id: str, days: int):
-        client = await self.get_by_tgid(user_id)
-        print(client, flush=True)
+        client = await self.get_by_tgid(user_id=user_id)
         if not client: raise ClientNotFoundException
         client.reset = client.reset + days
-        await self.update_client(client.uuid, client)
+        await self.update_client(client.id, client)
 
 
     async def reset_sub_id(self, user_id: str):
@@ -117,7 +116,7 @@ class XUIClient:
     
 
     async def update_client(self, uuid4: str, new_client: py3xui.Client):
-        new_client.id = new_client.uuid
+        new_client.id = new_client.uuid or new_client.id
         new_client.flow = self._flow
         try: await self._api.client.update(uuid4, new_client)
         except Exception as exc:
