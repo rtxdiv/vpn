@@ -195,7 +195,7 @@ body {
 
                         > img {
                             aspect-ratio: 1/1;
-                            height: 20px;
+                            height: var(--def-font-size);
                             padding: 12px;
                             opacity: 0.5;
                         }
