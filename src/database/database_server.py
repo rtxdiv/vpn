@@ -27,5 +27,11 @@ def database_session(func):
     @wraps(func)
     async def wrapper(*args, **kwargs):
         async with AsyncSessionLocal() as session:
-            return await func(session, *args, **kwargs)
+            try:
+                result = await func(session, *args, **kwargs)
+                await session.commit()
+            except Exception as exc:
+                await session.rollback()
+                raise
+
     return wrapper

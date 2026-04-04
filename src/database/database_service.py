@@ -6,7 +6,8 @@ from src.utils.exceptions import *
 from src.utils.hashids_client import hashids
 from src.utils.payment_info import PaymentInfo
 from src.server.dto.payment_buy_dto import BuyDto
-from datetime import timedelta, datetime
+from datetime import timedelta, datetime, timezone
+from src.xui.xui_client import xui
 
 
 @database_session
@@ -76,7 +77,6 @@ async def create_payment(session: AsyncSession, user_id: str, type: str, title: 
     await session.flush()
     payment.payment_id = hashids.encode(payment.id)
     payment.updated = None
-    await session.commit()
     return payment.payment_id
 
 
@@ -121,7 +121,55 @@ async def prepare_buy(session: AsyncSession, user_id: str, uname: str, months: i
         title=tariff.name,
         total=total
     )
+
+
+async def process_buy(session: AsyncSession, payment: Payments):
+    last_period = await session.scalar(select(UserPeriods)
+        .where(UserPeriods.user_id == payment.user_id, UserPeriods.used == True)
+        .order_by(desc(UserPeriods.starts))
+    )
+
+    try:
+        data = BuyDto.model_validate_json(payment.data)
+    except:
+        raise ForeseenException('Целостность данных повреждена')
     
+    tariff = await session.scalar(select(Tariffs).where(Tariffs.uname == data.to_tariff))
+    if not tariff: raise ForeseenException('Тариф не найден')
+
+    async with session.begin():
+        payment.success = True
+        user_period = UserPeriods(
+            user_id = payment.user_id,
+            tariff_uname = tariff.uname,
+            days = data.months * 30,
+        )
+        session.add(user_period)
+
+        current_date_utc = datetime.now(timezone.utc).date()
+        if not last_period or (current_date_utc > (last_period.starts + timedelta(days=last_period.days))):
+            await xui.enable_client(
+                user_id=payment.user_id,
+                comment=tariff.uname,
+                limit_ip=tariff.devices,
+                days=data.months * 30
+            )
+        else:
+            await xui.renew_client(user_id=payment.user_id, days=data.months * 30)
+
+
+process_types = {
+    'Buy': process_buy
+}
+
+@database_session
+async def process_payment(session: AsyncSession, payment_id: str):
+    payment = await session.scalar(select(Payments).where(Payments.payment_id == payment_id))
+    if not payment: raise ForeseenException('Платёж не найден')
+    handler = process_types.get(payment.type)
+    if not handler: raise ForeseenException('Невозможно обработать платёж')
+    await handler(session, payment)
+
 
 # @database_session
 # async def get_sub_url(session: AsyncSession) -> str:
