@@ -91,6 +91,7 @@ class XUIClient:
     
 
     async def create_client(self, user_id: str, limit_ip: int, expiry: int) -> py3xui.Client:
+        print('CREATE', flush=True)
         if not user_id: raise GetTgIdException
         uuid4 = await self.get_new_uuid()
         new_client = py3xui.Client(
@@ -102,8 +103,10 @@ class XUIClient:
             subId=uuid4,
             flow=self._flow,
         )
+        print(new_client, flush=True)
         try: await self._api.client.add(self._inbound_id, [new_client])
         except Exception as exc:
+            print(exc, flush=True)
             error_log.error(exc)
             raise CreateClientException
         return new_client
