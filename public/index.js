@@ -64,6 +64,7 @@ async function getClient() {
     if (resp.ok) {
         const body = await resp.json()
         client = body
+        alert(body)
         displayClient({ client: body })
 
     } else {

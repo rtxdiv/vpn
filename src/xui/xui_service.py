@@ -47,7 +47,7 @@ class XUIClient:
         try:
             return await self._api.client.get_by_email(user_id)
         except Exception as exc:
-            if 'not Found' in str(exc).lower():
+            if 'not found' in str(exc).lower():
                 return None
             raise
         
