@@ -55,11 +55,12 @@ class XUIClient:
     async def enable_client(self, user_id: str, limit_ip: int, days: int):
         client = await self.get_by_tgid(user_id)
         expiry = self.days_to_expiry(days)
-        if not client: await self.create_client(
-            user_id=user_id,
-            limit_ip=limit_ip,
-            expiry=expiry,
-        )
+        if not client: 
+            return await self.create_client(
+                user_id=user_id,
+                limit_ip=limit_ip,
+                expiry=expiry,
+            )
         client.enable = True
         client.limit_ip = limit_ip
         client.expiry_time = expiry
