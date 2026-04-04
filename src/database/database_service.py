@@ -69,12 +69,12 @@ async def get_payment_settings(session: AsyncSession) -> dict:
 @database_session
 async def create_payment(session: AsyncSession, user_id: str, type: str, title: str, amount: float, data: dict, currency: str | None = None) -> str:
     payment: Payments = await session.scalar(select(Payments).where(
-        user_id=user_id,
-        type=type,
-        amount=amount,
-        currency=currency,
-        data=data,
-        success=False
+        Payments.user_id==user_id,
+        Payments.type==type,
+        Payments.amount==amount,
+        Payments.currency==currency,
+        Payments.data==data,
+        Payments.success==False
     ))
     if payment: return payment.payment_id
 
