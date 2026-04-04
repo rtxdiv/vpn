@@ -233,7 +233,7 @@ body {
     background: #974545 !important;
 }
 .animated {
-    animation: 2s btnOverflowEnable;
+    animation: 1s btnOverflowEnable;
 }
 
 
