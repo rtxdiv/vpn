@@ -83,11 +83,11 @@ body {
             .name {
                 font-size: 34px;
                 font-weight: 800;
-                margin: 4px 0 13px 0;
+                margin: 6px 0 15px 0;
                 color: #a0acb6;
             }
             .devices, .date {
-                margin: 3px 0;
+                margin: 4px 0;
             }
         }
         .bottom {
