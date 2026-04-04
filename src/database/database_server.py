@@ -30,8 +30,8 @@ def database_session(func):
             try:
                 result = await func(session, *args, **kwargs)
                 await session.commit()
-            except Exception as exc:
+                return result
+            except:
                 await session.rollback()
                 raise
-
     return wrapper
