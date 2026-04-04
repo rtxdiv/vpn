@@ -296,7 +296,7 @@ function displayBuy({ info = false, error = false }) {
         popupTitle.innerHTML = info.title
         const date = new Date(info.starts+'Z')
         const currDate = new Date()
-        alert(`${date.setHours(0,0,0,0)}\n${currDate.setHours(0,0,0,0)}`)
+        alert(`${date.setHours(0,0,0,0)}\n${currDate}`)
         const localDate = date.setHours(0,0,0,0) == currDate.setHours(0,0,0,0)
             ? 'сегодня'
             : date.toLocaleDateString('ru-RU', {
