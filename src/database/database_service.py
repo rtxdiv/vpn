@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, desc
+from sqlalchemy import func, select, desc
 from sqlalchemy.orm import joinedload
 from .database_server import database_session
 from .models import *
@@ -69,13 +69,13 @@ async def get_payment_settings(session: AsyncSession) -> dict:
 
 @database_session
 async def create_payment(session: AsyncSession, user_id: str, type: str, title: str, amount: float, data: dict, currency: str | None = None) -> str:
-    print(json.dumps(data), flush=True)
+    print(data, flush=True)
     payment: Payments = await session.scalar(select(Payments).where(
         Payments.user_id==user_id,
         Payments.type==type,
         Payments.amount==amount,
         Payments.currency==currency,
-        # Payments.data==json.dumps(data),
+        func.json_contains(Payments.data, json.dumps(data)),
         Payments.success==False
     ))
     print(payment.data, flush=True)
