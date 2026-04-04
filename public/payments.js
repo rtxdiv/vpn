@@ -129,9 +129,9 @@ function displayPayment({ payment = false, error = false }) {
     if (payment) {
         popupTitle.innerHTML = payment.title
         popupAmount.innerHTML = `К оплате: <green>${payment.amount}${payment.currency}</green>`
-        popupDetails.innerHTML = payment.settings.payment_details
+        popupDetails.querySelector('.text').innerHTML = payment.settings.payment_details
         popupDetailsComment.innerHTML = payment.settings.payment_comment
-        popupPaymentId.innerHTML = `${payment.settings.payment_id_prefix}${payment.paymentId}`
+        popupPaymentId.querySelector('.text').innerHTML = `${payment.settings.payment_id_prefix}${payment.paymentId}`
         if (payment.settings.payment_message) popupMessage.innerHTML = payment.settings.payment_message
         popupContent.style.display = 'flex'
 
@@ -150,6 +150,24 @@ function scrollXTo(id) {
     document.querySelector(id).scrollIntoView({
         behavior: 'smooth',
         block: 'nearest'
+    })
+}
+function showBtnResult({ elem, error = false, message }) {
+    const overflow = elem.querySelector('.overflow')
+    if (!overflow) elem.innerHTML += '<div class="overflow"></div>'
+    overflow.classList.remove('error', 'success', 'animated')
+    overflow.classList.add(error? 'error' : 'success')
+    overflow.textContent = message? message : error? 'Ошибка' : 'Успешно'
+    void overflow.offsetHeight
+    overflow.classList.add('animated')
+}
+function copyContent(elem) {
+    const text = elem.querySelector('.text').textContent
+    navigator.clipboard.writeText(text).then(() => {
+        showBtnResult({ elem: elem, message: 'Скопировано!' })
+    }).catch(err => {
+        console.log(err)
+        showBtnResult({ elem: elem, error: true, message: 'Ошибка копирования' })
     })
 }
 

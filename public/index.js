@@ -364,6 +364,7 @@ function closePopup(event) {
 
 function showBtnResult({ elem, error = false, message }) {
     const overflow = elem.querySelector('.overflow')
+    if (!overflow) elem.innerHTML += '<div class="overflow"></div>'
     overflow.classList.remove('error', 'success', 'animated')
     overflow.classList.add(error? 'error' : 'success')
     overflow.textContent = message? message : error? 'Ошибка' : 'Успешно'

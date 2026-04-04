@@ -211,6 +211,29 @@ body {
     }
 }
 
+.overflow {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    opacity: 0;
+    color: #c3cfdb;
+}
+.success {
+    background: #007b70 !important;
+}
+.error {
+    background: #974545 !important;
+}
+.animated {
+    animation: 2s btnOverflowEnable;
+}
+
 
 red { color: rgb(225, 67, 67); }
 yellow { color: #8f8f50; }
