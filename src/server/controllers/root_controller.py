@@ -15,7 +15,18 @@ async def get_root():
 @root_router.get('/client')
 @authorization
 async def get_sub(request: Request):
-    return await xui.get_by_tgid(request.state.telegram_id)
+    user_id = request.state.telegram_id
+    last_period: UserPeriods = await get_active_period(user_id=user_id)
+    if not last_period: return None
+    client = await xui.get_by_tgid(user_id=user_id)
+    if not client: raise ForeseenException('Клиент подключения отсутствует. Обратитесь в поддержку')
+    return {
+        'enable': client.enable,
+        'tariff': last_period.tariffs.name,
+        'limitIp': last_period.tariffs.name,
+        'expiry': last_period.starts + timedelta(days=last_period.days),
+        'subId': client.sub_id
+    }
 
 @root_router.get('/tariffs')
 async def get_tariffs():

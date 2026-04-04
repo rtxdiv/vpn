@@ -187,10 +187,10 @@ function displayClient({ client = false, error = false }) {
     if (client) {
         clientBlock.style.display = 'flex'
         clientInfoStatus.innerHTML = client.enable? '<green>Активна</green>' : '<red>Неактивна</red>'
-        clientInfoName.innerHTML = `${ client.comment }`
+        clientInfoName.innerHTML = `${ client.tariff }`
         clientInfoDevices.innerHTML = `Устройства: ${ client.limitIp == 0? 'бесконечно' : client.limitIp }`
 
-        const expiry = client.expiryTime
+        const expiry = client.expiry
         let localDate
         if (expiry !== 0) {
             const date = new Date(expiry)
@@ -223,7 +223,6 @@ function displayTariffs({ tariffs = false, error = false }) {
     }
     if (tariffs && tariffs.length != 0) {
         tariffs.forEach(tariff => {
-            if (client && tariff.uname == client["comment"]) clientInfoName.innerHTML = tariff.name
             tariffsBlock.innerHTML += `
                 <div class="block">
                     <div class="top">

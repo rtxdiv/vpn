@@ -12,6 +12,19 @@ from src.xui.xui_client import xui
 
 
 @database_session
+async def get_active_period(session: AsyncSession, user_id: str) -> UserPeriods | None:
+    last_used_period = await session.scalar(select(UserPeriods)
+        .where(UserPeriods.user_id == user_id, UserPeriods.used == True)
+        .order_by(desc(UserPeriods.starts))
+        .options(joinedload(UserPeriods.tariffs))
+    )
+    current_date_utc = datetime.now(timezone.utc).date()
+    isActive = last_used_period and (current_date_utc < (last_used_period.starts + timedelta(days=last_used_period.days)))
+    if isActive:
+        return last_used_period
+    return None
+
+@database_session
 async def get_all_tafiffs(session: AsyncSession) -> list[Tariffs]:
     return (await session.scalars(select(Tariffs).where(Tariffs.enabled == True))).all()
 
