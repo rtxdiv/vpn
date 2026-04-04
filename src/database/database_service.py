@@ -122,7 +122,6 @@ async def prepare_buy(session: AsyncSession, user_id: str, uname: str, months: i
         total=total
     )
 
-
 async def process_buy(session: AsyncSession, payment: Payments):
     last_period = await session.scalar(select(UserPeriods)
         .where(UserPeriods.user_id == payment.user_id, UserPeriods.used == True)
@@ -130,7 +129,7 @@ async def process_buy(session: AsyncSession, payment: Payments):
     )
 
     try:
-        data = BuyDto.model_validate_json(payment.data)
+        data = BuyDto.model_validate(payment.data)
     except:
         raise ForeseenException('Целостность данных повреждена')
     
