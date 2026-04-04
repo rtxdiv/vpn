@@ -136,25 +136,24 @@ async def process_buy(session: AsyncSession, payment: Payments):
     tariff = await session.scalar(select(Tariffs).where(Tariffs.uname == data.to_tariff))
     if not tariff: raise ForeseenException('Тариф не найден')
 
-    async with session.begin():
-        payment.success = True
-        user_period = UserPeriods(
-            user_id = payment.user_id,
-            tariff_uname = tariff.uname,
-            days = data.months * 30,
-        )
-        session.add(user_period)
+    payment.success = True
+    user_period = UserPeriods(
+        user_id = payment.user_id,
+        tariff_uname = tariff.uname,
+        days = data.months * 30,
+    )
+    session.add(user_period)
 
-        current_date_utc = datetime.now(timezone.utc).date()
-        if not last_period or (current_date_utc > (last_period.starts + timedelta(days=last_period.days))):
-            await xui.enable_client(
-                user_id=payment.user_id,
-                comment=tariff.uname,
-                limit_ip=tariff.devices,
-                days=data.months * 30
-            )
-        else:
-            await xui.renew_client(user_id=payment.user_id, days=data.months * 30)
+    current_date_utc = datetime.now(timezone.utc).date()
+    if not last_period or (current_date_utc > (last_period.starts + timedelta(days=last_period.days))):
+        await xui.enable_client(
+            user_id=payment.user_id,
+            comment=tariff.uname,
+            limit_ip=tariff.devices,
+            days=data.months * 30
+        )
+    else:
+        await xui.renew_client(user_id=payment.user_id, days=data.months * 30)
 
 
 process_types = {
