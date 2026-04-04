@@ -79,15 +79,16 @@ body {
 
             .status {
                 font-size: 17px;
+                margin-bottom: 7px;
             }
             .name {
                 font-size: 34px;
                 font-weight: 800;
-                margin: 6px 0 15px 0;
+                margin-bottom: 15px;
                 color: #a0acb6;
             }
             .devices, .date {
-                margin: 4px 0;
+                margin: 5px 0;
             }
         }
         .bottom {
