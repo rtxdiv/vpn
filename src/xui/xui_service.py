@@ -45,7 +45,9 @@ class XUIClient:
         
 
     async def enable_client(self, user_id: str, limit_ip: int, days: int):
+        print('ENABLE CLIENT', flush=True)
         client = await self._api.client.get_by_email(user_id)
+        print(client, flush=True)
         expiry = self.days_to_expiry(days)
         if not client: await self.create_client(
             user_id=user_id,
