@@ -118,6 +118,7 @@ body {
     display: none;
 }
 
+
 #popup-bg {
     display: none;
     position: fixed;
@@ -213,6 +214,7 @@ body {
     }
 }
 
+
 .overflow {
     position: absolute;
     display: flex;
@@ -233,14 +235,14 @@ body {
     background: #974545 !important;
 }
 .animated {
-    animation: 1s btnOverflowEnable;
+    animation: 1.5s btnOverflowEnable;
 }
 
 
 @keyframes btnOverflowEnable {
     0% { opacity: 0; }
-    20% { opacity: 1; }
-    80% { opacity: 1; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
     100% { opacity: 0; }
 }
 

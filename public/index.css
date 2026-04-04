@@ -247,28 +247,6 @@ body {
     display: none;
 }
 
-.overflow {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    pointer-events: none;
-    opacity: 0;
-    color: #c3cfdb;
-}
-.success {
-    background: #007b70 !important;
-}
-.error {
-    background: #974545 !important;
-}
-.animated {
-    animation: 1s btnOverflowEnable;
-}
 
 #popup-bg {
     display: none;
@@ -410,10 +388,34 @@ body {
 }
 
 
+.overflow {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    opacity: 0;
+    color: #c3cfdb;
+}
+.success {
+    background: #007b70 !important;
+}
+.error {
+    background: #974545 !important;
+}
+.animated {
+    animation: 1.5s btnOverflowEnable;
+}
+
+
 @keyframes btnOverflowEnable {
     0% { opacity: 0; }
-    20% { opacity: 1; }
-    80% { opacity: 1; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
     100% { opacity: 0; }
 }
 
