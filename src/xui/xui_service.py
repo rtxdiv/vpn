@@ -44,21 +44,19 @@ class XUIClient:
         return client[0]
         
 
-    async def enable_client(self, user_id: str, comment: str, limit_ip: int, days: int, reset: int = 0):
+    async def enable_client(self, user_id: str, limit_ip: int, days: int = 0, reset: int = 0):
         client = await self._api.client.get_by_email(user_id)
-        expiry = self.days_to_expiry(days)
+        expiry = self.days_to_expiry(days) if days else 0
         if not client: await self.create_client(
             user_id=user_id,
-            comment=comment,
             limit_ip=limit_ip,
             expiry=expiry,
             reset=reset
         )
         client.enable = True
-        client.comment = comment
         client.limit_ip = limit_ip
         client.expiry_time = expiry
-        client.reset = reset if reset != 0 else client.reset
+        client.reset += reset
         await self.update_client(client.uuid, client)
 
 
@@ -69,7 +67,7 @@ class XUIClient:
         if not client: raise ClientNotFoundException
         client.comment = client_data.comment
         client.limit_ip = client_data.limit_ip
-        client.reset = client.reset + days
+        client.expiry_time += self.days_to_expiry(days=days)
         await self.update_client(client.uuid, client)
 
 
@@ -98,14 +96,13 @@ class XUIClient:
         return client[0]
     
 
-    async def create_client(self, user_id: str, comment: str, limit_ip: int, expiry: int, reset: int) -> py3xui.Client:
+    async def create_client(self, user_id: str, limit_ip: int, expiry: int, reset: int = 0) -> py3xui.Client:
         if not user_id: raise GetTgIdException
         uuid4 = await self.get_new_uuid()
         new_client = py3xui.Client(
             id=uuid4,
             enable=True,
             email=user_id,
-            comment=comment,
             limitIp=limit_ip,
             expiryTime=expiry,
             subId=uuid4,
@@ -133,4 +130,6 @@ class XUIClient:
         expiry_date = current_date + timedelta(days=days)
         return int(expiry_date.timestamp() * 1000)
 
+    def days_to_timestamp(self, days: int):
+        return days * 24 * 60 * 60 * 1000
     

@@ -153,12 +153,15 @@ async def process_buy(session: AsyncSession, payment: Payments):
     if not last_used_period or (current_date_utc > (last_used_period.starts + timedelta(days=last_used_period.days))):
         await xui.enable_client(
             user_id=payment.user_id,
-            comment=tariff.uname,
             limit_ip=tariff.devices,
             days=data.months * 30
         )
     else:
-        await xui.renew_client(user_id=payment.user_id, days=data.months * 30)
+        await xui.enable_client(
+            user_id=payment.user_id,
+            limit_ip=last_used_period.tariffs,
+            reset=data.months * 30
+        )
 
 
 process_types = {
