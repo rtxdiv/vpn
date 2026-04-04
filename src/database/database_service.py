@@ -145,7 +145,7 @@ async def process_buy(session: AsyncSession, payment: Payments):
         user_id = payment.user_id,
         tariff_uname = tariff.uname,
         days = data.months * 30,
-        starts=last_period.starts + timedelta(days=last_period.days) + timedelta(days=data.months * 30) if last_period
+        starts=last_period.starts + timedelta(days=last_period.days) if last_period
             else current_date_utc + timedelta(days=data.months * 30)
     )
     session.add(user_period)
