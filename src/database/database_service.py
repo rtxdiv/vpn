@@ -76,6 +76,7 @@ async def create_payment(session: AsyncSession, user_id: str, type: str, title: 
         Payments.data==data,
         Payments.success==False
     ))
+    print(payment)
     if payment: return payment.payment_id
 
     new_payment = Payments(
