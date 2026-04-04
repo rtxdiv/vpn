@@ -48,7 +48,7 @@ class XUIClient:
         client = await self.get_by_tgid(user_id)
         expiry = self.days_to_expiry(days)
         if not client:
-            await self.create_client(
+            return await self.create_client(
                 user_id=user_id,
                 limit_ip=limit_ip,
                 expiry=expiry,
@@ -56,23 +56,24 @@ class XUIClient:
         client.enable = True
         client.limit_ip = limit_ip
         client.expiry_time = expiry
-        await self.update_client(client.uuid, client)
+        await self.update_client(client.id, client)
 
 
     async def renew_client(self, user_id: str, limit_ip: int, reset: int):
         client = await self.get_by_tgid(user_id)
-        if not client: raise ForeseenException('Клиент не найден')
+        if not client: raise ClientNotFoundException
         client.limit_ip = limit_ip
         client.reset = reset
-        await self.update_client(client.uuid, client)
+        await self.update_client(client.id, client)
 
 
     async def reset_sub_id(self, user_id: str):
         if not user_id: raise GetTgIdException
         client = await self.get_by_tgid(user_id)
-        old_uuid = client.uuid
+        if not client: ClientNotFoundException
+        old_uuid = client.id
         uuid4 = await self.get_new_uuid()
-        client.uuid = uuid4
+        client.id = uuid4
         client.sub_id = uuid4
         await self.update_client(old_uuid, client)
 
