@@ -36,7 +36,7 @@ class XUIClient:
         return inbound
 
 
-    async def get_by_tgid(self, user_id: str) -> py3xui.Client:
+    async def get_by_tgid(self, user_id: str) -> py3xui.Client | None:
         if not user_id: raise GetTgIdException
         inbound = await self.get_inbound()
         client = [item for item in inbound.settings.clients if item.email == user_id]
@@ -47,11 +47,12 @@ class XUIClient:
     async def enable_client(self, user_id: str, limit_ip: int, days: int):
         client = await self.get_by_tgid(user_id)
         expiry = self.days_to_expiry(days)
-        if not client: await self.create_client(
-            user_id=user_id,
-            limit_ip=limit_ip,
-            expiry=expiry,
-        )
+        if not client:
+            await self.create_client(
+                user_id=user_id,
+                limit_ip=limit_ip,
+                expiry=expiry,
+            )
         client.enable = True
         client.limit_ip = limit_ip
         client.expiry_time = expiry
