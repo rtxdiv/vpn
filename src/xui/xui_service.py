@@ -44,28 +44,26 @@ class XUIClient:
         return client[0]
         
 
-    async def enable_client(self, user_id: str, comment: str, limit_ip: int, days: int, reset: int = 0):
+    async def enable_client(self, user_id: str, comment: str, limit_ip: int, days: int):
         client = await self._api.client.get_by_email(user_id)
         expiry = self.days_to_expiry(days)
         if not client: await self.create_client(
             user_id=user_id,
             comment=comment,
             limit_ip=limit_ip,
-            expiry=expiry,
-            reset=reset
+            expiry=expiry
         )
         client.enable = True
         client.comment = comment
         client.limit_ip = limit_ip
         client.expiry_time = expiry
-        client.reset = reset if reset != 0 else client.reset
         await self.update_client(client.uuid, client)
 
 
     async def renew_client(self, user_id: str, days: int):
         client = await self._api.client.get_by_email(user_id)
         if not client: raise ClientNotFoundException
-        client.reset = days
+        client.expiry_time += self.days_to_expiry(days=days)
         await self.update_client(client.uuid, client)
 
 
@@ -94,7 +92,7 @@ class XUIClient:
         return client[0]
     
 
-    async def create_client(self, user_id: str, comment: str, limit_ip: int, expiry: int, reset: int) -> py3xui.Client:
+    async def create_client(self, user_id: str, comment: str, limit_ip: int, expiry: int) -> py3xui.Client:
         if not user_id: raise GetTgIdException
         uuid4 = await self.get_new_uuid()
         new_client = py3xui.Client(
@@ -106,7 +104,6 @@ class XUIClient:
             expiryTime=expiry,
             subId=uuid4,
             flow=self._flow,
-            reset=reset
         )
         try: await self._api.client.add(self._inbound_id, [new_client])
         except Exception as exc:
