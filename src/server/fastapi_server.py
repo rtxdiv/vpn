@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from root import PUBLIC_DIR
 from src.database.database_service import *
@@ -16,16 +17,26 @@ app.include_router(root_router)
 app.include_router(payment_router)
 app.include_router(docs_router)
 
+
 @app.exception_handler(ForeseenException)
-def forseen_exception_handler(request: Request, exc: ForeseenException):
-    raise HTTPException(status_code=400, detail=str(exc))
+async def forseen_exception_handler(request: Request, exc: ForeseenException):
+    return JSONResponse(
+        status_code=400,
+        content={"detail": str(exc)}
+    )
 
 @app.exception_handler(Exception)
-def forseen_exception_handler(request: Request, exc: Exception):
+async def forseen_exception_handler(request: Request, exc: Exception):
     error_log.error(exc)
-    raise HTTPException(status_code=500, detail='Ошибка сервера')
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "Ошибка сервера"}
+    )
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
     error_log.error(exc)
-    raise HTTPException(status_code=422, detail='Ошибка валидации данных')
+    return JSONResponse(
+        status_code=422,
+        content={"detail": "Ошибка валидации данных"}
+    )
