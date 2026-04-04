@@ -36,45 +36,49 @@ class XUIClient:
         return inbound
 
 
-    async def get_by_tgid(self, user_id: str) -> py3xui.Client | None:
-        if not user_id: raise GetTgIdException
-        inbound = await self.get_inbound()
-        client = [item for item in inbound.settings.clients if item.email == user_id]
-        print(client[0].__dict__, flush=True)
-        if not client: return None
-        return client[0]
+    # async def get_by_tgid(self, user_id: str) -> py3xui.Client:
+    #     if not user_id: raise GetTgIdException
+    #     inbound = await self.get_inbound()
+    #     client = [item for item in inbound.settings.clients if item.email == user_id]
+    #     if not client: return None
+    #     return client[0]
+    
+    async def get_by_tgid(self, user_id):
+        try:
+            return await self._api.client.get_by_email(user_id)
+        except Exception as exc:
+            if 'not Found' in str(exc).lower():
+                return None
+            raise
         
 
     async def enable_client(self, user_id: str, limit_ip: int, days: int):
         client = await self.get_by_tgid(user_id)
         expiry = self.days_to_expiry(days)
-        if not client:
-            return await self.create_client(
-                user_id=user_id,
-                limit_ip=limit_ip,
-                expiry=expiry,
-            )
+        if not client: await self.create_client(
+            user_id=user_id,
+            limit_ip=limit_ip,
+            expiry=expiry,
+        )
         client.enable = True
         client.limit_ip = limit_ip
         client.expiry_time = expiry
-        await self.update_client(client.id, client)
-
+        await self.update_client(client.uuid, client)
 
     async def renew_client(self, user_id: str, limit_ip: int, reset: int):
         client = await self.get_by_tgid(user_id)
-        if not client: raise ClientNotFoundException
+        if not client: raise ForeseenException('Клиент не найден')
         client.limit_ip = limit_ip
         client.reset = reset
-        await self.update_client(client.id, client)
+        await self.update_client(client.uuid, client)
 
 
     async def reset_sub_id(self, user_id: str):
         if not user_id: raise GetTgIdException
         client = await self.get_by_tgid(user_id)
-        if not client: ClientNotFoundException
-        old_uuid = client.id
+        old_uuid = client.uuid
         uuid4 = await self.get_new_uuid()
-        client.id = uuid4
+        client.uuid = uuid4
         client.sub_id = uuid4
         await self.update_client(old_uuid, client)
 
@@ -106,6 +110,7 @@ class XUIClient:
             subId=uuid4,
             flow=self._flow,
         )
+        print(new_client, flush=True)
         try: await self._api.client.add(self._inbound_id, [new_client])
         except Exception as exc:
             error_log.error(f'Ошибка при создании клиента: {exc}')
@@ -114,8 +119,8 @@ class XUIClient:
     
 
     async def update_client(self, uuid4: str, new_client: py3xui.Client):
+        new_client.id = new_client.uuid
         new_client.flow = self._flow
-        print(f'ОБНОВЛЕНИЕ КЛИЕНТА: {uuid4}, {new_client}', flush=True)
         try: await self._api.client.update(uuid4, new_client)
         except Exception as exc:
             error_log.error(f'Ошибка при обновлении клиента: {exc}')
