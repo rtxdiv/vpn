@@ -111,7 +111,6 @@ class XUIClient:
             subId=uuid4,
             flow=self._flow,
         )
-        print(new_client, flush=True)
         try: await self._api.client.add(self._inbound_id, [new_client])
         except Exception as exc:
             error_log.error(f'Ошибка при создании клиента: {exc}')

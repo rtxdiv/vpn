@@ -153,14 +153,14 @@ async def process_buy(session: AsyncSession, payment: Payments):
     session.add(user_period)
 
     if not last_used_period or (current_date_utc > (last_used_period.starts + timedelta(days=last_used_period.days))):
-        print('НЕТ АКТИВНОЙ ПОДПИСКИ, enable')
+        print('НЕТ АКТИВНОЙ ПОДПИСКИ, enable', flush=True)
         await xui.enable_client(
             user_id=payment.user_id,
             limit_ip=tariff.devices,
             days=data.months * 30
         )
     else:
-        print('ЕСТЬ АКТИВНАЯ ПОДПИСКА, renew')
+        print('ЕСТЬ АКТИВНАЯ ПОДПИСКА, renew', flush=True)
         await xui.renew_client(
             user_id=payment.user_id,
             limit_ip=last_used_period.tariffs.devices,
