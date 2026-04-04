@@ -123,15 +123,18 @@ async def prepare_buy(session: AsyncSession, user_id: str, uname: str, months: i
     )
 
 async def process_buy(session: AsyncSession, payment: Payments):
+    last_period = await session.scalar(select(UserPeriods)
+        .where(UserPeriods.user_id == payment.user_id)
+        .order_by(desc(UserPeriods.starts))
+    )
     last_used_period = await session.scalar(select(UserPeriods)
         .where(UserPeriods.user_id == payment.user_id, UserPeriods.used == True)
         .order_by(desc(UserPeriods.starts))
         .options(joinedload(UserPeriods.tariffs))
     )
-    last_period = await session.scalar(select(UserPeriods)
-        .where(UserPeriods.user_id == payment.user_id)
-        .order_by(desc(UserPeriods.starts))
-    )
+
+    current_date_utc = datetime.now(timezone.utc).date()
+    isActive = last_used_period and (current_date_utc < (last_used_period.starts + timedelta(days=last_used_period.days)))
 
     try:
         data = BuyDto.model_validate(payment.data)
@@ -141,26 +144,25 @@ async def process_buy(session: AsyncSession, payment: Payments):
     tariff = await session.scalar(select(Tariffs).where(Tariffs.uname == data.to_tariff))
     if not tariff: raise ForeseenException('Тариф не найден')
 
-    current_date_utc = datetime.now(timezone.utc).date()
     payment.success = True
-    user_period = UserPeriods(
-        user_id = payment.user_id,
-        tariff_uname = tariff.uname,
-        days = data.months * 30,
+    user_period=UserPeriods(
+        user_id=payment.user_id,
+        tariff_uname=tariff.uname,
+        days=data.months * 30,
         starts=last_period.starts + timedelta(days=last_period.days) if last_period
-            else current_date_utc + timedelta(days=data.months * 30)
+            else current_date_utc + timedelta(days=data.months * 30),
+        used=not isActive
     )
     session.add(user_period)
 
-    if not last_used_period or (current_date_utc > (last_used_period.starts + timedelta(days=last_used_period.days))):
-        print('НЕТ АКТИВНОЙ ПОДПИСКИ, enable', flush=True)
+    if not isActive:
+        print(last_used_period)
         await xui.enable_client(
             user_id=payment.user_id,
             limit_ip=tariff.devices,
             days=data.months * 30
         )
     else:
-        print('ЕСТЬ АКТИВНАЯ ПОДПИСКА, renew', flush=True)
         await xui.renew_client(
             user_id=payment.user_id,
             limit_ip=last_used_period.tariffs.devices,
