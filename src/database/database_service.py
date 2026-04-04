@@ -74,7 +74,7 @@ async def create_payment(session: AsyncSession, user_id: str, type: str, title: 
         Payments.amount==amount,
         Payments.currency==currency,
         Payments.data==data,
-        Payments.success==False
+        # Payments.success==False
     ))
     if payment: return payment.payment_id
 
