@@ -88,7 +88,7 @@ async def create_payment(session: AsyncSession, user_id: str, type: str, title: 
     )
     session.add(new_payment)
     await session.flush()
-    new_payment.payment_id = hashids.encode(payment.id)
+    new_payment.payment_id = hashids.encode(new_payment.id)
     new_payment.updated = None
     return new_payment.payment_id
 
