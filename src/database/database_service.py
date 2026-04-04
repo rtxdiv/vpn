@@ -11,7 +11,7 @@ from datetime import timedelta, datetime
 
 @database_session
 async def get_all_tafiffs(session: AsyncSession) -> list[Tariffs]:
-    return (await session.scalars(select(Tariffs))).all()
+    return (await session.scalars(select(Tariffs).where(Tariffs.enabled == True))).all()
 
 @database_session
 async def get_all_settings(session: AsyncSession) -> list[Settings]:
@@ -83,7 +83,7 @@ async def create_payment(session: AsyncSession, user_id: str, type: str, title: 
 # payment types
 @database_session
 async def prepare_buy(session: AsyncSession, user_id: str, uname: str, months: int, pay: bool = False) -> PaymentInfo | str:
-    tariff = await session.scalar(select(Tariffs).where(Tariffs.uname == uname))
+    tariff = await session.scalar(select(Tariffs).where(Tariffs.uname == uname, Tariffs.enabled == True))
     if not tariff: raise ForeseenException('Тариф не найден')
     if not months:
         period = await session.scalar(
