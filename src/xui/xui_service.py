@@ -63,7 +63,9 @@ class XUIClient:
     async def renew_client(self, user_id: str, days: int):
         client = await self._api.client.get_by_email(user_id)
         if not client: raise ClientNotFoundException
-        client.expiry_time += self.days_to_expiry(days=days)
+        client.comment = client.comment
+        client.limit_ip = client.limit_ip
+        client.expiry_time = client.expiry_time + self.days_to_ms(days=days)
         await self.update_client(client.uuid, client)
 
 
@@ -125,5 +127,8 @@ class XUIClient:
         current_date = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0)
         expiry_date = current_date + timedelta(days=days)
         return int(expiry_date.timestamp() * 1000)
+    
+    def days_to_ms(self, days: int) -> int:
+        return days * 86400000
 
     
