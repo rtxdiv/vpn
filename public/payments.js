@@ -98,7 +98,7 @@ function displayPayments({ payments = false, error = false }) {
                 minute: '2-digit'
             }).replace(' г.', '')
             paymentsBlock.innerHTML += `
-                <div class="block" ${payment.success? '' : `onclick="getPayment(${payment.payment_id})"`}>
+                <div class="block" ${payment.success? '' : `onclick="getPayment('${payment.payment_id}')"`}>
                     <div class="top">
                         <a class="title">${payment.title}</a>
                         <a class="total">${payment.amount}${payment.currency}</a>
