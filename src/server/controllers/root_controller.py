@@ -15,9 +15,7 @@ async def get_root():
 @root_router.get('/client')
 @authorization
 async def get_sub(request: Request):
-    client = await xui.get_by_tgid(request.state.telegram_id)
-    print(client, flush=True)
-    return client
+    return await xui.get_by_tgid(request.state.telegram_id)
 
 @root_router.get('/tariffs')
 async def get_tariffs():
