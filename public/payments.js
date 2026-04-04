@@ -155,7 +155,7 @@ function scrollXTo(id) {
 function showBtnResult({ elem, error = false, message }) {
     let overflow = elem.querySelector('.overflow')
     if (!overflow) {
-        elem.innerHTML += '<div class="overflow"></div>'
+        elem.insertAdjacentHTML('beforeend', '<div class="overflow"></div>')
         overflow = elem.querySelector('.overflow')
     }
     overflow.classList.remove('error', 'success', 'animated')
