@@ -180,6 +180,7 @@ body {
                     background: #20293f;
                     border: 1px #2d3a58 solid;
                     border-radius: 7px;
+                    position: relative
                 }
                 a {
                     font-size: 16px;
