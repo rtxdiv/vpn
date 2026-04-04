@@ -72,9 +72,9 @@ async def create_payment(session: AsyncSession, user_id: str, type: str, title: 
         Payments.user_id==user_id,
         Payments.type==type,
         Payments.amount==amount,
-        # Payments.currency==currency,
-        # Payments.data==data,
-        # Payments.success==False
+        Payments.currency==currency,
+        Payments.data==data,
+        Payments.success==False
     ))
     if payment: return payment.payment_id
 
@@ -135,6 +135,7 @@ async def prepare_buy(session: AsyncSession, user_id: str, uname: str, months: i
             type='Buy',
             title=title,
             amount=total,
+            currency='₽',
             data=payment_data.model_dump()
         )
         return payment_id
