@@ -136,15 +136,16 @@ async def process_buy(session: AsyncSession, payment: Payments):
     tariff = await session.scalar(select(Tariffs).where(Tariffs.uname == data.to_tariff))
     if not tariff: raise ForeseenException('Тариф не найден')
 
+    current_date_utc = datetime.now(timezone.utc).date()
     payment.success = True
     user_period = UserPeriods(
         user_id = payment.user_id,
         tariff_uname = tariff.uname,
         days = data.months * 30,
+        starts=current_date_utc + timedelta(days=data.months * 30)
     )
     session.add(user_period)
 
-    current_date_utc = datetime.now(timezone.utc).date()
     if not last_period or (current_date_utc > (last_period.starts + timedelta(days=last_period.days))):
         await xui.enable_client(
             user_id=payment.user_id,
@@ -164,6 +165,7 @@ process_types = {
 async def process_payment(session: AsyncSession, payment_id: str):
     payment = await session.scalar(select(Payments).where(Payments.payment_id == payment_id))
     if not payment: raise ForeseenException('Платёж не найден')
+    if payment.success == True: raise ForeseenException('Платёж уже выполнен')
     handler = process_types.get(payment.type)
     if not handler: raise ForeseenException('Невозможно обработать платёж')
     await handler(session, payment)
