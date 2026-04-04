@@ -159,9 +159,9 @@ async def process_buy(session: AsyncSession, payment: Payments):
             days=data.months * 30
         )
     else:
-        await xui.enable_client(
+        await xui.renew_client(
             user_id=payment.user_id,
-            limit_ip=last_used_period.tariffs.devices,
+            limit_ip=last_period.tariffs.devices,
             reset=data.months * 30
         )
 

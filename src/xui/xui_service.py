@@ -44,30 +44,24 @@ class XUIClient:
         return client[0]
         
 
-    async def enable_client(self, user_id: str, limit_ip: int, days: int = 0, reset: int = 0):
+    async def enable_client(self, user_id: str, limit_ip: int, days: int):
         client = await self._api.client.get_by_email(user_id)
-        expiry = self.days_to_expiry(days) if days else 0
+        expiry = self.days_to_expiry(days)
         if not client: await self.create_client(
             user_id=user_id,
             limit_ip=limit_ip,
             expiry=expiry,
-            reset=reset
         )
         client.enable = True
         client.limit_ip = limit_ip
         client.expiry_time = expiry
-        client.reset += reset
         await self.update_client(client.uuid, client)
 
-
-    async def renew_client(self, user_id: str, days: int):
-        client_data = await self.get_by_tgid(user_id=user_id)
-        if not client_data: raise ClientNotFoundException
+    async def renew_client(self, user_id: str, limit_ip: int, reset: int):
         client = await self._api.client.get_by_email(user_id)
-        if not client: raise ClientNotFoundException
-        client.comment = client_data.comment
-        client.limit_ip = client_data.limit_ip
-        client.expiry_time += self.days_to_expiry(days=days)
+        if not client: raise ForeseenException('Клиент не найден')
+        client.limit_ip = limit_ip
+        client.reset = reset
         await self.update_client(client.uuid, client)
 
 
@@ -96,7 +90,7 @@ class XUIClient:
         return client[0]
     
 
-    async def create_client(self, user_id: str, limit_ip: int, expiry: int, reset: int = 0) -> py3xui.Client:
+    async def create_client(self, user_id: str, limit_ip: int, expiry: int) -> py3xui.Client:
         if not user_id: raise GetTgIdException
         uuid4 = await self.get_new_uuid()
         new_client = py3xui.Client(
@@ -107,7 +101,6 @@ class XUIClient:
             expiryTime=expiry,
             subId=uuid4,
             flow=self._flow,
-            reset=reset
         )
         try: await self._api.client.add(self._inbound_id, [new_client])
         except Exception as exc:
