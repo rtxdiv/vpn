@@ -63,7 +63,7 @@ class XUIClient:
 
 
     async def renew_client(self, user_id: str, days: int):
-        client = await self._api.client.get_by_email(user_id)
+        client = await self.get_by_tgid(user_id)
         print(client, flush=True)
         if not client: raise ClientNotFoundException
         client.reset = client.reset + days
