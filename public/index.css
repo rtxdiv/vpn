@@ -18,6 +18,7 @@ html {
 }
 * {
     -webkit-tap-highlight-color: transparent;
+    line-height: 1;
 }
 body {
     background: #0a1222;
