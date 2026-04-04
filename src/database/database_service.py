@@ -9,6 +9,7 @@ from src.utils.payment_info import PaymentInfo
 from src.server.dto.payment_buy_dto import BuyDto
 from datetime import timedelta, datetime, timezone
 from src.xui.xui_client import xui
+import json
 
 
 @database_session
@@ -73,7 +74,7 @@ async def create_payment(session: AsyncSession, user_id: str, type: str, title: 
         Payments.type==type,
         Payments.amount==amount,
         Payments.currency==currency,
-        # Payments.data==data,
+        Payments.data==json.dumps(data),
         Payments.success==False
     ))
     if payment: return payment.payment_id
