@@ -400,6 +400,7 @@ body {
     pointer-events: none;
     opacity: 0;
     color: #c3cfdb;
+    z-index: 42;
 }
 .success {
     background: #007b70 !important;
