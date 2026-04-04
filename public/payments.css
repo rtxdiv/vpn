@@ -236,6 +236,13 @@ body {
 }
 
 
+@keyframes btnOverflowEnable {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
 red { color: rgb(225, 67, 67); }
 yellow { color: #8f8f50; }
 green { color: #009185; }
