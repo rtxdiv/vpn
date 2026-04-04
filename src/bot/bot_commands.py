@@ -15,6 +15,7 @@ commands_router = Router()
 async def cmd_process(ctx: Message, command: CommandObject):
     try:
         await process_payment(payment_id=command.args)
+        await ctx.answer('Платёж обработан')
         
     except ForeseenException as e:
         await ctx.answer(str(e))

@@ -24,17 +24,6 @@ async def get_all_allowed_periods(session: AsyncSession) -> list[PaymentPeriods]
     return (await session.scalars(select(PaymentPeriods))).all()
 
 @database_session
-async def get_user_periods_end(session: AsyncSession, user_id: str) -> str:
-    last_period = await session.scalar(
-        select(UserPeriods)
-        .where(UserPeriods.user_id == user_id)
-    )
-    if not last_period: return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    end_date = last_period.starts + timedelta(days=last_period.days)
-    return end_date
-
-
-@database_session
 async def get_all_payments(session: AsyncSession, user_id: str) -> list[Payments]:
     return (await session.scalars(
         select(Payments)
@@ -99,6 +88,15 @@ async def prepare_buy(session: AsyncSession, user_id: str, uname: str, months: i
     if not period:
         raise ForeseenException('Нет периодов для покупки' if not months else 'Такой период для оплаты недоступен')
 
+    last_period = await session.scalar(select(UserPeriods)
+        .where(UserPeriods.user_id == user_id, UserPeriods.used == True)
+        .order_by(desc(UserPeriods.starts))
+    )
+    if (last_period):
+        starts = last_period.starts + timedelta(days=last_period.days)
+    else:
+        datetime.now(timezone.utc).date()
+
     total = round(tariff.price * period.months * (1 - period.discount))
 
     if pay:
@@ -119,6 +117,7 @@ async def prepare_buy(session: AsyncSession, user_id: str, uname: str, months: i
 
     return PaymentInfo(
         title=tariff.name,
+        starts=starts,
         total=total
     )
 
