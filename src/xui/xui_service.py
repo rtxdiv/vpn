@@ -113,9 +113,8 @@ class XUIClient:
     
 
     async def update_client(self, uuid4: str, new_client: py3xui.Client):
-        print(f'ОБНОВЛЕНИЕ КЛИЕНТА: {uuid4}, {new_client}', flush=True)
-        new_client.id = new_client.uuid or new_client.id
         new_client.flow = self._flow
+        print(f'ОБНОВЛЕНИЕ КЛИЕНТА: {uuid4}, {new_client}', flush=True)
         try: await self._api.client.update(uuid4, new_client)
         except Exception as exc:
             error_log.error(f'Ошибка при обновлении клиента: {exc}')
