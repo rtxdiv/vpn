@@ -70,7 +70,7 @@ class XUIClient:
         client = await self.get_by_tgid(user_id)
         if not client: raise ForeseenException('Клиент не найден')
         client.limit_ip = limit_ip
-        client.reset = reset
+        client.reset += reset
         await self.update_client(client.uuid, client)
 
 
