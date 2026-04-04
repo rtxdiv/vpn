@@ -38,33 +38,35 @@ class XUIClient:
 
     async def get_by_tgid(self, user_id: str) -> py3xui.Client:
         if not user_id: raise GetTgIdException
-        client = await self._api.client.get_by_email(user_id)
+        inbound = await self.get_inbound()
+        client = [item for item in inbound.settings.clients if item.email == user_id]
         if not client: return None
-        return client
+        return client[0]
         
 
-    async def enable_client(self, user_id: str, comment: str, limit_ip: int, days: int):
+    async def enable_client(self, user_id: str, comment: str, limit_ip: int, days: int, reset: int = 0):
         client = await self._api.client.get_by_email(user_id)
         expiry = self.days_to_expiry(days)
         if not client: await self.create_client(
             user_id=user_id,
             comment=comment,
             limit_ip=limit_ip,
-            expiry=expiry
+            expiry=expiry,
+            reset=reset
         )
         client.enable = True
         client.comment = comment
         client.limit_ip = limit_ip
         client.expiry_time = expiry
+        client.reset = reset if reset != 0 else client.reset
         await self.update_client(client.uuid, client)
 
 
     async def renew_client(self, user_id: str, days: int):
         client = await self._api.client.get_by_email(user_id)
+        print(client, flush=True)
         if not client: raise ClientNotFoundException
-        client.comment = client.comment
-        client.limit_ip = client.limit_ip
-        client.expiry_time = client.expiry_time + self.days_to_ms(days=days)
+        client.reset = client.reset + days
         await self.update_client(client.uuid, client)
 
 
@@ -93,7 +95,7 @@ class XUIClient:
         return client[0]
     
 
-    async def create_client(self, user_id: str, comment: str, limit_ip: int, expiry: int) -> py3xui.Client:
+    async def create_client(self, user_id: str, comment: str, limit_ip: int, expiry: int, reset: int) -> py3xui.Client:
         if not user_id: raise GetTgIdException
         uuid4 = await self.get_new_uuid()
         new_client = py3xui.Client(
@@ -105,6 +107,7 @@ class XUIClient:
             expiryTime=expiry,
             subId=uuid4,
             flow=self._flow,
+            reset=reset
         )
         try: await self._api.client.add(self._inbound_id, [new_client])
         except Exception as exc:
@@ -126,8 +129,5 @@ class XUIClient:
         current_date = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0)
         expiry_date = current_date + timedelta(days=days)
         return int(expiry_date.timestamp() * 1000)
-    
-    def days_to_ms(self, days: int) -> int:
-        return days * 86400000
 
     
