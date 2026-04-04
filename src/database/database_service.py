@@ -89,7 +89,7 @@ async def prepare_buy(session: AsyncSession, user_id: str, uname: str, months: i
         raise ForeseenException('Нет периодов для покупки' if not months else 'Такой период для оплаты недоступен')
 
     last_period = await session.scalar(select(UserPeriods)
-        .where(UserPeriods.user_id == user_id, UserPeriods.used == True)
+        .where(UserPeriods.user_id == user_id)
         .order_by(desc(UserPeriods.starts))
     )
     if (last_period):
@@ -122,7 +122,7 @@ async def prepare_buy(session: AsyncSession, user_id: str, uname: str, months: i
     )
 
 async def process_buy(session: AsyncSession, payment: Payments):
-    last_period = await session.scalar(select(UserPeriods)
+    last_used_period = await session.scalar(select(UserPeriods)
         .where(UserPeriods.user_id == payment.user_id, UserPeriods.used == True)
         .order_by(desc(UserPeriods.starts))
     )
@@ -145,7 +145,7 @@ async def process_buy(session: AsyncSession, payment: Payments):
     )
     session.add(user_period)
 
-    if not last_period or (current_date_utc > (last_period.starts + timedelta(days=last_period.days))):
+    if not last_used_period or (current_date_utc > (last_used_period.starts + timedelta(days=last_used_period.days))):
         await xui.enable_client(
             user_id=payment.user_id,
             comment=tariff.uname,
