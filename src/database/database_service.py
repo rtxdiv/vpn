@@ -126,6 +126,10 @@ async def process_buy(session: AsyncSession, payment: Payments):
         .where(UserPeriods.user_id == payment.user_id, UserPeriods.used == True)
         .order_by(desc(UserPeriods.starts))
     )
+    last_period = await session.scalar(select(UserPeriods)
+        .where(UserPeriods.user_id == payment.user_id)
+        .order_by(desc(UserPeriods.starts))
+    )
 
     try:
         data = BuyDto.model_validate(payment.data)
@@ -141,7 +145,8 @@ async def process_buy(session: AsyncSession, payment: Payments):
         user_id = payment.user_id,
         tariff_uname = tariff.uname,
         days = data.months * 30,
-        starts=current_date_utc + timedelta(days=data.months * 30)
+        starts=last_period.starts + timedelta(days=last_period.days) + timedelta(days=data.months * 30) if last_period
+            else current_date_utc + timedelta(days=data.months * 30)
     )
     session.add(user_period)
 
