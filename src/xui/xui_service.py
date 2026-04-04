@@ -39,7 +39,9 @@ class XUIClient:
     async def get_by_tgid(self, user_id: str) -> py3xui.Client:
         if not user_id: raise GetTgIdException
         inbound = await self.get_inbound()
+        print(inbound, flush=True)
         client = [item for item in inbound.settings.clients if item.email == user_id]
+        print(client, flush=True)
         if not client: return None
         return client[0]
         
