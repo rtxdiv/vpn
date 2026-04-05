@@ -140,13 +140,11 @@ p {
 .note {
     background: var(--note-bg);
     border: 2px solid var(--note-border);
-    border-radius: 14px;
-    padding: 12px;
-    margin: 28px 0;
-    font-size: 16.5px;
-    line-height: 1.7;
+    border-radius: 7px;
+    padding: 10px 12px;
+    margin: 10px 0;
+    font-size: 16px;
     color: var(--def-text-color);
-    box-shadow: 0 6px 20px rgba(98, 119, 172, 0.15);
 }
 
 underline {
