@@ -47,7 +47,7 @@ async def callback_process(callback: types.CallbackQuery):
         await process_payment(payment_id=payment_id)
         await callback.answer(f'✅ Платёж {payment_id} успешно обработан')
         t = callback.message.html_text
-        await callback.message.edit_text(text=f'{t[:1] + "✅" + t[1:]}', reply_markup=None, parse_mode=ParseMode.HTML)
+        await callback.message.edit_text(text=f'{t[:1] + "☑️" + t[1:]}', reply_markup=None, parse_mode=ParseMode.HTML)
 
     except Exception as exc:
         await callback.answer(f'❌ {exc}')
