@@ -115,15 +115,19 @@ figure {
         margin-bottom: 8px;
         color: var(--title-text-color);
     }
-    > li > ul > li > a {
+    ul > li > a {
         display: block;
         margin-bottom: 6px;
+        color: var(--side-text-color);
+    }
+    ul > li > a::before {
+        content: '• ';
     }
 
     li ul {
         display: block;
         padding-left: 28px;
-        margin-bottom: 4px;
+        margin-bottom: 10px;
         list-style: none;
     }
 }
