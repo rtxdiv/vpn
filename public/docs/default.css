@@ -48,7 +48,7 @@ body {
     max-width: var(--container-max-width) !important;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 20px;
     > * {
         width: 100%;
     }
@@ -75,7 +75,7 @@ h1 {
 h2 {
     font-size: 24px;
     color: var(--h2-color);
-    margin: 30px 0 3px;
+    margin: 20px 0 3px;
     font-weight: 700;
 }
 h3 {
