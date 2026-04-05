@@ -1,7 +1,7 @@
 :root {
     --h1-color: #b5c0ca;
     --h2-color: #6277ac;
-    --h3-color: #a8b2bb;
+    --h3-color: rgb(161, 171, 180);
     --def-text-color: #808d9e;
     --link-text-color: #407eb4;
     --container-max-width: 700px;
@@ -48,7 +48,7 @@ body {
     max-width: var(--container-max-width) !important;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
     > * {
         width: 100%;
     }
@@ -75,7 +75,7 @@ h1 {
 h2 {
     font-size: 24px;
     color: var(--h2-color);
-    margin: 20px 0 3px;
+    margin-top: 20px;
     font-weight: 700;
 }
 h3 {
