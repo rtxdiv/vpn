@@ -1,7 +1,7 @@
 from aiogram import F, Router
 from aiogram import types
 from aiogram.enums import ParseMode
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReactionTypeEmoji
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from .bot_server import bot, ADMIN_ID
 from src.utils.logger_client import error_log
 
@@ -15,7 +15,7 @@ async def send_new_payment(payment_id: str, amount: int, currency: str):
         ])
         await bot.send_message(
             ADMIN_ID,
-            f'Получен новый платёж\n\n#*{payment_id}*\n└─ *{amount}{currency}*',
+            f'Новый платёж ────────\n\n#*{payment_id}*\n└─ *{amount}{currency}*',
             reply_markup=keyboard,
             parse_mode=ParseMode.MARKDOWN
         )
@@ -33,6 +33,7 @@ async def callback_process(callback: types.CallbackQuery):
         from src.database.database_service import process_payment
         await process_payment(payment_id=payment_id)
         await callback.answer(f'✅ Платёж {payment_id} успешно обработан')
-        await callback.message.react(reaction=[ReactionTypeEmoji(emoji="✅")])
+        await callback.message.edit_text(text=f'✅ {callback.message.text}', reply_markup=None, parse_mode=ParseMode.MARKDOWN)
+
     except Exception as exc:
         await callback.answer(f'❌ {exc}')
