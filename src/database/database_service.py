@@ -167,7 +167,7 @@ async def process_buy(session: AsyncSession, payment: Payments):
         .options(joinedload(UserPeriods.tariffs))
     )
 
-    current_time = datetime.now(timezone(timedelta(hours=3)))
+    current_time = datetime.now()
     isActive = last_used_period and (current_time < (last_used_period.starts + timedelta(days=last_used_period.days)))
 
     try:

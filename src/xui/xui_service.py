@@ -128,7 +128,7 @@ class XUIClient:
 
 
     def days_to_expiry(self, days: int) -> int:
-        current_date = datetime.now(timezone(timedelta(hours=3))).replace(hour=0, minute=0, second=0, microsecond=0)
+        current_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         expiry_date = current_date + timedelta(days=days)
         return int(expiry_date.timestamp() * 1000)
 
