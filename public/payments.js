@@ -75,8 +75,7 @@ const main = async () => {
     const urlParams = new URLSearchParams(window.location.search)
     const id = urlParams.get('id')
     await getPayments()
-    alert(successPayments)
-    alert(!successPayments.includes(payment_id))
+    alert(successPayments.includes(payment_id))
     if (id && !successPayments.includes(payment_id)) await getPayment(id)
 }
 main()
