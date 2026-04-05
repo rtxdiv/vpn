@@ -198,8 +198,6 @@ function displayClient({ client = false, error = false }) {
                 day: 'numeric',
                 month: 'short',
                 year: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric'
             }).replace(' г.', '')
         } else localDate = 'бессрочно'
         clientInfoDate.innerHTML = `Действует до: ${ localDate }`
@@ -304,8 +302,6 @@ function displayBuy({ info = false, error = false }) {
                 day: 'numeric',
                 month: 'short',
                 year: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric'
             }).replace(' г.', '')
         popupText.innerHTML = `
             Начнется: ${localDate}
