@@ -33,7 +33,7 @@ body {
     cursor: default;
     margin: 0;
     font-size: var(--def-font-size);
-    padding-bottom: 30px;
+    padding-bottom: 60px;
     color: var(--def-text-color);
 
     > * {
