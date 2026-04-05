@@ -26,6 +26,7 @@ async def send_new_payment(payment_id: str, amount: int, currency: str):
 
 async def send_ok_payment(payment_id: str, title: str):
     pass
+    #
     
 @service_router.callback_query(F.data.regexp(r'^process:(.+)$'))
 async def callback_process(callback: types.CallbackQuery):
