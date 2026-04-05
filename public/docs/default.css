@@ -76,7 +76,7 @@ h2 {
 h3 {
     font-size: 19px;
     color: var(--side-text-color);
-    margin: 12px 0 8px;
+    margin: 12px 0 6px;
     font-weight: 500;
 }
 h3::before {
