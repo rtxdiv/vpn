@@ -15,7 +15,7 @@ async def send_new_payment(payment_id: str, amount: int, currency: str):
         ])
         await bot.send_message(
             ADMIN_ID,
-            f'─── Новый платёж ─────<br><br>#<b>{payment_id}</b>\n└─ <b>{amount}{currency}</b>',
+            f'─── Новый платёж ─────\n\n#<b>{payment_id}</b>\n└─ <b>{amount}{currency}</b>',
             reply_markup=keyboard,
             parse_mode=ParseMode.HTML
         )
