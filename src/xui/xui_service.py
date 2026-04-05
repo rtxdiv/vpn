@@ -2,7 +2,7 @@ from src.utils.exceptions import *
 import py3xui
 import uuid
 from src.utils.logger_client import error_log
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 
 class XUIClient:
@@ -128,7 +128,7 @@ class XUIClient:
 
 
     def days_to_expiry(self, days: int) -> int:
-        current_date = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0)
+        current_date = datetime.now(timezone(timedelta(hours=3))).replace(hour=0, minute=0, second=0, microsecond=0)
         expiry_date = current_date + timedelta(days=days)
         return int(expiry_date.timestamp() * 1000)
 
