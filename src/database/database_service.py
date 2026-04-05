@@ -20,8 +20,8 @@ async def get_active_period(session: AsyncSession, user_id: str) -> UserPeriods 
         .order_by(desc(UserPeriods.starts))
         .options(joinedload(UserPeriods.tariffs))
     )
-    current_date_utc = datetime.now(timezone(timedelta(hours=3))).date()
-    isActive = last_used_period and (current_date_utc < (last_used_period.starts + timedelta(days=last_used_period.days)))
+    current_date = datetime.now(timezone(timedelta(hours=3)))
+    isActive = last_used_period and (current_date < (last_used_period.starts + timedelta(days=last_used_period.days)))
     if isActive:
         return last_used_period
     return None
