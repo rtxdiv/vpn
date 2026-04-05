@@ -9,6 +9,7 @@ from src.utils.logger_client import error_log
 service_router = Router()
 
 async def send_new_payment(payment_id: str, amount: int, currency: str):
+    print('ОТПРАВКА', flush=True)
     try:
         keyboard = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='Подтвердить', callback_data=f'process:{payment_id}')]
@@ -20,8 +21,10 @@ async def send_new_payment(payment_id: str, amount: int, currency: str):
             parse_mode=ParseMode.MARKDOWN
         )
     except Exception as exc:
+        print(f'Ошибка отправки уведомления админу: {exc}')
         error_log.error(f'Ошибка отправки уведомления админу: {exc}')
         raise
+
     
 @service_router.callback_query(F.data.regexp(r'^process:(\d+)$'))
 async def callback_process(callback: types.CallbackQuery):
