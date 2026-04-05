@@ -33,7 +33,7 @@ async def callback_process(callback: types.CallbackQuery):
         from src.database.database_service import process_payment
         await process_payment(payment_id=payment_id)
         await callback.answer(f'✅ Платёж {payment_id} успешно обработан')
-        await callback.message.edit_text(text=f'✅ {callback.message.text}', reply_markup=None, parse_mode=ParseMode.MARKDOWN)
+        await callback.message.edit_text(text=f'✅ {callback.message.md_text}', reply_markup=None, parse_mode=ParseMode.MARKDOWN)
 
     except Exception as exc:
         await callback.answer(f'❌ {exc}')
