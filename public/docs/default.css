@@ -72,13 +72,13 @@ h1 {
 h2 {
     font-size: 24px;
     color: var(--h2-color);
-    margin: 20px 0 14px;
+    margin: 20px 0 10px;
     font-weight: 700;
 }
 h3 {
     font-size: 19px;
     color: var(--h3-color);
-    margin: 16px 0 8px;
+    margin: 18px 0 10px;
     font-weight: 500;
 }
 h3::before {
@@ -135,6 +135,7 @@ figure {
 }
 
 p {
+    line-height: 1.2;
     margin: 8px 0;
     color: var(--def-text-color);
 }
