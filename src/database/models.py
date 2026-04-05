@@ -1,7 +1,7 @@
 from typing import Optional
 import datetime
 
-from sqlalchemy import DateTime, Float, ForeignKeyConstraint, Index, Integer, JSON, String, Text, text
+from sqlalchemy import Float, ForeignKeyConstraint, Index, Integer, JSON, String, TIMESTAMP, Text, text
 from sqlalchemy.dialects.mysql import FLOAT, INTEGER, TINYINT, VARCHAR
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
@@ -31,10 +31,10 @@ class Payments(Base):
     amount: Mapped[float] = mapped_column(Float, nullable=False)
     currency: Mapped[str] = mapped_column(VARCHAR(64, charset='utf8mb4', collation='utf8mb4_unicode_ci'), nullable=False, server_default=text("'₽'"))
     data: Mapped[dict] = mapped_column(JSON, nullable=False)
-    created: Mapped[datetime.datetime] = mapped_column(DateTime, nullable=False, server_default=text('(now())'))
+    created: Mapped[datetime.datetime] = mapped_column(TIMESTAMP, nullable=False, server_default=text('(now())'))
     success: Mapped[int] = mapped_column(TINYINT(1), nullable=False, server_default=text("'0'"))
     payment_id: Mapped[Optional[str]] = mapped_column(VARCHAR(16, charset='utf8mb4', collation='utf8mb4_unicode_ci'))
-    updated: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime)
+    updated: Mapped[Optional[datetime.datetime]] = mapped_column(TIMESTAMP)
 
     purchases: Mapped[list['Purchases']] = relationship('Purchases', back_populates='payment')
 
@@ -79,7 +79,7 @@ class UserPeriods(Base):
     tariff_uname: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     days: Mapped[int] = mapped_column(INTEGER(unsigned=True), nullable=False)
     used: Mapped[int] = mapped_column(TINYINT(1), nullable=False, server_default=text("'0'"))
-    starts: Mapped[datetime.datetime] = mapped_column(DateTime, nullable=False, server_default=text('(now())'))
+    starts: Mapped[datetime.datetime] = mapped_column(TIMESTAMP, nullable=False)
 
     tariffs: Mapped['Tariffs'] = relationship('Tariffs', back_populates='user_periods')
     purchases: Mapped[list['Purchases']] = relationship('Purchases', back_populates='user_period')
