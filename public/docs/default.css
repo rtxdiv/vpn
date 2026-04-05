@@ -1,15 +1,17 @@
 :root {
-    --def-text-color: #b5c0ca;
-    --side-text-color: #708297;
-    --title-text-color: #6277ac;
+    --h1-color: #b5c0ca;
+    --h2-color: #6277ac;
+    --h3-color: #a7b1ba;
+    --def-text-color: #8e969e;
     --link-text-color: #407eb4;
     --container-max-width: 700px;
     --container-width: 87%;
     --scroll-margin: max(4vw, calc((100vw - 700px) / 2));
     --def-font-size: 18px;
 
-    --note-bg: #13243d;
-    --note-border: #2a4a79;
+    --note-bg: #101f35;
+    --note-border: #193051;
+    --not-solor: #9fa7ae;
     --accent-red: #ff6b6b;
     --accent-yellow: #f9c74f;
     --accent-green: #4ec9a3;
@@ -38,7 +40,7 @@ body {
     cursor: default;
     margin: 0;
     font-size: var(--def-font-size);
-    padding-top: 20px;
+    padding-top: 35px;
     padding-bottom: 60px;
 }
 
@@ -64,24 +66,21 @@ a[href]:link {
 
 h1 {
     font-size: 30px;
-    color: var(--def-text-color);
+    color: var(--h1-color);
     margin: 8px 0 12px;
     font-weight: 700;
 }
 h2 {
     font-size: 24px;
-    color: var(--title-text-color);
+    color: var(--h2-color);
     margin: 16px 0 14px;
     font-weight: 700;
 }
 h3 {
     font-size: 19px;
-    color: var(--side-text-color);
+    color: var(--h3-color);
     margin: 12px 0 6px;
     font-weight: 500;
-}
-h3::before {
-    content: '• ';
 }
 
 figure {
@@ -114,12 +113,12 @@ figure {
     > li > a {
         display: block;
         margin-bottom: 10px;
-        color: var(--title-text-color) !important;
+        color: var(--h2-color) !important;
     }
     ul > li > a {
         display: block;
         margin-bottom: 8px;
-        color: var(--side-text-color) !important;
+        color: var(--h3-color) !important;
     }
     ul > li > a::before {
         text-decoration: none;
