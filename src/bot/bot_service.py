@@ -13,7 +13,7 @@ async def send_new_payment(payment_id: str, amount: int, currency: str):
         keyboard = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='Подтвердить', callback_data=f'process:{payment_id}')]
         ])
-        bot.send_message(
+        await bot.send_message(
             ADMIN_ID,
             f'Новый платёж\n\n#*{payment_id}*\n\n*{amount}*{currency}',
             reply_markup=keyboard,
