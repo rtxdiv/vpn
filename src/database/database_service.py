@@ -150,6 +150,7 @@ async def prepare_buy(session: AsyncSession, user_id: str, uname: str, months: i
         )
         return payment_id
 
+    print(starts, flush=True)
     return PaymentInfo(
         title=tariff.name,
         starts=starts.isoformat(),
