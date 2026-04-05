@@ -58,9 +58,12 @@ body {
     flex-direction: column;
 }
 a[href]:link {
-    color: var(--link-text-color);
-    text-decoration-thickness: 1px;
+    text-decoration: underline;
+    text-decoration-color: var(--link-text-color);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 2px;
     cursor: pointer;
+    color: var(--link-text-color);
 }
 
 h1 {
@@ -153,7 +156,7 @@ p {
 unl {
     text-decoration: underline;
     text-decoration-color: var(--link-text-color);
-    text-underline-offset: 4px;
+    text-underline-offset: 3px;
     text-decoration-thickness: 2px;
 }
 
