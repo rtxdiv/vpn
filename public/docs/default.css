@@ -82,7 +82,7 @@ h3 {
     font-weight: 500;
 }
 h3::before {
-    content: '─── ';
+    content: '── ';
 }
 
 figure {
@@ -145,7 +145,7 @@ p {
     border: 1px solid var(--note-border);
     border-radius: 7px;
     padding: 14px 16px;
-    margin: 12px 0;
+    margin: 14px 0;
     font-size: 17px;
     color: var(--note-color);
 }
