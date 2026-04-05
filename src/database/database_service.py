@@ -127,8 +127,9 @@ async def prepare_buy(session: AsyncSession, user_id: str, uname: str, months: i
     )
     if last_period:
         starts = last_period.starts + timedelta(days=last_period.days)
+        starts = datetime.combine(starts, datetime.min.time(), tzinfo=timezone.utc)
     else:
-        starts = datetime.now(timezone.utc).date()
+        starts = datetime.now(timezone.utc)
 
     total = round(tariff.price * period.months * (1 - period.discount))
 

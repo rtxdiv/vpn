@@ -296,7 +296,7 @@ function displayBuy({ info = false, error = false }) {
     }
     if (info) {
         popupTitle.innerHTML = info.title
-        const date = new Date(info.starts+'Z')
+        const date = new Date(info.starts)
         const currDate = new Date()
         const localDate = true == false
             ? 'сегодня'
