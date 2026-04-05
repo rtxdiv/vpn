@@ -116,12 +116,14 @@ figure {
     margin: 0;
 
     > li > a {
+        font-size: var(--def-font-size);
         display: block;
         margin-bottom: 8px;
         color: var(--h2-color) !important;
         text-decoration-color: var(--h2-color) !important;
     }
     ul > li > a {
+        font-size: 17px;
         display: block;
         margin-bottom: 8px;
         color: var(--h3-color) !important;
