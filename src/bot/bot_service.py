@@ -15,7 +15,7 @@ async def send_new_payment(payment_id: str, amount: int, currency: str):
         ])
         await bot.send_message(
             ADMIN_ID,
-            f'── <b>Новый платёж</b> ─────\n\n#<code>{payment_id}</code>\n└─ <b>{amount}{currency}</b>',
+            f'── <b>Новый платёж</b> ──────\n\n#<code>{payment_id}</code>\n└─ <b>{amount}{currency}</b>',
             reply_markup=keyboard,
             parse_mode=ParseMode.HTML
         )
@@ -24,11 +24,12 @@ async def send_new_payment(payment_id: str, amount: int, currency: str):
         error_log.error(f'Ошибка отправки уведомления админу: {exc}')
         raise
 
+
 async def send_processed_payment(user_id: str, payment_id: str, title: str):
     try:
         await bot.send_message(
             user_id,
-            f'─💲─ <b>Платёж подтверждён</b> ────\n\n<b>{title}</b>\n<b>ID</b> #{payment_id}',
+            f'─💵─ <b>Платёж подтверждён</b> ────\n\n<b>{title}</b>\n<b>ID:</b> #{payment_id}',
             parse_mode=ParseMode.HTML
         )
     except Exception as exc:
@@ -36,6 +37,7 @@ async def send_processed_payment(user_id: str, payment_id: str, title: str):
         error_log.error(f'Ошибка отправки уведомления админу: {exc}')
         raise
     
+
 @service_router.callback_query(F.data.regexp(r'^process:(.+)$'))
 async def callback_process(callback: types.CallbackQuery):
     payment_id = callback.data.split(':')[1]
@@ -44,7 +46,8 @@ async def callback_process(callback: types.CallbackQuery):
         from src.database.database_service import process_payment
         await process_payment(payment_id=payment_id)
         await callback.answer(f'✅ Платёж {payment_id} успешно обработан')
-        await callback.message.edit_text(text=f'✅ {callback.message.html_text}', reply_markup=None, parse_mode=ParseMode.HTML)
+        t = callback.message.html_text
+        await callback.message.edit_text(text=f'{t[:1] + '✅' + t[1:]}', reply_markup=None, parse_mode=ParseMode.HTML)
 
     except Exception as exc:
         await callback.answer(f'❌ {exc}')
