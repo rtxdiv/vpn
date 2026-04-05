@@ -108,15 +108,14 @@ figure {
 .toc {
     list-style: none;
     padding-left: 0;
-    margin: 8px 0;
-
-    a {
-        margin-bottom: 4px;
-    }
+    margin: 10px 0;
 
     > li > a {
-        margin-bottom: 4px;
+        margin-bottom: 8px;
         color: var(--title-text-color);
+    }
+    > li > ul > li > a {
+        margin-bottom: 4px;
     }
 
     li ul {
