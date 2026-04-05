@@ -29,7 +29,7 @@ async def send_processed_payment(user_id: str, payment_id: str, title: str):
     try:
         await bot.send_message(
             user_id,
-            f'☑️─ <b>Платёж подтверждён</b> ────\n\n<b>{title}</b>\n<b>ID:</b> #{payment_id}',
+            f'── <b>Платёж подтверждён</b> ────\n\n<b>{title}</b>\n<b>ID:</b> #{payment_id}',
             parse_mode=ParseMode.HTML
         )
     except Exception as exc:
@@ -46,8 +46,7 @@ async def callback_process(callback: types.CallbackQuery):
         from src.database.database_service import process_payment
         await process_payment(payment_id=payment_id)
         await callback.answer(f'✅ Платёж {payment_id} успешно обработан')
-        callback.message.html_text[0] = '✅'
-        await callback.message.edit_text(text=callback.message.html_text, reply_markup=None, parse_mode=ParseMode.HTML)
+        await callback.message.edit_text(text=f'✅ {callback.message.html_text}', reply_markup=None, parse_mode=ParseMode.HTML)
 
     except Exception as exc:
         await callback.answer(f'❌ {exc}')
