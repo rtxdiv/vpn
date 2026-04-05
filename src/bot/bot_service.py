@@ -15,9 +15,9 @@ async def send_new_payment(payment_id: str, amount: int, currency: str):
         ])
         await bot.send_message(
             ADMIN_ID,
-            f'Новый платёж ────────\n\n#*{payment_id}*\n└─ *{amount}{currency}*',
+            f'─── Новый платёж ─────<br><br>#<b>{payment_id}</b>\n└─ <b>{amount}{currency}</b>',
             reply_markup=keyboard,
-            parse_mode=ParseMode.MARKDOWN
+            parse_mode=ParseMode.HTML
         )
     except Exception as exc:
         print(f'Ошибка отправки уведомления админу: {exc}')
@@ -33,7 +33,7 @@ async def callback_process(callback: types.CallbackQuery):
         from src.database.database_service import process_payment
         await process_payment(payment_id=payment_id)
         await callback.answer(f'✅ Платёж {payment_id} успешно обработан')
-        await callback.message.edit_text(text=f'✅ {callback.message.md_text}', reply_markup=None, parse_mode=ParseMode.MARKDOWN)
+        await callback.message.edit_text(text=f'✅ {callback.message.html_text}', reply_markup=None, parse_mode=ParseMode.HTML)
 
     except Exception as exc:
         await callback.answer(f'❌ {exc}')
