@@ -94,10 +94,13 @@ async def create_payment(session: AsyncSession, user_id: str, type: str, title: 
     new_payment.payment_id = hash_id
     new_payment.updated = None
 
+    print('ПЕРЕД ОТПРАВКОЙ', flush=True)
     try:
         await send_new_payment(payment_id=hash_id)
     except:
+        print('ОШИБКА ОТПРАВКИ', flush=True)
         pass
+
     return new_payment.payment_id
 
 

@@ -9,7 +9,6 @@ from src.utils.logger_client import error_log
 service_router = Router()
 
 async def send_new_payment(payment_id: str, amount: int, currency: str):
-    print('ОТПРАВКА', flush=True)
     try:
         keyboard = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='Подтвердить', callback_data=f'process:{payment_id}')]
