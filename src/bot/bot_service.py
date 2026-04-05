@@ -28,7 +28,7 @@ async def send_processed_payment(user_id: str, payment_id: str, title: str):
     try:
         await bot.send_message(
             user_id,
-            f'── <b>Платёж подтверждён</b> ────\n\n<b>{title}</b>\n<b>ID</b> #{payment_id}',
+            f'─💲─ <b>Платёж подтверждён</b> ────\n\n<b>{title}</b>\n<b>ID</b> #{payment_id}',
             parse_mode=ParseMode.HTML
         )
     except Exception as exc:
