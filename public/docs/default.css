@@ -58,6 +58,7 @@ body {
 }
 a[href]:link {
     color: var(--link-text-color);
+    text-decoration-thickness: 1px;
     cursor: pointer;
 }
 
@@ -121,7 +122,6 @@ figure {
         color: var(--side-text-color) !important;
     }
     ul > li > a::before {
-        content: '• ';
         text-decoration: none;
     }
 
