@@ -193,7 +193,7 @@ function displayClient({ client = false, error = false }) {
         const expiry = client.expiry
         let localDate
         if (expiry !== 0) {
-            const date = new Date(expiry+'Z')
+            const date = new Date(expiry)
             localDate = date.toLocaleDateString('ru-RU', {
                 day: 'numeric',
                 month: 'short',
@@ -296,7 +296,7 @@ function displayBuy({ info = false, error = false }) {
     }
     if (info) {
         popupTitle.innerHTML = info.title
-        const date = new Date(info.starts+'Z')
+        const date = new Date(info.starts)
         const currDate = new Date()
         const localDate = date.setHours(0,0,0,0) == currDate.setHours(0,0,0,0)
             ? 'сегодня'
