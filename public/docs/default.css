@@ -72,13 +72,13 @@ h1 {
 h2 {
     font-size: 24px;
     color: var(--h2-color);
-    margin: 22px 0 6px;
+    margin: 24px 0 10px;
     font-weight: 700;
 }
 h3 {
     font-size: 19px;
     color: var(--h3-color);
-    margin: 18px 0 10px;
+    margin: 20px 0 12px;
     font-weight: 500;
 }
 h3::before {
