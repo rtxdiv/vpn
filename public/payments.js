@@ -97,8 +97,7 @@ function displayPayments({ payments = false, error = false }) {
                 month: 'short',
                 year: 'numeric',
                 hour: '2-digit',
-                minute: '2-digit',
-                timeZone: 'UTC'
+                minute: '2-digit'
             }).replace(' г.', '')
             paymentsBlock.innerHTML += `
                 <div class="block" ${payment.success? '' : `onclick="getPayment('${payment.payment_id}')"`}>
