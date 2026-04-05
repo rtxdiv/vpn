@@ -20,7 +20,7 @@ async def get_active_period(session: AsyncSession, user_id: str) -> UserPeriods 
         .order_by(desc(UserPeriods.starts))
         .options(joinedload(UserPeriods.tariffs))
     )
-    current_date_utc = datetime.now(timezone.utc).date()
+    current_date_utc = datetime.now(timezone(timedelta(hours=3))).date()
     isActive = last_used_period and (current_date_utc < (last_used_period.starts + timedelta(days=last_used_period.days)))
     if isActive:
         return last_used_period
@@ -128,7 +128,7 @@ async def prepare_buy(session: AsyncSession, user_id: str, uname: str, months: i
     if last_period:
         starts = last_period.starts + timedelta(days=last_period.days)
     else:
-        starts = datetime.now(timezone.utc).date()
+        starts = datetime.now(timezone(timedelta(hours=3))).date()
 
     total = round(tariff.price * period.months * (1 - period.discount))
 
@@ -166,7 +166,7 @@ async def process_buy(session: AsyncSession, payment: Payments):
         .options(joinedload(UserPeriods.tariffs))
     )
 
-    current_date_utc = datetime.now(timezone.utc).date()
+    current_date_utc = datetime.now(timezone(timedelta(hours=3))).date()
     isActive = last_used_period and (current_date_utc < (last_used_period.starts + timedelta(days=last_used_period.days)))
 
     try:
@@ -182,14 +182,13 @@ async def process_buy(session: AsyncSession, payment: Payments):
         user_id=payment.user_id,
         tariff_uname=tariff.uname,
         days=data.months * 30,
-        starts=last_period.starts + timedelta(days=last_period.days) if last_period
-            else current_date_utc + timedelta(days=data.months * 30),
+        starts=last_used_period.starts + timedelta(days=last_used_period.days) if isActive
+            else current_date_utc,
         used=not isActive
     )
     session.add(user_period)
 
     if not isActive:
-        print(last_used_period)
         await xui.enable_client(
             user_id=payment.user_id,
             limit_ip=tariff.devices,
