@@ -131,9 +131,10 @@ body {
     #help-payments, #help-about, #help-tutorial, #help-support {
         display: none;
         align-items: center;
-        height: 36px;
+        height: 38px;
         color: var(--side-text-color);
         cursor: pointer;
+        font-size: 19px;
     }
 }
 #tariffs {
