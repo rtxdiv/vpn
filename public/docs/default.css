@@ -119,11 +119,13 @@ figure {
         display: block;
         margin-bottom: 10px;
         color: var(--h2-color) !important;
+        text-decoration-color: var(--h2-color) !important;
     }
     ul > li > a {
         display: block;
         margin-bottom: 8px;
         color: var(--h3-color) !important;
+        text-decoration-color: var(--h3-color) !important;
     }
     ul > li > a::before {
         text-decoration: none;
