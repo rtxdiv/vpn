@@ -28,9 +28,9 @@ async def send_new_payment(payment_id: str, amount: int, currency: str):
 @service_router.callback_query(F.data.regexp(r'^process:(.+)$'))
 async def callback_process(callback: types.CallbackQuery):
     payment_id = callback.data.split(':')[1]
-    if not payment_id: callback.answer(text=f'Платёж {payment_id} успешно обработан', show_alert=True)
+    if not payment_id: callback.answer(text=f'Платёж {payment_id} успешно обработан')
     try:
         from src.database.database_service import process_payment
         await process_payment(payment_id=payment_id)
     except Exception as exc:
-        callback.answer(text=f'Ошибка: {exc}', show_alert=True)
+        callback.answer(text=f'Ошибка: {exc}')
