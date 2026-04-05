@@ -82,6 +82,9 @@ h3 {
     margin: 12px 0 8px;
     font-weight: 500;
 }
+h3::before {
+    content: '• ';
+}
 
 figure {
     margin: 32px 0 20px;
