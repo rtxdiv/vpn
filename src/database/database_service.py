@@ -9,6 +9,7 @@ from src.utils.payment_info import PaymentInfo
 from src.server.dto.payment_buy_dto import BuyDto
 from datetime import timedelta, datetime, timezone
 from src.xui.xui_client import xui
+from src.bot.bot_service import send_new_payment
 import json
 
 
@@ -89,8 +90,14 @@ async def create_payment(session: AsyncSession, user_id: str, type: str, title: 
     )
     session.add(new_payment)
     await session.flush()
-    new_payment.payment_id = hashids.encode(new_payment.id)
+    hash_id = hashids.encode(new_payment.id)
+    new_payment.payment_id = hash_id
     new_payment.updated = None
+
+    try:
+        await send_new_payment(payment_id=hash_id)
+    except:
+        pass
     return new_payment.payment_id
 
 

@@ -22,7 +22,7 @@ async def send_new_payment(payment_id: str, amount: int, currency: str):
         )
     except Exception as exc:
         error_log.error(f'Ошибка отправки уведомления админу: {exc}')
-        return
+        raise
     
 @service_router.callback_query(F.data.regexp(r'^process:(\d+)$'))
 async def callback_process(callback: types.CallbackQuery):
