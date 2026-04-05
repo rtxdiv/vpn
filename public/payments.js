@@ -32,6 +32,7 @@ telegram.expand()
 
 // globals
 let popupIsOpened = false
+let successPayments = []
 
 
 async function getPayments() {
@@ -73,8 +74,8 @@ async function getPayment(id) {
 const main = async () => {
     const urlParams = new URLSearchParams(window.location.search)
     const id = urlParams.get('id')
-    if (id) await getPayment(id)
     await getPayments()
+    if (id && !successPayments.includes(payment_id)) await getPayment(id)
 }
 main()
 
@@ -89,6 +90,7 @@ function displayPayments({ payments = false, error = false }) {
     }
     if (payments && payments.length != 0) {
         payments.forEach(payment => {
+            payment.success? successPayments.push(payment.payment_id) : null
             const date = new Date(payment.created+'Z')
             const localDate = date.toLocaleDateString('ru-RU', {
                 day: 'numeric',
