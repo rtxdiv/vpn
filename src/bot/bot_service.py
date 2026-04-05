@@ -4,7 +4,6 @@ from aiogram.enums import ParseMode
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from .bot_server import bot, ADMIN_ID
 from src.utils.logger_client import error_log
-from src.database.database_service import process_payment
 
 
 service_router = Router()
@@ -29,6 +28,7 @@ async def callback_process(callback: types.CallbackQuery):
     payment_id = callback.data.split(':')[1]
     if not payment_id: callback.answer(text=f'Платёж {payment_id} успешно обработан', show_alert=True)
     try:
+        from src.database.database_service import process_payment
         await process_payment(payment_id=payment_id)
     except Exception as exc:
         callback.answer(text=f'Ошибка: {exc}', show_alert=True)
