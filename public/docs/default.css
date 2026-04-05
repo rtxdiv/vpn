@@ -9,7 +9,7 @@
     --def-font-size: 18px;
 
     --note-bg: #13243d;
-    --note-border: #6277ac;
+    --note-border: #2a4a79;
     --accent-red: #ff6b6b;
     --accent-yellow: #f9c74f;
     --accent-green: #4ec9a3;
@@ -70,21 +70,21 @@ a[href]:hover {
 h1 {
     font-size: 30px;
     color: var(--def-text-color);
-    margin-bottom: 20px;
+    margin: 8px 0;
     font-weight: 700;
 }
 
 h2 {
     font-size: 24px;
     color: var(--title-text-color);
-    margin: 20px 0 15px;
+    margin: 8px 0;
     font-weight: 700;
 }
 
 h3 {
     font-size: 19px;
     color: var(--side-text-color);
-    margin: 15px 0 8px;
+    margin: 8px 0;
     font-weight: 600;
 }
 
@@ -132,18 +132,18 @@ figure {
 }
 
 p {
-    margin-bottom: 8px;
+    margin: 8px 0;
     line-height: 1.5;
     color: var(--def-text-color);
 }
 
 .note {
     background: var(--note-bg);
-    border: 2px solid var(--note-border);
+    border: 1px solid var(--note-border);
     border-radius: 7px;
-    padding: 10px 12px;
+    padding: 12px 14px;
     margin: 10px 0;
-    font-size: 16px;
+    font-size: 16.5px;
     color: var(--def-text-color);
 }
 
