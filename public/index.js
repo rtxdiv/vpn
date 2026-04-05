@@ -209,6 +209,7 @@ function displayClient({ client = false, error = false }) {
     } else {
         clientError.querySelector('.message').innerHTML = 'У вас ещё нет подписки'
         clientError.style.display = 'flex'
+        addLink(paymentsBlock, settings.payments_url)
         addButton(aboutBlock, settings.about_url)
         addButton(supportBlock, settings.support_url)
     }
