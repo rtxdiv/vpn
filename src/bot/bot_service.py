@@ -15,7 +15,7 @@ async def send_new_payment(payment_id: str, amount: int, currency: str):
         ])
         await bot.send_message(
             ADMIN_ID,
-            f'Новый платёж\n\n#*{payment_id}*\n\n*{amount}*{currency}',
+            f'Получен новый платёж\n\n#*{payment_id}*\n└─ *{amount}{currency}*',
             reply_markup=keyboard,
             parse_mode=ParseMode.MARKDOWN
         )
@@ -25,7 +25,7 @@ async def send_new_payment(payment_id: str, amount: int, currency: str):
         raise
 
     
-@service_router.callback_query(F.data.regexp(r'^process:(\d+)$'))
+@service_router.callback_query(F.data.regexp(r'^process:(.+)$'))
 async def callback_process(callback: types.CallbackQuery):
     payment_id = callback.data.split(':')[1]
     if not payment_id: callback.answer(text=f'Платёж {payment_id} успешно обработан', show_alert=True)
