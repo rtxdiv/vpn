@@ -39,7 +39,7 @@ body {
     margin: 0;
     font-size: var(--def-font-size);
     padding-top: 20px;
-    padding-bottom: 30px;
+    padding-bottom: 50px;
 }
 
 .container {
@@ -67,19 +67,20 @@ h1 {
     margin: 8px 0;
     font-weight: 700;
 }
-
 h2 {
     font-size: 24px;
     color: var(--title-text-color);
-    margin: 14px 0 12px;
+    margin: 16px 0 14px;
     font-weight: 700;
 }
-
 h3 {
     font-size: 19px;
     color: var(--side-text-color);
     margin: 8px 0;
-    font-weight: 600;
+    font-weight: 500;
+}
+h3::before {
+    content: '•';
 }
 
 figure {
