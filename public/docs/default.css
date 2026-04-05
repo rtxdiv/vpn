@@ -35,8 +35,20 @@ body {
     font-size: var(--def-font-size);
     padding-bottom: 30px;
     color: var(--def-text-color);
-
+    margin-top: 25px;
+}
+.container {
+    width: var(--container-width) !important;
+    max-width: var(--container-max-width) !important;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     > * {
-        margin-top: var(--container-large-margin);
+        width: 100%;
     }
+}
+
+.block {
+    display: flex;
+    flex-direction: column;
 }
