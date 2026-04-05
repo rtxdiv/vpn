@@ -91,13 +91,14 @@ function displayPayments({ payments = false, error = false }) {
     if (payments && payments.length != 0) {
         payments.forEach(payment => {
             payment.success? successPayments.push(payment.payment_id) : null
-            const date = new Date(payment.created+'Z')
+            const date = new Date(payment.created)
             const localDate = date.toLocaleDateString('ru-RU', {
                 day: 'numeric',
                 month: 'short',
                 year: 'numeric',
                 hour: '2-digit',
-                minute: '2-digit'
+                minute: '2-digit',
+                timeZone: 'UTC'
             }).replace(' г.', '')
             paymentsBlock.innerHTML += `
                 <div class="block" ${payment.success? '' : `onclick="getPayment('${payment.payment_id}')"`}>
