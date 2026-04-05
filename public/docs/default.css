@@ -136,7 +136,7 @@ figure {
 
 p {
     line-height: 1.4;
-    margin: 3px 0;
+    margin: 4px 0;
     color: var(--def-text-color);
 }
 
@@ -145,7 +145,7 @@ p {
     border: 1px solid var(--note-border);
     border-radius: 7px;
     padding: 14px 16px;
-    margin: 11px 0;
+    margin: 12px 0;
     font-size: 17px;
     color: var(--note-color);
 }
