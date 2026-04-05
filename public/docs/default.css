@@ -109,19 +109,17 @@ figure {
     list-style: none;
     padding-left: 0;
     margin: 10px 0;
-
-    > li > a {
-        margin-bottom: 8px;
-        color: var(--title-text-color);
-    }
-    > li > ul > li > a {
-        margin-bottom: 4px;
-    }
-
-    li ul {
-        padding-left: 28px;
-        list-style: none;
-    }
+}
+.toc > li > a {
+    margin-bottom: 8px;
+    color: var(--title-text-color);
+}
+.toc > li > ul > li > a {
+    margin-bottom: 4px;
+}
+.toc li ul {
+    padding-left: 28px;
+    list-style: none;
 }
 
 p {
