@@ -72,17 +72,17 @@ h1 {
 h2 {
     font-size: 24px;
     color: var(--h2-color);
-    margin: 28px 0 5px;
+    margin: 28px 0 3px;
     font-weight: 700;
 }
 h3 {
     font-size: 19px;
     color: var(--h3-color);
-    margin: 22px 0 10px;
+    margin: 25px 0 10px;
     font-weight: 500;
 }
 h3::before {
-    content: '── ';
+    content: '• ';
 }
 
 figure {
@@ -145,7 +145,7 @@ p {
     border: 1px solid var(--note-border);
     border-radius: 7px;
     padding: 14px 16px;
-    margin: 14px 0;
+    margin: 15px 0;
     font-size: 17px;
     color: var(--note-color);
 }
