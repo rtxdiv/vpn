@@ -39,7 +39,7 @@ body {
     margin: 0;
     font-size: var(--def-font-size);
     padding-top: 20px;
-    padding-bottom: 50px;
+    padding-bottom: 60px;
 }
 
 .container {
@@ -65,7 +65,7 @@ a[href]:link {
 h1 {
     font-size: 30px;
     color: var(--def-text-color);
-    margin: 8px 0;
+    margin: 8px 0 12px;
     font-weight: 700;
 }
 h2 {
