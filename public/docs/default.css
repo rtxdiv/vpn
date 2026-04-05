@@ -48,7 +48,7 @@ body {
     max-width: var(--container-max-width) !important;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
     > * {
         width: 100%;
     }
