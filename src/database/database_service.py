@@ -9,7 +9,7 @@ from src.utils.payment_info import PaymentInfo
 from src.server.dto.payment_buy_dto import BuyDto
 from datetime import timedelta, datetime, timezone
 from src.xui.xui_client import xui
-from src.bot.bot_service import send_new_payment
+from src.bot.bot_service import send_new_payment, send_processed_payment
 import json
 
 
@@ -201,6 +201,11 @@ async def process_buy(session: AsyncSession, payment: Payments):
             limit_ip=last_used_period.tariffs.devices,
             reset=data.months * 30
         )
+
+    try:
+        await send_processed_payment(user_id=payment.user_id, payment_id=payment.payment_id, title=payment.title)
+    except:
+        pass
 
 
 process_types = {

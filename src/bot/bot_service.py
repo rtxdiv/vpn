@@ -24,8 +24,17 @@ async def send_new_payment(payment_id: str, amount: int, currency: str):
         error_log.error(f'Ошибка отправки уведомления админу: {exc}')
         raise
 
-async def send_ok_payment(payment_id: str, title: str):
-    pass
+async def send_processed_payment(user_id: str, payment_id: str, title: str):
+    try:
+        await bot.send_message(
+            user_id,
+            f'── <b>Платёж подтверждён</b> ────\n\n<b>{title}</b>\n<b>ID</b> #{payment_id}',
+            parse_mode=ParseMode.HTML
+        )
+    except Exception as exc:
+        print(f'Ошибка отправки уведомления пользователю: {exc}')
+        error_log.error(f'Ошибка отправки уведомления админу: {exc}')
+        raise
     
 @service_router.callback_query(F.data.regexp(r'^process:(.+)$'))
 async def callback_process(callback: types.CallbackQuery):
