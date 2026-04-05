@@ -1,11 +1,11 @@
 from aiogram import Router
 from aiogram.filters import Command, CommandObject
-from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import Message
 from aiogram.enums import ParseMode
 from src.utils.exceptions import *
 from src.xui.xui_client import xui
 from src.utils.logger_client import error_log
-from src.bot.bot_server import bot
+from .bot_server import bot, ADMIN_ID
 from src.database.database_service import *
 
 
@@ -13,6 +13,7 @@ commands_router = Router()
 
 @commands_router.message(Command('process'))
 async def cmd_process(ctx: Message, command: CommandObject):
+    if str(ctx.from_user.id) != ADMIN_ID: return
     try:
         await process_payment(payment_id=command.args)
         await ctx.answer('Платёж обработан')
@@ -23,8 +24,9 @@ async def cmd_process(ctx: Message, command: CommandObject):
         await ctx.answer('Ошибка сервера')
         error_log.error(str(e))
 
-@commands_router.message(Command('update'))
+# @commands_router.message(Command('update'))
 async def cmd_reset(ctx: Message, command: CommandObject):
+    if str(ctx.from_user.id) != ADMIN_ID: return
     try:
         await xui.reset_sub_id(command.args)
         await ctx.answer('ID подписки обновлён')
@@ -35,8 +37,9 @@ async def cmd_reset(ctx: Message, command: CommandObject):
         await ctx.answer('Ошибка сервера')
         error_log.error(str(e))
 
-@commands_router.message(Command('enable'))
+# @commands_router.message(Command('enable'))
 async def cmd_enable(ctx: Message):
+    if str(ctx.from_user.id) != ADMIN_ID: return
     try:
         await xui.enable_client(
             user_id=str(ctx.from_user.id),
@@ -53,8 +56,9 @@ async def cmd_enable(ctx: Message):
         await ctx.answer('Ошибка сервера')
         error_log.error(str(e))
 
-@commands_router.message(Command('disable_message'))
+# @commands_router.message(Command('disable_message'))
 async def cmd_enable(ctx: Message, command: CommandObject):
+    if str(ctx.from_user.id) != ADMIN_ID: return
     try:
         message = '❗ *Доступ к PROMO-подписке приосановлен администратором*\n'
         message += '\nПо всем вопросам: @rtxdiv'
