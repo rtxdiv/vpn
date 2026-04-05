@@ -1,7 +1,7 @@
 :root {
     --h1-color: #b5c0ca;
     --h2-color: #6277ac;
-    --h3-color: #9aa4ad;
+    --h3-color: #a8b2bb;
     --def-text-color: #808d9e;
     --link-text-color: #407eb4;
     --container-max-width: 700px;
@@ -67,19 +67,19 @@ a[href]:link {
 h1 {
     font-size: 30px;
     color: var(--h1-color);
-    margin: 8px 0 12px;
+    margin: 12px;
     font-weight: 700;
 }
 h2 {
     font-size: 24px;
     color: var(--h2-color);
-    margin: 18px 0 14px;
+    margin: 20px 0 14px;
     font-weight: 700;
 }
 h3 {
     font-size: 19px;
     color: var(--h3-color);
-    margin: 12px 0 8px;
+    margin: 16px 0 8px;
     font-weight: 500;
 }
 h3::before {
