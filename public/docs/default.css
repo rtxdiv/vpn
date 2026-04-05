@@ -60,8 +60,8 @@ body {
 a[href]:link {
     text-decoration: underline;
     text-decoration-color: var(--link-text-color);
-    text-underline-offset: 3px;
-    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
     cursor: pointer;
     color: var(--link-text-color);
 }
