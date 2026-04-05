@@ -1,8 +1,8 @@
 :root {
     --h1-color: #b5c0ca;
     --h2-color: #6277ac;
-    --h3-color: #a7b1ba;
-    --def-text-color: #8e969e;
+    --h3-color: #9aa4ad;
+    --def-text-color: #808d9e;
     --link-text-color: #407eb4;
     --container-max-width: 700px;
     --container-width: 87%;
@@ -73,13 +73,13 @@ h1 {
 h2 {
     font-size: 24px;
     color: var(--h2-color);
-    margin: 16px 0 14px;
+    margin: 18px 0 14px;
     font-weight: 700;
 }
 h3 {
     font-size: 19px;
     color: var(--h3-color);
-    margin: 12px 0 6px;
+    margin: 12px 0 8px;
     font-weight: 500;
 }
 
