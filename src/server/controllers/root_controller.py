@@ -24,7 +24,7 @@ async def get_sub(request: Request):
         'enable': client.enable,
         'tariff': last_period.tariffs.name,
         'limitIp': last_period.tariffs.devices,
-        'expiry': last_period.starts + timedelta(days=last_period.days),
+        'expiry': (last_period.starts + timedelta(days=last_period.days)).isoformat(),
         'subId': client.sub_id
     }
 

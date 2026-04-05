@@ -1,7 +1,7 @@
 from typing import Optional
 import datetime
 
-from sqlalchemy import Date, DateTime, Float, ForeignKeyConstraint, Index, Integer, JSON, String, Text, text
+from sqlalchemy import DateTime, Float, ForeignKeyConstraint, Index, Integer, JSON, String, Text, text
 from sqlalchemy.dialects.mysql import FLOAT, INTEGER, TINYINT, VARCHAR
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
@@ -79,7 +79,7 @@ class UserPeriods(Base):
     tariff_uname: Mapped[str] = mapped_column(String(64, 'utf8mb4_unicode_ci'), nullable=False)
     days: Mapped[int] = mapped_column(INTEGER(unsigned=True), nullable=False)
     used: Mapped[int] = mapped_column(TINYINT(1), nullable=False, server_default=text("'0'"))
-    starts: Mapped[datetime.date] = mapped_column(Date, nullable=False, server_default=text('(now())'))
+    starts: Mapped[datetime.datetime] = mapped_column(DateTime, nullable=False, server_default=text('(now())'))
 
     tariffs: Mapped['Tariffs'] = relationship('Tariffs', back_populates='user_periods')
     purchases: Mapped[list['Purchases']] = relationship('Purchases', back_populates='user_period')

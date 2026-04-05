@@ -127,9 +127,8 @@ async def prepare_buy(session: AsyncSession, user_id: str, uname: str, months: i
     )
     if last_period:
         starts = last_period.starts + timedelta(days=last_period.days)
-        starts = datetime.combine(starts, datetime.min.time(), tzinfo=timezone.utc)
     else:
-        starts = datetime.now(timezone.utc)
+        starts = datetime.now((timedelta(hours=3)))
 
     total = round(tariff.price * period.months * (1 - period.discount))
 
@@ -168,8 +167,8 @@ async def process_buy(session: AsyncSession, payment: Payments):
         .options(joinedload(UserPeriods.tariffs))
     )
 
-    current_date_utc = datetime.now(timezone(timedelta(hours=3))).date()
-    isActive = last_used_period and (current_date_utc < (last_used_period.starts + timedelta(days=last_used_period.days)))
+    current_time = datetime.now(timezone(timedelta(hours=3)))
+    isActive = last_used_period and (current_time < (last_used_period.starts + timedelta(days=last_used_period.days)))
 
     try:
         data = BuyDto.model_validate(payment.data)
@@ -184,8 +183,8 @@ async def process_buy(session: AsyncSession, payment: Payments):
         user_id=payment.user_id,
         tariff_uname=tariff.uname,
         days=data.months * 30,
-        starts=last_used_period.starts + timedelta(days=last_used_period.days) if isActive
-            else current_date_utc,
+        starts=last_period.starts + timedelta(days=last_period.days) if isActive
+            else current_time.replace(hour=0, minute=0, second=0, microsecond=0),
         used=not isActive
     )
     session.add(user_period)
