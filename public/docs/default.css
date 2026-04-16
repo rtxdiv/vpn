@@ -57,7 +57,7 @@ body {
     display: flex;
     flex-direction: column;
 }
-a[href]:link {
+a[href]:link, a[href]:active, a[href]:hover, a[href]:visited {
     text-decoration: underline;
     text-decoration-color: var(--link-text-color);
     text-underline-offset: 2px;
