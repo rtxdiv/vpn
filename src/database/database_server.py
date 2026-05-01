@@ -3,10 +3,11 @@ from functools import wraps
 import os
 
 HOST = os.environ['MYSQL_HOST']
+PORT = os.environ['MYSQL_PORT']
 USER = os.environ['MYSQL_USER']
 PASSWORD = os.environ['MYSQL_PASSWORD']
 DATABASE = os.environ['MYSQL_DATABASE']
-DB_URL = f'mysql+aiomysql://{USER}:{PASSWORD}@{HOST}/{DATABASE}'
+DB_URL = f'mysql+aiomysql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}'
 
 engine = create_async_engine(
     url=DB_URL,

@@ -8,7 +8,7 @@ from src.bot.bot_server import bot, dp, register_routers
 
 
 async def main():
-    config = uvicorn.Config(app, host='localhost', port=8000)
+    config = uvicorn.Config(app)
     server = uvicorn.Server(config)
     await xui.login()
     await bot.delete_webhook(drop_pending_updates=True)

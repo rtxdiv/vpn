@@ -1,0 +1,61 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: vpn-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "${MYSQL_PORT}:3306"
+    networks:
+      - vpn-network
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf:ro
+    command:
+      - --default-time-zone=+03:00
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --innodb-buffer-pool-size=64M
+      - --max-connections=20
+      - --innodb-log-buffer-size=4M
+      - --tmp-table-size=8M
+      - --max-heap-table-size=8M
+      - --performance-schema=0
+      - --table-open-cache=200
+      - --table-definition-cache=200
+      - --skip-log-bin
+      - --innodb-flush-log-at-trx-commit=2
+      - --max-binlog-size=100M
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+          
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: vpn-app:latest
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    networks:
+      - vpn-network
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    
+
+volumes:
+  mysql_data:
+    name: mysql84-data
+
+networks:
+  vpn-network:
