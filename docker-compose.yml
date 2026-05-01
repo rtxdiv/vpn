@@ -51,11 +51,15 @@ services:
     depends_on:
       - mysql
     restart: unless-stopped
+    volumes:
+      - logs_data:/app/logs
     
 
 volumes:
   mysql_data:
     name: mysql84-data
+  logs_data:
+    name: vpn-logs
 
 networks:
   vpn-network:
