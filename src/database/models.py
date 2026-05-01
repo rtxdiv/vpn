@@ -80,7 +80,7 @@ class UserPeriods(Base):
     days: Mapped[int] = mapped_column(INTEGER(unsigned=True), nullable=False)
     used: Mapped[int] = mapped_column(TINYINT(1), nullable=False, server_default=text("'0'"))
     starts: Mapped[datetime.datetime] = mapped_column(TIMESTAMP, nullable=False)
-    ends: Mapped[datetime.datetime] = mapped_column(TIMESTAMP, nullable=True)
+    ends: Mapped[datetime.datetime] = mapped_column(TIMESTAMP, nullable=False)
 
     tariffs: Mapped['Tariffs'] = relationship('Tariffs', back_populates='user_periods')
     purchases: Mapped[list['Purchases']] = relationship('Purchases', back_populates='user_period')
