@@ -12,6 +12,7 @@ ENV/
 # Git metadata
 .git
 .gitignore
+README.md
 
 # Docker
 Dockerfile

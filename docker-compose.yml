@@ -59,6 +59,7 @@ services:
 volumes:
   mysql_data:
     name: mysql84-data
+    external: true
   logs_data:
     name: vpn-logs
 
