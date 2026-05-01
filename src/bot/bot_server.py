@@ -3,6 +3,7 @@ from aiogram import Bot, Dispatcher
 
 
 TOKEN = os.environ['MAIN_BOT_TOKEN']
+ADMIN_ID = os.environ['ADMIN_ID']
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
