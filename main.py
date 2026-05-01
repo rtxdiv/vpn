@@ -5,10 +5,11 @@ import uvicorn
 from src.server.fastapi_server import app
 from src.xui.xui_client import xui
 from src.bot.bot_server import bot, dp, register_routers
+import os
 
 
 async def main():
-    config = uvicorn.Config(app)
+    config = uvicorn.Config(app, host=os.environ['APP_HOST'], port=os.environ['APP_PORT'])
     server = uvicorn.Server(config)
     await xui.login()
     await bot.delete_webhook(drop_pending_updates=True)
