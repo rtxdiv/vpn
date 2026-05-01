@@ -178,13 +178,15 @@ async def process_buy(session: AsyncSession, payment: Payments):
     tariff = await session.scalar(select(Tariffs).where(Tariffs.uname == data.to_tariff))
     if not tariff: raise ForeseenException('Тариф не найден')
 
+    new_period_starts = last_period.starts + timedelta(days=last_period.days) if isActive else current_time.replace(hour=0, minute=0, second=0, microsecond=0)
+    new_period_days = data.months * 30
     payment.success = True
     user_period=UserPeriods(
         user_id=payment.user_id,
         tariff_uname=tariff.uname,
-        days=data.months * 30,
-        starts=last_period.starts + timedelta(days=last_period.days) if isActive
-            else current_time.replace(hour=0, minute=0, second=0, microsecond=0),
+        days=new_period_days,
+        starts=new_period_starts,
+        ends=new_period_starts + timedelta(days=new_period_days),
         used=not isActive
     )
     session.add(user_period)
