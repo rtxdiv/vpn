@@ -84,11 +84,11 @@ body {
             .name {
                 font-size: 34px;
                 font-weight: 800;
-                margin-bottom: 15px;
+                margin-bottom: 13px;
                 color: #a0acb6;
             }
             .devices, .date {
-                margin: 5px 0;
+                margin: 6px 0;
             }
             .periods {
                 margin: 0 0 5px 0;
