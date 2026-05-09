@@ -1,6 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import func, select, desc
 from sqlalchemy.orm import joinedload
+from src.utils.periods_info import PeriodsInfo
 from .database_server import database_session
 from .models import *
 from src.utils.exceptions import *
@@ -14,17 +15,19 @@ import json
 
 
 @database_session
-async def get_active_period(session: AsyncSession, user_id: str) -> UserPeriods | None:
-    last_used_period = await session.scalar(select(UserPeriods)
-        .where(UserPeriods.user_id == user_id, UserPeriods.used == True)
+async def get_active_periods(session: AsyncSession, user_id: str) -> UserPeriods | None:
+    active_periods: list[UserPeriods] = (await session.scalars(select(UserPeriods)
+        .where(UserPeriods.user_id == user_id, UserPeriods.ends > datetime.now())
         .order_by(desc(UserPeriods.starts))
-        .options(joinedload(UserPeriods.tariffs))
+    )).all()
+    current_period = active_periods[0] if active_periods[0].starts < datetime.now() else None
+    if current_period: await session.load(current_period, 'tariffs')
+
+    return PeriodsInfo(
+        periods=active_periods,
+        current=current_period
     )
-    current_date = datetime.now()
-    isActive = last_used_period and (current_date < (last_used_period.starts + timedelta(days=last_used_period.days)))
-    if isActive:
-        return last_used_period
-    return None
+
 
 @database_session
 async def get_all_tafiffs(session: AsyncSession) -> list[Tariffs]:

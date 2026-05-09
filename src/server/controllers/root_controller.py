@@ -4,6 +4,7 @@ from src.utils.auth_guard import authorization
 from src.xui.xui_client import xui
 from src.database.database_service import *
 from root import PUBLIC_DIR
+from src.utils.periods_info import PeriodsInfo
 
 
 root_router = APIRouter(prefix='')
@@ -16,15 +17,15 @@ async def get_root():
 @authorization
 async def get_sub(request: Request):
     user_id = request.state.telegram_id
-    last_period: UserPeriods = await get_active_period(user_id=user_id)
-    if not last_period: return None
+    active_periods: PeriodsInfo = await get_active_periods(user_id=user_id)
     client = await xui.get_by_tgid(user_id=user_id)
     if not client: raise ForeseenException('Клиент подключения отсутствует. Обратитесь в поддержку')
     return {
         'enable': client.enable,
-        'tariff': last_period.tariffs.name,
-        'limitIp': last_period.tariffs.devices,
-        'expiry': (last_period.starts + timedelta(days=last_period.days)).isoformat(),
+        'tariff': active_periods.current.tariffs.name,
+        'limitIp': active_periods.current.tariffs.devices,
+        'expiry': active_periods.current.ends.isoformat(),
+        'featureCount': active_periods.feature_count,
         'subId': client.sub_id
     }
 

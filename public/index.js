@@ -6,6 +6,7 @@ const clientInfoStatus = document.querySelector('#client-info .status')
 const clientInfoName = document.querySelector('#client-info .name')
 const clientInfoDevices = document.querySelector('#client-info .devices')
 const clientInfoDate = document.querySelector('#client-info .date')
+const clientInfoPeriods = document.querySelector('#client-info .periods')
 const clientSettingsCopy = document.querySelector('#client-settings .copy')
 const clientSettingsLink = document.querySelector('#client-settings .link')
 const clientSettingsReset = document.querySelector('#client-settings .reset')
@@ -113,7 +114,7 @@ async function getPeriods() {
     }
 }
 async function resetSubId() {
-    if (!confirm('Текущая ссылка станет недейтствительна, вам придется добавить новую на всех устройствах!')) return
+    if (!confirm('Текущая ссылка станет недейтствительной, вам придется добавить новую на всех устройствах!')) return
     const resp = await fetch('/resetSub', {
         method: 'POST',
         headers: {
@@ -210,6 +211,10 @@ function displayClient({ client = false, error = false }) {
         clientInfoStatus.innerHTML = client.enable? '<green>Активна</green>' : '<red>Неактивна</red>'
         clientInfoName.innerHTML = `${ client.tariff }`
         clientInfoDevices.innerHTML = `Устройства: ${ client.limitIp == 0? 'бесконечно' : client.limitIp }`
+        if (client.featureCount != 0) {
+            clientInfoPeriods.innerHTML = `И ещё ${client.featureCount}`
+            addLink(clientInfoPeriods, settings.periods_url)
+        }
 
         const expiry = client.expiry
         let localDate

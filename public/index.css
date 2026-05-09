@@ -90,6 +90,9 @@ body {
             .devices, .date {
                 margin: 5px 0;
             }
+            .periods {
+                margin: 8px 0 5px 0;
+            }
         }
         .bottom {
             display: flex;
@@ -433,4 +436,7 @@ def { color: var(--def-text-color); }
 a[href]:link {
     color: var(--link-text-color);
     cursor: pointer;
+}
+a:empty {
+    display: none !important;
 }
