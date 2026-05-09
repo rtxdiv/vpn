@@ -125,7 +125,8 @@ async function resetSubId() {
         const newSubId = await resp.json()
         client.subId = newSubId
         addButton(clientSettingsLink, settings.sub_url + client.subId)
-        showBtnResult({ elem: clientSettingsReset, message: 'Подписка обновлена!' })
+        showBtnResult({ elem: clientSettingsReset, success: true })
+        showBtnResult({ elem: clientSettingsCopy, message: 'Скопируйте!' })
         
     } else {
         showBtnResult({ elem: clientSettingsReset, error: true, message: (await resp.json()).detail })
@@ -382,21 +383,21 @@ function closePopup(event) {
     }
 }
 
-function showBtnResult({ elem, error = false, message }) {
+function showBtnResult({ elem, error = false, success = false, message }) {
     let overflow = elem.querySelector('.overflow')
     if (!overflow) {
         elem.insertAdjacentHTML('beforeend', '<div class="overflow"></div>')
         overflow = elem.querySelector('.overflow')
     }
-    overflow.classList.remove('error', 'success', 'animated')
-    overflow.classList.add(error? 'error' : 'success')
+    overflow.classList.remove('error', 'success', 'info', 'animated')
+    overflow.classList.add(error? 'error' : success? 'success' : 'info')
     overflow.textContent = message? message : error? 'Ошибка' : 'Успешно'
     void overflow.offsetHeight
     overflow.classList.add('animated')
 }
 function copySubLink() {
     navigator.clipboard.writeText(settings.sub_url + client.subId).then(() => {
-        showBtnResult({ elem: clientSettingsCopy, message: 'Скопировано!' })
+        showBtnResult({ elem: clientSettingsCopy, success: true, message: 'Скопировано!' })
     }).catch(err => {
         console.log(err)
         showBtnResult({ elem: clientSettingsCopy, error: true })

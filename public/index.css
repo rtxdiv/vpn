@@ -405,6 +405,9 @@ body {
     color: #c3cfdb;
     z-index: 42;
 }
+.info {
+    background: #174a89 !important;
+}
 .success {
     background: #007b70 !important;
 }
