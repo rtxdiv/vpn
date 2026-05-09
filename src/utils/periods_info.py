@@ -1,4 +1,4 @@
-from database.models import UserPeriods
+from src.database.models import UserPeriods
 
 
 class PeriodsInfo:
