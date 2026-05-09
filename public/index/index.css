@@ -110,7 +110,8 @@ body {
         .top {
             display: flex;
             flex-direction: column;
-            justify-self: center;
+            justify-content: center;
+            align-items: center;
             gap: 9px;
         }
         .bottom {
@@ -118,7 +119,7 @@ body {
             flex-direction: row;
             justify-content: start;
             gap: 8px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
     }
 }
