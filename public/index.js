@@ -8,6 +8,7 @@ const clientInfoDevices = document.querySelector('#client-info .devices')
 const clientInfoDate = document.querySelector('#client-info .date')
 const clientSettingsCopy = document.querySelector('#client-settings .copy')
 const clientSettingsLink = document.querySelector('#client-settings .link')
+const clientSettingsReset = document.querySelector('#client-settings .reset')
 
 const tariffsBlock = document.querySelector('#tariffs')
 const tariffsError = document.querySelector('#tariffs-error')
@@ -109,6 +110,25 @@ async function getPeriods() {
         displayPeriods({ periods: body })
     } else {
         displayPeriods({ error: (await resp.json()).detail })
+    }
+}
+async function resetSubId() {
+    if (!confirm('Текущая ссылка станет недейтствительна, вам придется добавить новую на всех устройствах!')) return
+    const resp = await fetch('/resetSub', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Telegram ${telegram.initData}`
+        }
+    })
+    if (resp.ok) {
+        const newSubId = await resp.json()
+        client.subId = newSubId
+        addButton(clientSettingsLink, settings.sub_url + client.subId)
+        showBtnResult({ elem: clientSettingsReset, message: 'Подписка обновлена!' })
+        
+    } else {
+        showBtnResult({ elem: clientSettingsReset, error: true, message: (await resp.json()).detail })
     }
 }
 async function getBuy(months = 0) {

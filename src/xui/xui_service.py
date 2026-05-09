@@ -82,6 +82,7 @@ class XUIClient:
         client.uuid = uuid4
         client.sub_id = uuid4
         await self.update_client(old_uuid, client)
+        return uuid
 
 
     async def get_new_uuid(self) -> str:

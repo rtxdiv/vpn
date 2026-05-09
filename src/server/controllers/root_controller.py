@@ -39,3 +39,9 @@ async def get_settings():
 @root_router.get('/paymentPeriods')
 async def get_periods():
     return await get_all_allowed_periods()
+
+@root_router.post('/resetSub')
+@authorization
+async def reset_sub(request: Request):
+    user_id = request.state.telegram_id
+    return await xui.reset_sub_id(user_id=user_id)
