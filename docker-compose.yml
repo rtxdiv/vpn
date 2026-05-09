@@ -43,6 +43,8 @@ services:
       dockerfile: ./Dockerfile
     image: vpn-app:latest
     container_name: vpn-app
+    environment:
+      - TZ=Europe/Moscow
     env_file:
       - .env
     ports:

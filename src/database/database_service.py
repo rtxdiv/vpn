@@ -20,6 +20,8 @@ async def get_active_periods(session: AsyncSession, user_id: str) -> UserPeriods
         .where(UserPeriods.user_id == user_id, UserPeriods.ends > datetime.now())
         .order_by(desc(UserPeriods.starts))
     )).all()
+    if not active_periods: return PeriodsInfo()
+    
     current_period = active_periods[0] if active_periods[0].starts < datetime.now() else None
     if current_period: await session.load(current_period, 'tariffs')
 
