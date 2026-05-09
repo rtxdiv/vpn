@@ -18,6 +18,7 @@ async def get_root():
 async def get_sub(request: Request):
     user_id = request.state.telegram_id
     active_periods: PeriodsInfo = await get_active_periods(user_id=user_id)
+    print(active_periods.current, flush=True)
     if not active_periods.current: return None
     client = await xui.get_by_tgid(user_id=user_id)
     if not client: raise ForeseenException('Клиент подключения отсутствует. Обратитесь в поддержку')
