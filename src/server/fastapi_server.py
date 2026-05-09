@@ -9,6 +9,7 @@ from src.utils.logger_client import error_log
 from .controllers.root_controller import root_router
 from .controllers.payment_controller import payment_router
 from .controllers.docs_controller import docs_router
+from .controllers.periods_controller import periods_router
 
 
 app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
@@ -16,6 +17,7 @@ app.mount('/public', StaticFiles(directory=PUBLIC_DIR, html=True), name='public'
 app.include_router(root_router)
 app.include_router(payment_router)
 app.include_router(docs_router)
+app.include_router(periods_router)
 
 
 @app.exception_handler(ForeseenException)

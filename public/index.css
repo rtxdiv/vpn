@@ -91,7 +91,9 @@ body {
                 margin: 5px 0;
             }
             .periods {
-                margin: 8px 0 5px 0;
+                margin: 3px 0 5px 0;
+                text-decoration: underline;
+                color: #407eb4;
             }
         }
         .bottom {
