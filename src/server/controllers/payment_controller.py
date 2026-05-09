@@ -11,7 +11,7 @@ payment_router = APIRouter(prefix='/payments')
 
 @payment_router.get('/')
 async def get_root():
-    return FileResponse(PUBLIC_DIR / 'payments.html')
+    return FileResponse(PUBLIC_DIR / 'payments' / 'payments.html')
 
 # page gets
 @payment_router.get('/getAll')

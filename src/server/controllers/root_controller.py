@@ -11,7 +11,7 @@ root_router = APIRouter(prefix='')
 
 @root_router.get('/')
 async def get_root():
-    return FileResponse(PUBLIC_DIR / 'index.html')
+    return FileResponse(PUBLIC_DIR / 'index' / 'index.html')
 
 @root_router.get('/client')
 @authorization

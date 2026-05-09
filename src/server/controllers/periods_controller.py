@@ -7,4 +7,4 @@ periods_router = APIRouter(prefix='/periods')
 
 @periods_router.get('/')
 async def get_root():
-    return FileResponse(PUBLIC_DIR / 'periods.html')
+    return FileResponse(PUBLIC_DIR / 'periods' / 'periods.html')
