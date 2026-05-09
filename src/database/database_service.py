@@ -18,13 +18,8 @@ import json
 async def get_active_periods(session: AsyncSession, user_id: str) -> UserPeriods | None:
     active_periods: list[UserPeriods] = (await session.scalars(select(UserPeriods)
         .where(UserPeriods.user_id == user_id, UserPeriods.ends > datetime.now())
-        .order_by(desc(UserPeriods.starts))
     )).all()
     if not active_periods: return PeriodsInfo()
-    print(active_periods, flush=True)
-    print(active_periods[0], flush=True)
-    print(active_periods[0].starts, flush=True)
-    print(datetime.now(), flush=True)
     current_period = active_periods[0] if active_periods[0].starts < datetime.now() else None
     if current_period: await session.load(current_period, 'tariffs')
 

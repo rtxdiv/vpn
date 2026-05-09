@@ -9,7 +9,7 @@ import os
 
 
 async def main():
-    config = uvicorn.Config(app, host=os.environ['APP_HOST'], port=os.environ['APP_PORT'])
+    config = uvicorn.Config(app, host=os.environ['APP_HOST'], port=int(os.environ['APP_PORT']))
     server = uvicorn.Server(config)
     await xui.login()
     await bot.delete_webhook(drop_pending_updates=True)
