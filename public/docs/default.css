@@ -175,7 +175,7 @@ green {
 }
 
 copy {
-    background: #101c34;
+    background: #28344d;
     padding: 2px;
-    box-sizing: 3px;
+    border-radius: 3px;
 }
