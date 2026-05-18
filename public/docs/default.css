@@ -175,7 +175,10 @@ green {
 }
 
 copy {
-    background: #1b2636;
+    background: #1d2734;
     padding: 1px 4px;
     border-radius: 4px;
+}
+copy:active, copy:hover {
+    background: #243140;
 }
