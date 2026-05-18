@@ -173,3 +173,9 @@ yellow {
 green {
     color: var(--accent-green);
 }
+
+copy {
+    background: #101c34;
+    padding: 2px;
+    box-sizing: 3px;
+}

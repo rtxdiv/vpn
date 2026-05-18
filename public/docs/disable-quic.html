@@ -19,7 +19,7 @@
 
         <div class="block">
             <p>1. Отокройте Google Chrome на вашем устройстве (не поисковик Google, а полноценный Chrome)</p>
-            <p>2. Впишите в адресную строку chrome://flags/#enable-quic</p>
+            <p>2. Впишите в адресную строку <copy onclick="copy(this)">chrome://flags/#enable-quic</copy></p>
             <p>3. У найденного пункта выберите Disabled (отключено)</p>
             <p>4. Перезапустите приложение</p>
 
@@ -29,5 +29,11 @@
 
             <p>При возникновении вопросов вы можете обратиться в <a href="htts://t.me/rtxdiv_vpn_support">поддержку</a></p>
         </div>
+
+        <script>
+            function copy(elem) {
+                navigator.clipboard.writeText(elem.textContent)
+            }
+        </script>
 </body>
 </html>
