@@ -175,10 +175,10 @@ green {
 }
 
 copy {
-    background: #192433;
+    background: #222f40;
     padding: 1px 4px;
     border-radius: 4px;
 }
 copy:hover {
-    background: #1d2939;
+    background: #2a394d;
 }
