@@ -64,6 +64,7 @@ class XUIClient:
         client.enable = True
         client.limit_ip = limit_ip
         client.expiry_time = expiry
+        client.reset = 0
         await self.update_client(client.uuid, client)
 
     async def renew_client(self, user_id: str, limit_ip: int, reset: int):
