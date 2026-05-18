@@ -34,8 +34,6 @@ body {
     font-family: "Commissioner", sans-serif;
     word-spacing: 2px;
     color: var(--def-text-color);
-    user-select: none;
-    -webkit-user-select: none;
     cursor: default;
     margin: 0;
     font-size: var(--def-font-size);
