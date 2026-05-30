@@ -1,5 +1,5 @@
 :root {
-    --def-ligth-text-color: #bdcad7;
+    --def-ligth-text-color: #b9c7d4;
     --def-text-color: #b8c3ce;
     --side-text-color: #708297;
     --header-text-color: #6277ac;
@@ -207,6 +207,7 @@ body {
                     margin-top: 3px;
                     font-size: 16px;
                     padding-left: 2px;
+                    color: var(--def-text-color);
                 }
             }
             .message {
