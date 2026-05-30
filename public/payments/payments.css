@@ -1,7 +1,6 @@
 :root {
-    --def-ligth-text-color: #b7c5d2;
     --def-text-color: #b5c0ca;
-    --side-text-color: #708297;
+    --side-text-color: #7689a0;
     --header-text-color: #6277ac;
     --link-text-color: #407eb4;
     --container-max-width: 800px;
@@ -166,7 +165,7 @@ body {
                 box-sizing: border-box;
                 padding-left: 2px;
                 font-weight: 500;
-                color: var(--def-ligth-text-color);
+                color: var(--def-text-color);
             }
             .group {
                 display: flex;
@@ -179,7 +178,7 @@ body {
                     padding: 12px;
                     box-sizing: border-box;
                     font-size: var(--def-font-size);
-                    color: var(--def-ligth-text-color);
+                    color: var(--def-text-color);
                     background: #20293f;
                     border: 1px #2d3a58 solid;
                     border-radius: 7px;
@@ -207,7 +206,7 @@ body {
                     margin-top: 3px;
                     font-size: 16px;
                     padding-left: 2px;
-                    color: var(--def-text-color);
+                    color: var(--side-text-color);
                 }
             }
             .message {
