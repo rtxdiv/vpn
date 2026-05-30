@@ -1,5 +1,6 @@
 :root {
-    --def-text-color: #b5c0ca;
+    --def-ligth-text-color: #bdcad7;
+    --def-text-color: #b8c3ce;
     --side-text-color: #708297;
     --header-text-color: #6277ac;
     --link-text-color: #407eb4;
@@ -160,11 +161,12 @@ body {
                 padding-left: 2px;
             }
             .amount {
-                font-size: 20px;
+                font-size: 18px;
                 margin-bottom: 30px;
                 box-sizing: border-box;
                 padding-left: 2px;
                 font-weight: 500;
+                color: var(--def-ligth-text-color);
             }
             .group {
                 display: flex;
@@ -177,7 +179,7 @@ body {
                     padding: 12px;
                     box-sizing: border-box;
                     font-size: var(--def-font-size);
-                    color: var(--side-text-color);
+                    color: var(--def-ligth-text-color);
                     background: #20293f;
                     border: 1px #2d3a58 solid;
                     border-radius: 7px;
@@ -205,7 +207,6 @@ body {
                     margin-top: 3px;
                     font-size: 16px;
                     padding-left: 2px;
-                    color: var(--side-text-color);
                 }
             }
             .message {
@@ -217,7 +218,7 @@ body {
                 background: #3b3b35;
                 border: 1px #5b5b39 solid;
                 border-radius: 7px;
-                margin-top: 12px;
+                margin-top: 8px;
             }
             .message:empty {
                 display: none;
@@ -268,7 +269,7 @@ body {
 
 red { color: rgb(225, 67, 67); }
 yellow { color: #8f8f50; }
-green { color: #009185; }
+green { color: #009c8f; }
 def { color: var(--def-text-color); }
 
 a[href]:link {

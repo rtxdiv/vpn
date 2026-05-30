@@ -436,7 +436,7 @@ body {
 }
 
 red { color: rgb(225, 67, 67); }
-green { color: #009185; }
+green { color: #009c8f; }
 def { color: var(--def-text-color); }
 
 a[href]:link {
