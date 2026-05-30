@@ -1,11 +1,9 @@
 from aiogram import Router
 from aiogram.filters import Command, CommandObject
 from aiogram.types import Message
-from aiogram.enums import ParseMode
 from src.utils.exceptions import *
-from src.xui.xui_client import xui
 from src.utils.logger_client import error_log
-from .bot_server import bot, ADMIN_ID
+from .bot_server import ADMIN_ID
 from src.database.database_service import *
 
 
@@ -24,47 +22,22 @@ async def cmd_process(ctx: Message, command: CommandObject):
         await ctx.answer('Ошибка сервера')
         error_log.error(str(e))
 
-# @commands_router.message(Command('update'))
-async def cmd_reset(ctx: Message, command: CommandObject):
+@commands_router.message(Command('notify'))
+async def cmd_notify(ctx: Message):
     if str(ctx.from_user.id) != ADMIN_ID: return
     try:
-        await xui.reset_sub_id(command.args)
-        await ctx.answer('ID подписки обновлён')
+        periods = await get_not_renewed()
+        await ctx.answer(periods)
         
     except ForeseenException as e:
         await ctx.answer(str(e))
-    except Exception as e:
-        await ctx.answer('Ошибка сервера')
-        error_log.error(str(e))
 
-# @commands_router.message(Command('enable'))
-async def cmd_enable(ctx: Message):
+@commands_router.message(Command('newperiods'))
+async def cmd_notify(ctx: Message):
     if str(ctx.from_user.id) != ADMIN_ID: return
     try:
-        await xui.enable_client(
-            user_id=str(ctx.from_user.id),
-            limit_ip=5,
-            days=30,
-            reset=30,
-            comment='ADMIN'
-        )
-        await ctx.answer('Клиент активирован')
+        await get_new_periods()
+        await ctx.answer(periods)
         
     except ForeseenException as e:
-        await ctx.answer(str(e))
-    except Exception as e:
-        await ctx.answer('Ошибка сервера')
-        error_log.error(str(e))
-
-# @commands_router.message(Command('disable_message'))
-async def cmd_enable(ctx: Message, command: CommandObject):
-    if str(ctx.from_user.id) != ADMIN_ID: return
-    try:
-        message = '❗ *Доступ к PROMO-подписке приосановлен администратором*\n'
-        message += '\nПо всем вопросам: @rtxdiv'
-        await bot.send_message(chat_id=command.args, text=message, parse_mode=ParseMode.MARKDOWN)
-        await ctx.answer('Отправлено!')
-        
-    except Exception as e:
-        await ctx.answer(f'Произошла ошибка: {e}')
-        print(e)
+        periods = await ctx.answer(str(e))

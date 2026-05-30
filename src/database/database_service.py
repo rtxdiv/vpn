@@ -250,7 +250,6 @@ async def get_not_renewed(session: AsyncSession):
 
 @database_session
 async def get_new_periods(session: AsyncSession):
-    
     periods: list[UserPeriods] = (await session.scalars(
         select(UserPeriods)
         .where(
