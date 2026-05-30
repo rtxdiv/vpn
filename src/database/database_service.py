@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import func, select, desc
-from sqlalchemy.orm import joinedload
+from sqlalchemy import and_, func, not_, select, desc
+from sqlalchemy.orm import aliased, joinedload
 from src.utils.periods_info import PeriodsInfo
 from .database_server import database_session
 from .models import *
@@ -8,7 +8,7 @@ from src.utils.exceptions import *
 from src.utils.hashids_client import hashids
 from src.utils.payment_info import PaymentInfo
 from src.server.dto.payment_buy_dto import BuyDto
-from datetime import timedelta, datetime, timezone
+from datetime import date, timedelta, datetime, timezone
 from src.xui.xui_client import xui
 from src.bot.bot_service import send_new_payment, send_processed_payment
 import json
@@ -212,7 +212,6 @@ async def process_buy(session: AsyncSession, payment: Payments):
     except:
         pass
 
-
 process_types = {
     'Buy': process_buy
 }
@@ -227,8 +226,38 @@ async def process_payment(session: AsyncSession, payment_id: str):
     await handler(session, payment)
 
 
-# @database_session
-# async def get_sub_url(session: AsyncSession) -> str:
-#     setting = await session.scalar(select(Settings).where(Settings.key == 'sub_url'))
-#     if not setting: raise Exception
-#     return setting.value
+@database_session
+async def get_not_renewed(session: AsyncSession):
+    NextPeriod = aliased(UserPeriods)
+    periods: list[UserPeriods] = (await session.scalars(
+        select(UserPeriods)
+        .where(
+            UserPeriods.ends.between(
+                text("NOW()"),
+                text("NOW() + INTERVAL 24 HOUR")
+            )
+        )
+        .where(
+            not_(
+                select(NextPeriod)
+                .where(NextPeriod.user_id == UserPeriods.user_id)
+                .where(NextPeriod.starts == UserPeriods.ends)
+                .exists()
+            )
+        )
+    )).all()
+    return periods
+
+@database_session
+async def get_new_periods(session: AsyncSession):
+    
+    periods: list[UserPeriods] = (await session.scalars(
+        select(UserPeriods)
+        .where(
+            and_(
+                UserPeriods.starts < func.now(),
+                UserPeriods.used == False
+            )
+        )
+    )).all()
+    return periods

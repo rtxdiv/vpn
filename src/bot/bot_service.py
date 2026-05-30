@@ -2,7 +2,7 @@ from aiogram import F, Router
 from aiogram import types
 from aiogram.enums import ParseMode
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from .bot_server import bot, ADMIN_ID
+from .bot_server import bot, ADMIN_ID, GROUP_ID
 from src.utils.logger_client import error_log
 
 
@@ -24,7 +24,6 @@ async def send_new_payment(payment_id: str, amount: int, currency: str):
         error_log.error(f'Ошибка отправки уведомления админу: {exc}')
         raise
 
-
 async def send_processed_payment(user_id: str, payment_id: str, title: str):
     try:
         await bot.send_message(
@@ -34,9 +33,31 @@ async def send_processed_payment(user_id: str, payment_id: str, title: str):
         )
     except Exception as exc:
         print(f'Ошибка отправки уведомления пользователю: {exc}')
-        error_log.error(f'Ошибка отправки уведомления админу: {exc}')
+        error_log.error(f'Ошибка отправки уведомления пользователю: {exc}')
         raise
-    
+
+async def send_start():
+    try:
+        await bot.send_message(
+            GROUP_ID,
+            '▶️ App started'
+        )
+    except Exception as exc:
+        print(f'Ошибка отправки уведомления о старте: {exc}')
+        error_log.error(f'Ошибка отправки уведомления о старте: {exc}')
+        raise
+
+async def send_not_renewed(user_id: str, date: str):
+    try:
+        await bot.send_message(
+            user_id,
+            f'🔔 <b>Оплаченный VPN закончится {date} по МСК</b>\n\n<a href="t.me/rtxdiv_vpn_bot/app">Купить заранее</a>',
+            parse_mode=ParseMode.HTML
+        )
+    except Exception as exc:
+        print(f'Ошибка отправки уведомления пользователю: {exc}')
+        error_log.error(f'Ошибка отправки уведомления пользователю: {exc}')
+
 
 @service_router.callback_query(F.data.regexp(r'^process:(.+)$'))
 async def callback_process(callback: types.CallbackQuery):

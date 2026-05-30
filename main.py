@@ -5,6 +5,7 @@ import uvicorn
 from src.server.fastapi_server import app
 from src.xui.xui_client import xui
 from src.bot.bot_server import bot, dp, register_routers
+from src.bot.bot_service import send_start
 import os
 
 
@@ -14,12 +15,14 @@ async def main():
     await xui.login()
     await bot.delete_webhook(drop_pending_updates=True)
     register_routers()
+    await send_start()
 
     await asyncio.gather(
         server.serve(),
         asyncio.create_task(dp.start_polling(bot)),
         return_exceptions=True
     )
+
 
 if __name__ == '__main__':
     asyncio.run(main())
