@@ -37,7 +37,7 @@ async def cmd_notify(ctx: Message):
 async def cmd_notify(ctx: Message):
     if str(ctx.from_user.id) != ADMIN_ID: return
     try:
-        await get_new_periods()
+        periods = await get_new_periods()
         print(str(periods), flush=True)
         await ctx.answer(str(periods))
         
