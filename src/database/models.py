@@ -85,6 +85,19 @@ class UserPeriods(Base):
     tariffs: Mapped['Tariffs'] = relationship('Tariffs', back_populates='user_periods')
     purchases: Mapped[list['Purchases']] = relationship('Purchases', back_populates='user_period')
 
+    def __repr__(self):
+        return (
+            f"<UserPeriods("
+            f"id={self.id}, "
+            f"user_id='{self.user_id}', "
+            f"tariff_uname='{self.tariff_uname}', "
+            f"days={self.days}, "
+            f"used={self.used}, "
+            f"starts='{self.starts.isoformat() if self.starts else None}', "
+            f"ends='{self.ends.isoformat() if self.ends else None}'"
+            f")>"
+        )
+
 
 class Purchases(Base):
     __tablename__ = 'purchases'
