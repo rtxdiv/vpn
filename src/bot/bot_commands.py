@@ -27,7 +27,8 @@ async def cmd_notify(ctx: Message):
     if str(ctx.from_user.id) != ADMIN_ID: return
     try:
         periods = await get_not_renewed()
-        await ctx.answer(periods)
+        await ctx.answer(str(periods))
+        print(periods, flush=True)
         
     except ForeseenException as e:
         await ctx.answer(str(e))
@@ -37,7 +38,8 @@ async def cmd_notify(ctx: Message):
     if str(ctx.from_user.id) != ADMIN_ID: return
     try:
         await get_new_periods()
-        await ctx.answer(periods)
+        await ctx.answer(str(periods))
+        print(periods, flush=True)
         
     except ForeseenException as e:
         periods = await ctx.answer(str(e))
