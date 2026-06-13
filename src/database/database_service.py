@@ -194,18 +194,11 @@ async def process_buy(session: AsyncSession, payment: Payments):
     )
     session.add(user_period)
 
-    if not isActive:
-        await xui.enable_client(
-            user_id=payment.user_id,
-            limit_ip=tariff.devices,
-            days=data.months * 30
-        )
-    else:
-        await xui.renew_client(
-            user_id=payment.user_id,
-            limit_ip=last_used_period.tariffs.devices,
-            reset=data.months * 30
-        )
+    await xui.renew_client(
+        user_id=payment.user_id,
+        limit_ip=tariff.devices if not isActive else last_used_period.tariffs.devices,
+        days=data.months * 30
+    )
 
     try:
         await send_processed_payment(user_id=payment.user_id, payment_id=payment.payment_id, title=payment.title)

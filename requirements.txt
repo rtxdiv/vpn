@@ -8,6 +8,7 @@ aiosignal==1.4.0
 annotated-doc==0.0.4
 annotated-types==0.7.0
 anyio==4.12.1
+ast_serialize==0.5.0
 attrs==25.4.0
 certifi==2026.2.25
 cffi==2.0.0
@@ -26,11 +27,15 @@ httpx==0.28.1
 idna==3.11
 inflect==7.5.0
 init-data-py==0.2.7
+librt==0.11.0
 magic-filter==1.0.12
 more-itertools==10.8.0
 multidict==6.7.1
+mypy==2.1.0
+mypy_extensions==1.1.0
+pathspec==1.1.1
 propcache==0.4.1
-py3xui==0.5.5
+py3xui==0.7.0
 pycparser==3.0
 pydantic==2.12.5
 pydantic_core==2.41.5

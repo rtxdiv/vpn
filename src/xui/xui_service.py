@@ -2,14 +2,13 @@ from src.utils.exceptions import *
 import py3xui
 import uuid
 from src.utils.logger_client import error_log
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 
 
 class XUIClient:
-    def __init__(self, host, login, password, protocol, flow):
+    def __init__(self, host, token, protocol, flow):
         self._host = host
-        self._login = login
-        self._password = password
+        self._token = token
         self._protocol = protocol
         self._api = None
         self._inbound_id = None
@@ -17,9 +16,7 @@ class XUIClient:
 
 
     async def login(self):
-        self._api = py3xui.AsyncApi(self._host, self._login, self._password, use_tls_verify=False)
-        await self._api.login()
-
+        self._api = py3xui.AsyncApi(host=self._host, token=self._token, use_tls_verify=False)
         inbound = await self.get_inbound()
         self._inbound_id = inbound.id
 
@@ -34,14 +31,7 @@ class XUIClient:
         inbound = [item for item in inbounds if item.protocol == self._protocol][0]
         if not inbound: raise InboundNotFoundException
         return inbound
-
-
-    # async def get_by_tgid(self, user_id: str) -> py3xui.Client:
-    #     if not user_id: raise GetTgIdException
-    #     inbound = await self.get_inbound()
-    #     client = [item for item in inbound.settings.clients if item.email == user_id]
-    #     if not client: return None
-    #     return client[0]
+    
     
     async def get_by_tgid(self, user_id):
         try:
@@ -52,10 +42,26 @@ class XUIClient:
             raise
         
 
-    async def enable_client(self, user_id: str, limit_ip: int, days: int):
+    # async def enable_client(self, user_id: str, limit_ip: int, days: int):
+    #     client = await self.get_by_tgid(user_id)
+    #     expiry = self.days_to_expiry(days)
+    #     if not client: 
+    #         return await self.create_client(
+    #             user_id=user_id,
+    #             limit_ip=limit_ip,
+    #             expiry=expiry,
+    #         )
+    #     client.enable = True
+    #     client.limit_ip = limit_ip
+    #     client.expiry_time = expiry
+    #     client.reset = 0
+    #     await self.update_client(client.uuid, client)
+
+
+    async def renew_client(self, user_id: str, limit_ip: int, days: int):
         client = await self.get_by_tgid(user_id)
-        expiry = self.days_to_expiry(days)
         if not client: 
+            expiry = self.days_to_expiry(days)
             return await self.create_client(
                 user_id=user_id,
                 limit_ip=limit_ip,
@@ -63,15 +69,11 @@ class XUIClient:
             )
         client.enable = True
         client.limit_ip = limit_ip
-        client.expiry_time = expiry
-        client.reset = 0
-        await self.update_client(client.uuid, client)
-
-    async def renew_client(self, user_id: str, limit_ip: int, reset: int):
-        client = await self.get_by_tgid(user_id)
-        if not client: raise ForeseenException('Клиент не найден')
-        client.limit_ip = limit_ip
-        client.reset += reset
+        now_ts = int(datetime.now().timestamp() * 1000)
+        if client.expiry_time and client.expiry_time > now_ts:
+            client.expiry_time = self.days_to_expiry(days, base_ts=client.expiry_time)
+        else:
+            client.expiry_time = self.days_to_expiry(days)
         await self.update_client(client.uuid, client)
 
 
@@ -108,9 +110,9 @@ class XUIClient:
             id=uuid4,
             enable=True,
             email=user_id,
-            limitIp=limit_ip,
-            expiryTime=expiry,
-            subId=uuid4,
+            limit_ip=limit_ip,
+            expiry_time=expiry,
+            sub_id=uuid4,
             flow=self._flow,
         )
         try: await self._api.client.add(self._inbound_id, [new_client])
@@ -129,7 +131,9 @@ class XUIClient:
             raise UpdateClientException
 
 
-    def days_to_expiry(self, days: int) -> int:
+    def days_to_expiry(self, days: int, base_ts: int = None) -> int:
+        if base_ts:
+            return base_ts + self.days_to_timestamp(days)
         current_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
         expiry_date = current_date + timedelta(days=days)
         return int(expiry_date.timestamp() * 1000)
