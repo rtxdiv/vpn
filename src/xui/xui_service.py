@@ -40,7 +40,7 @@ class XUIClient:
         except Exception as exc:
             error_log.error(exc)
             raise InboundNotFoundException
-        matched_inbounds = [item for item in inbounds if item.remark and item.remark.startswith('wi-')]
+        matched_inbounds = [item for item in inbounds if item.remark and not item.remark.startswith('dev-')]
         if not matched_inbounds:
             raise InboundNotFoundException
         return matched_inbounds
