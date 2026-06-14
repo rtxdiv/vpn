@@ -6,10 +6,10 @@ from datetime import datetime, timedelta
 
 
 class XUIClient:
-    def __init__(self, host, token, protocol, flow):
+    def __init__(self, host, token, remark, flow):
         self._host = host
         self._token = token
-        self._protocol = protocol
+        self._remark = remark
         self._api = None
         self._inbound_id = None
         self._flow = flow
@@ -28,9 +28,10 @@ class XUIClient:
         except Exception as exc:
             error_log.error(exc)
             raise InboundNotFoundException
-        inbound = [item for item in inbounds if item.protocol == self._protocol][0]
-        if not inbound: raise InboundNotFoundException
-        return inbound
+        matched_inbounds = [item for item in inbounds if item.remark == self._remark]
+        if not matched_inbounds: 
+            raise InboundNotFoundException
+        return matched_inbounds[0]
     
     
     async def get_by_tgid(self, user_id):
