@@ -28,6 +28,7 @@ class XUIClient:
         except Exception as exc:
             error_log.error(exc)
             raise InboundNotFoundException
+        print(f'[!!!] INBOUNDS: {inbounds}')
         matched_inbounds = [item for item in inbounds if item.remark == self._remark]
         if not matched_inbounds: 
             raise InboundNotFoundException
