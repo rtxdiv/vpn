@@ -126,16 +126,11 @@ class XUIClient:
             limit_ip=limit_ip,
             expiry_time=expiry,
             sub_id=uuid4,
+            flow = '',
         )
         working_inbounds = await self.get_working_inbounds()
         added_at_least_once = False
         for inbound in working_inbounds:
-            settings_str = str(inbound.stream_settings).lower()
-            if inbound.protocol == 'vless' and 'tcp' in settings_str:
-                new_client.flow = 'xtls-rprx-vision'
-            else:
-                new_client.flow = ''
-                
             try:
                 await self._api.client.add(inbound.id, [new_client])
                 added_at_least_once = True
