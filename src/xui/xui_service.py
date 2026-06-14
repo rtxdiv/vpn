@@ -6,22 +6,23 @@ from datetime import datetime, timedelta
 
 
 class XUIClient:
-    def __init__(self, host, token, remark, flow):
+    def __init__(self, host, token, remark):
         self._host = host
         self._token = token
         self._remark = remark
         self._api = None
         self._inbound_id = None
-        self._flow = flow
 
 
     async def login(self):
         self._api = py3xui.AsyncApi(host=self._host, token=self._token, use_tls_verify=False)
-        inbound = await self.get_inbound()
+        inbound = await self.get_main_inbound()
         self._inbound_id = inbound.id
+        working_inbounds = await self.get_working_inbounds()
+        print(working_inbounds, flush=True)
 
 
-    async def get_inbound(self) -> py3xui.Inbound:
+    async def get_main_inbound(self) -> py3xui.Inbound:
         try:
             inbounds = await self._api.inbound.get_list()
         except Exception as exc:
@@ -32,6 +33,18 @@ class XUIClient:
             raise InboundNotFoundException
         return matched_inbounds[0]
     
+
+    async def get_working_inbounds(self) -> list[py3xui.Inbound]:
+        try:
+            inbounds = await self._api.inbound.get_list()
+        except Exception as exc:
+            error_log.error(exc)
+            raise InboundNotFoundException
+        matched_inbounds = [item for item in inbounds if item.remark and item.remark.startswith('wi-')]
+        if not matched_inbounds:
+            raise InboundNotFoundException
+        return matched_inbounds
+
     
     async def get_by_tgid(self, user_id):
         try:
@@ -97,7 +110,7 @@ class XUIClient:
 
     async def get_by_uuid(self, uuid: str) -> py3xui.Client:
         if not uuid: raise GetUuidException
-        inbound = await self.get_inbound()
+        inbound = await self.get_main_inbound()
         client = [item for item in inbound.settings.clients if item.uuid == uuid]
         if not client: return None
         return client[0]
@@ -113,18 +126,28 @@ class XUIClient:
             limit_ip=limit_ip,
             expiry_time=expiry,
             sub_id=uuid4,
-            flow=self._flow,
         )
-        try: await self._api.client.add(self._inbound_id, [new_client])
-        except Exception as exc:
-            error_log.error(f'Ошибка при создании клиента: {exc}')
+        working_inbounds = await self.get_working_inbounds()
+        added_at_least_once = False
+        for inbound in working_inbounds:
+            settings_str = str(inbound.stream_settings).lower()
+            if inbound.protocol == 'vless' and 'tcp' in settings_str:
+                new_client.flow = 'xtls-rprx-vision'
+            else:
+                new_client.flow = ''
+                
+            try:
+                await self._api.client.add(inbound.id, [new_client])
+                added_at_least_once = True
+            except Exception as exc:
+                error_log.error(f'Ошибка при создании клиента: {exc}')
+
+        if not added_at_least_once:
             raise CreateClientException
-        return new_client
     
 
     async def update_client(self, uuid4: str, new_client: py3xui.Client):
         new_client.id = new_client.uuid
-        new_client.flow = self._flow
         try: await self._api.client.update(uuid4, new_client)
         except Exception as exc:
             error_log.error(f'Ошибка при обновлении клиента: {exc}')

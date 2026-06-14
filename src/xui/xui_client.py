@@ -3,8 +3,7 @@ import os
 
 
 xui = XUIClient(
-    os.environ['PANEL_HOST'],
-    os.environ['PANEL_TOKEN'],
-    os.environ['INBOUND_REMARK'],
-    os.environ['CLIENT_FLOW']
+    host=os.environ['PANEL_HOST'],
+    token=os.environ['PANEL_TOKEN'],
+    remark=os.environ['MAIN_INBOUND_REMARK']
 )
