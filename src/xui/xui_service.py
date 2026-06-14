@@ -22,13 +22,13 @@ class XUIClient:
 
 
     async def get_inbound(self) -> py3xui.Inbound:
-        inbound = None
         try:
             inbounds = await self._api.inbound.get_list()
         except Exception as exc:
             error_log.error(exc)
+            print('[!!!] INBOUNDS: упали на моменте API', flush=True)
             raise InboundNotFoundException
-        print(f'[!!!] INBOUNDS: {inbounds}')
+        print(f'[!!!] INBOUNDS: {inbounds}', flush=True)
         matched_inbounds = [item for item in inbounds if item.remark == self._remark]
         if not matched_inbounds: 
             raise InboundNotFoundException
