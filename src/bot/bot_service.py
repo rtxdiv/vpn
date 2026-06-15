@@ -41,7 +41,7 @@ async def send_processed_compensation(user_id: str, days: int, starts: str, mess
     try:
         await bot.send_message(
             user_id,
-            f'<b>Вам начислена компенсация</b>\n\n{message}\n\nДни: {days}\nНачнётся: {format_date(starts)}',
+            f'── <b>Компенсация</b> ────\n\n<b>Дни:</b> {days}\n<b>Начнётся</b>: {format_date(starts)}\n\n<i>{message}</i>',
             parse_mode=ParseMode.HTML
         )
     except Exception as exc:
