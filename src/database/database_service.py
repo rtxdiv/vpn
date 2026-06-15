@@ -221,22 +221,20 @@ async def process_payment(session: AsyncSession, payment_id: str):
 
 @database_session
 async def get_last_periods(session: AsyncSession):
-    numbered_cte = (
-        select(
-            UserPeriods,
-            func.row_number().over(
-                partition_by=UserPeriods.user_id,
-                order_by=UserPeriods.ends.desc()
-            ).label("rn")
-        )
-        .where(UserPeriods.ends > func.now())
-        .cte()
-    )
+    subq = select(
+        UserPeriods.user_id,
+        func.max(UserPeriods.ends).label("max_ends")
+    ).where(UserPeriods.ends > func.now()).group_by(UserPeriods.user_id).subquery()
     return (await session.scalars(
-        select(UserPeriods)
-        .select_from(numbered_cte)
-        .where(numbered_cte.c.rn == 1)
+        select(UserPeriods).join(
+            subq,
+            and_(
+                UserPeriods.user_id == subq.c.user_id,
+                UserPeriods.ends == subq.c.max_ends
+            )
+        )
     )).all()
+    
 
 @database_session
 async def get_last_period(session: AsyncSession, user_id: str):

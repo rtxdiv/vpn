@@ -36,7 +36,7 @@ async def cmd_compensation(ctx: Message, command: CommandObject):
         if user == 'all':
             periods = await get_last_periods()
             print(str(periods), flush=True)
-            await ctx.answer(str(periods))
+            await ctx.answer(str(len(periods)))
         else:
             period = await get_last_period(user_id=user)
             print(str(period), flush=True)
