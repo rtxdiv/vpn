@@ -18,8 +18,6 @@ class XUIClient:
         self._api = py3xui.AsyncApi(host=self._host, token=self._token, use_tls_verify=False)
         inbound = await self.get_main_inbound()
         self._inbound_id = inbound.id
-        working_inbounds = await self.get_working_inbounds()
-        print(working_inbounds, flush=True)
 
 
     async def get_main_inbound(self) -> py3xui.Inbound:

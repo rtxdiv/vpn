@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import and_, func, not_, select, desc
+from sqlalchemy import and_, func, not_, over, select, desc
 from sqlalchemy.orm import aliased, joinedload
 from src.utils.periods_info import PeriodsInfo
 from .database_server import database_session
@@ -8,9 +8,9 @@ from src.utils.exceptions import *
 from src.utils.hashids_client import hashids
 from src.utils.payment_info import PaymentInfo
 from src.server.dto.payment_buy_dto import BuyDto
-from datetime import date, timedelta, datetime, timezone
+from datetime import timedelta, datetime, timezone
 from src.xui.xui_client import xui
-from src.bot.bot_service import send_new_payment, send_processed_payment
+from src.bot.bot_service import *
 import json
 
 
@@ -218,6 +218,61 @@ async def process_payment(session: AsyncSession, payment_id: str):
     if not handler: raise ForeseenException('Невозможно обработать платёж')
     await handler(session, payment)
 
+
+@database_session
+async def get_last_periods(session: AsyncSession):
+    numbered_cte = (
+        select(
+            UserPeriods,
+            func.row_number().over(
+                partition_by=UserPeriods.user_id,
+                order_by=UserPeriods.ends.desc()
+            ).label("rn")
+        )
+        .where(UserPeriods.ends > func.now())
+        .cte()
+    )
+    return (await session.scalars(
+        select(UserPeriods)
+        .select_from(numbered_cte)
+        .where(numbered_cte.c.rn == 1)
+    )).all()
+
+@database_session
+async def get_last_period(session: AsyncSession, user_id: str):
+    return await session.scalar(
+        select(UserPeriods)
+        .where(
+            and_(
+                UserPeriods.user_id == user_id,
+                UserPeriods.ends > func.now()
+            )
+        )
+        .order_by(desc(UserPeriods.ends))
+        .limit(1)
+    )
+
+@database_session
+async def process_compensation(session: AsyncSession, period: UserPeriods, days: int, devices: int, message: str):
+    user_period=UserPeriods(
+        user_id=period.user_id,
+        tariff_uname='Compensation',
+        days=days,
+        starts=period.ends,
+        ends=period.ends + timedelta(days=days)
+    )
+    session.add(user_period)
+    await xui.renew_client(
+        user_id=period.user_id,
+        limit_ip=devices,
+        days=days
+    )
+    try:
+        await send_processed_compensation(user_id=period.user_id, days=days, devices=devices, starts=period.ends, message=message)
+    except:
+        pass
+
+    
 
 @database_session
 async def get_not_renewed(session: AsyncSession):

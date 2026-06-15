@@ -4,6 +4,7 @@ from aiogram.enums import ParseMode
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from .bot_server import bot, ADMIN_ID, GROUP_ID
 from src.utils.logger_client import error_log
+from src.utils.funcs import format_date
 
 
 service_router = Router()
@@ -29,6 +30,18 @@ async def send_processed_payment(user_id: str, payment_id: str, title: str):
         await bot.send_message(
             user_id,
             f'── <b>Платёж подтверждён</b> ────\n\n<b>{title}</b>\n<b>ID:</b> #{payment_id}',
+            parse_mode=ParseMode.HTML
+        )
+    except Exception as exc:
+        print(f'Ошибка отправки уведомления пользователю: {exc}')
+        error_log.error(f'Ошибка отправки уведомления пользователю: {exc}')
+        raise
+
+async def send_processed_compensation(user_id: str, days: int, devices: int, starts: str, message: str):
+    try:
+        await bot.send_message(
+            user_id,
+            f'<b>Вам начислена компенсация</b>\n\n{message}\n\nДни: {days}\nУстройства: {devices}\nНачнётся: {format_date(starts)}',
             parse_mode=ParseMode.HTML
         )
     except Exception as exc:

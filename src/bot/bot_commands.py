@@ -5,6 +5,7 @@ from src.utils.exceptions import *
 from src.utils.logger_client import error_log
 from .bot_server import ADMIN_ID
 from src.database.database_service import *
+import shlex
 
 
 commands_router = Router()
@@ -21,6 +22,32 @@ async def cmd_process(ctx: Message, command: CommandObject):
     except Exception as e:
         await ctx.answer('Ошибка сервера')
         error_log.error(str(e))
+
+@commands_router.message(Command('compensation'))
+async def cmd_compensation(ctx: Message, command: CommandObject):
+    if str(ctx.from_user.id) != ADMIN_ID: return
+    args = shlex.split(command.args)
+    user = args[0]
+    days = args[1]
+    devices = args[2]
+    message = args[3]
+
+    try:
+        if user == 'all':
+            periods = await get_last_periods()
+            print(str(periods), flush=True)
+            await ctx.answer(str(periods))
+        else:
+            period = await get_last_period(user_id=user)
+            print(str(period), flush=True)
+            await ctx.answer(str(period))
+
+    except ForeseenException as e:
+        await ctx.answer(str(e))
+    except Exception as e:
+        await ctx.answer('Ошибка сервера')
+        error_log.error(str(e))
+
 
 @commands_router.message(Command('notify'))
 async def cmd_notify(ctx: Message):
