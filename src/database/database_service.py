@@ -167,7 +167,6 @@ async def process_buy(session: AsyncSession, payment: Payments):
     last_used_period = await session.scalar(select(UserPeriods)
         .where(UserPeriods.user_id == payment.user_id, UserPeriods.used == True)
         .order_by(desc(UserPeriods.starts))
-        .options(joinedload(UserPeriods.tariffs))
     )
 
     current_time = datetime.now()
@@ -194,11 +193,17 @@ async def process_buy(session: AsyncSession, payment: Payments):
     )
     session.add(user_period)
 
-    await xui.renew_client(
-        user_id=payment.user_id,
-        limit_ip=tariff.devices if not isActive else last_used_period.tariffs.devices,
-        days=data.months * 30
-    )
+    if isActive:
+        await xui.extend_client(
+            user_id=payment.user_id,
+            days=data.months * 30
+        )
+    else:
+        await xui.renew_client(
+            user_id=payment.user_id,
+            limit_ip=tariff.devices,
+            days=data.months * 30
+        )
 
     try:
         await send_processed_payment(user_id=payment.user_id, payment_id=payment.payment_id, title=payment.title)
@@ -218,59 +223,25 @@ async def process_payment(session: AsyncSession, payment_id: str):
     if not handler: raise ForeseenException('Невозможно обработать платёж')
     await handler(session, payment)
 
-
 @database_session
-async def get_last_periods(session: AsyncSession):
-    subq = select(
-        UserPeriods.user_id,
-        func.max(UserPeriods.ends).label("max_ends")
-    ).where(UserPeriods.ends > func.now()).group_by(UserPeriods.user_id).subquery()
-    return (await session.scalars(
-        select(UserPeriods).join(
-            subq,
-            and_(
-                UserPeriods.user_id == subq.c.user_id,
-                UserPeriods.ends == subq.c.max_ends
-            )
-        )
-    )).all()
-    
-
-@database_session
-async def get_last_period(session: AsyncSession, user_id: str):
-    return await session.scalar(
-        select(UserPeriods)
-        .where(
-            and_(
-                UserPeriods.user_id == user_id,
-                UserPeriods.ends > func.now()
-            )
-        )
-        .order_by(desc(UserPeriods.ends))
-        .limit(1)
-    )
-
-@database_session
-async def process_compensation(session: AsyncSession, period: UserPeriods, days: int, devices: int, message: str):
+async def process_compensation(session: AsyncSession, user_id: str, days: int, tariff_uname: str, starts: str, message: str):
     user_period=UserPeriods(
-        user_id=period.user_id,
-        tariff_uname='Compensation',
+        user_id=user_id,
+        tariff_uname=tariff_uname,
         days=days,
-        starts=period.ends,
-        ends=period.ends + timedelta(days=days)
+        starts=starts,
+        ends=starts + timedelta(days=days)
     )
     session.add(user_period)
-    await xui.renew_client(
-        user_id=period.user_id,
-        limit_ip=devices,
+    await xui.extend_client(
+        user_id=user_id,
         days=days
     )
     try:
-        await send_processed_compensation(user_id=period.user_id, days=days, devices=devices, starts=period.ends, message=message)
+        await send_processed_compensation(user_id=user_id, days=days, starts=starts, message=message)
     except:
         pass
 
-    
 
 @database_session
 async def get_not_renewed(session: AsyncSession):
@@ -306,3 +277,33 @@ async def get_new_periods(session: AsyncSession):
         )
     )).all()
     return periods
+
+@database_session
+async def get_last_active_periods(session: AsyncSession):
+    subq = select(
+        UserPeriods.user_id,
+        func.max(UserPeriods.ends).label("max_ends")
+    ).where(UserPeriods.ends > func.now()).group_by(UserPeriods.user_id).subquery()
+    return (await session.scalars(
+        select(UserPeriods).join(
+            subq,
+            and_(
+                UserPeriods.user_id == subq.c.user_id,
+                UserPeriods.ends == subq.c.max_ends
+            )
+        )
+    )).all() 
+
+@database_session
+async def get_last_active_period(session: AsyncSession, user_id: str):
+    return await session.scalar(
+        select(UserPeriods)
+        .where(
+            and_(
+                UserPeriods.user_id == user_id,
+                UserPeriods.ends > func.now()
+            )
+        )
+        .order_by(desc(UserPeriods.ends))
+        .limit(1)
+    )

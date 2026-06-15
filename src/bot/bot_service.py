@@ -37,11 +37,11 @@ async def send_processed_payment(user_id: str, payment_id: str, title: str):
         error_log.error(f'Ошибка отправки уведомления пользователю: {exc}')
         raise
 
-async def send_processed_compensation(user_id: str, days: int, devices: int, starts: str, message: str):
+async def send_processed_compensation(user_id: str, days: int, starts: str, message: str):
     try:
         await bot.send_message(
             user_id,
-            f'<b>Вам начислена компенсация</b>\n\n{message}\n\nДни: {days}\nУстройства: {devices}\nНачнётся: {format_date(starts)}',
+            f'<b>Вам начислена компенсация</b>\n\n{message}\n\nДни: {days}\nНачнётся: {format_date(starts)}',
             parse_mode=ParseMode.HTML
         )
     except Exception as exc:

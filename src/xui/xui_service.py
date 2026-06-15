@@ -71,7 +71,7 @@ class XUIClient:
 
     async def renew_client(self, user_id: str, limit_ip: int, days: int):
         client = await self.get_by_tgid(user_id)
-        if not client: 
+        if not client:
             expiry = self.days_to_expiry(days)
             return await self.create_client(
                 user_id=user_id,
@@ -86,6 +86,20 @@ class XUIClient:
         else:
             client.expiry_time = self.days_to_expiry(days)
         await self.update_client(client.uuid, client)
+
+    
+    async def extend_client(self, user_id: str, days: int):
+        client = await self.get_by_tgid(user_id)
+        if not client:
+            raise ClientNotFoundException
+        client.enable = True
+        now_ts = int(datetime.now().timestamp() * 1000)
+        if client.expiry_time and client.expiry_time > now_ts:
+            client.expiry_time = self.days_to_expiry(days, base_ts=client.expiry_time)
+        else:
+            client.expiry_time = self.days_to_expiry(days)
+        await self.update_client(client.uuid, client)
+
 
 
     async def reset_sub_id(self, user_id: str):

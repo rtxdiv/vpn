@@ -27,20 +27,44 @@ async def cmd_process(ctx: Message, command: CommandObject):
 async def cmd_compensation(ctx: Message, command: CommandObject):
     if str(ctx.from_user.id) != ADMIN_ID: return
     args = shlex.split(command.args)
-    user = args[0]
-    days = args[1]
-    devices = args[2]
-    message = args[3]
+    try:
+        user_id = args[0] # user_id | all
+        days = int(args[1])
+        tariff_uname = args[2] # uname | aslast
+        message = args[3]
+    except: return ctx.answer('Неправильный формат команды')
 
     try:
-        if user == 'all':
-            periods = await get_last_periods()
-            print(str(periods), flush=True)
-            await ctx.answer(str(len(periods)))
+        if user_id == 'all':
+            periods: list[UserPeriods] = await get_last_active_periods()
+            errors = []
+            for period in periods:
+                try:
+                    await process_compensation(
+                        user_id=period.user_id,
+                        days=days,
+                        tariff_uname=period.tariff_uname if tariff_uname == 'aslast' else tariff_uname,
+                        starts=period.ends,
+                        message=message
+                    )
+                except Exception as e:
+                    errors.append(period)
+                    error_log.error(str(e))
+            if errors:
+                print(f'Ошибки начисления компенсаций: {errors}', flush=True)
+                error_log.error(f'Ошибки начисления компенсаций: {errors}')
+            await ctx.answer(f'Компенсация начислена\nОшибок: {len(errors)} из {len(periods)}')
+
         else:
-            period = await get_last_period(user_id=user)
-            print(str(period), flush=True)
-            await ctx.answer(str(period))
+            period: UserPeriods = await get_last_active_period(user_id=user_id)
+            await process_compensation(
+                user_id=user_id,
+                days=days,
+                tariff_uname=period.tariff_uname if tariff_uname == 'aslast' else tariff_uname,
+                starts=period.ends,
+                message=message
+            )
+            await ctx.answer('Компенсация начислена')
 
     except ForeseenException as e:
         await ctx.answer(str(e))
