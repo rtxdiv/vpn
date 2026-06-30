@@ -80,19 +80,19 @@ body {
 
             .status {
                 font-size: 17px;
-                margin-bottom: 7px;
             }
             .name {
+                margin-top: 7px;
+                margin-bottom: 3px;
                 font-size: 34px;
                 font-weight: 800;
-                margin-bottom: 9px;
                 color: #a0acb6;
             }
             .devices, .date {
-                margin: 9px 0;
+                margin-top: 7px;
             }
             .periods {
-                margin: -3px 0 5px 0;
+                margin-top: 4px;
                 text-decoration: underline;
                 color: var(--header-text-color);
             }
