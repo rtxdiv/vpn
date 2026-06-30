@@ -93,7 +93,6 @@ body {
             }
             .periods {
                 margin-top: 5px;
-                text-decoration: underline;
                 color: var(--header-text-color);
             }
         }
