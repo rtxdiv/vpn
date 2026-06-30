@@ -5,7 +5,7 @@ from src.database.models import UserPeriods
 from src.utils.logger_client import error_log
 
 
-@aiocron.crontab('10 1 * * *')
+@aiocron.crontab('10 0 * * *')
 async def notify():
     periods: list[UserPeriods] = await get_not_extended()
     errors = []

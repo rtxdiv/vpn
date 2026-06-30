@@ -6,7 +6,7 @@ from src.database.models import UserPeriods
 from src.utils.logger_client import error_log
 
 
-@aiocron.crontab('0 1 * * *')
+@aiocron.crontab('0 0 * * *')
 async def limit():
     periods: list[tuple[UserPeriods, int]] = await get_new_periods()
     errors = []
@@ -16,4 +16,4 @@ async def limit():
         except Exception as e:
             errors.append(period)
             error_log.error(str(e))
-    await send_system_message(f'🆕 <b>Активация новых периодов</b>\nВсего: {len(periods)}\nОшибок: {len(errors)}')
+    await send_system_message(f'⌛ <b>Активация новых периодов</b>\nВсего: {len(periods)}\nОшибок: {len(errors)}')
