@@ -21,7 +21,6 @@ async def send_new_payment(payment_id: str, amount: int, currency: str):
             parse_mode=ParseMode.HTML
         )
     except Exception as exc:
-        print(f'Ошибка отправки уведомления админу: {exc}')
         error_log.error(f'Ошибка отправки уведомления админу: {exc}')
         raise
 
@@ -33,7 +32,6 @@ async def send_processed_payment(user_id: str, payment_id: str, title: str):
             parse_mode=ParseMode.HTML
         )
     except Exception as exc:
-        print(f'Ошибка отправки уведомления пользователю: {exc}')
         error_log.error(f'Ошибка отправки уведомления пользователю: {exc}')
         raise
 
@@ -45,30 +43,27 @@ async def send_processed_compensation(user_id: str, days: int, starts: str, mess
             parse_mode=ParseMode.HTML
         )
     except Exception as exc:
-        print(f'Ошибка отправки уведомления пользователю: {exc}')
         error_log.error(f'Ошибка отправки уведомления пользователю: {exc}')
         raise
 
-async def send_start():
+async def send_system_message(message: str):
     try:
-        await bot.send_message(
-            GROUP_ID,
-            '▶️ App started'
-        )
+        await bot.send_message(GROUP_ID, message)
     except Exception as exc:
-        print(f'Ошибка отправки уведомления о старте: {exc}')
-        error_log.error(f'Ошибка отправки уведомления о старте: {exc}')
+        error_log.error(f'Ошибка отправки системного уведомления: {exc}')
         raise
 
-async def send_not_renewed(user_id: str, date: str):
+async def send_not_extended(user_id: str, ends: str):
     try:
         await bot.send_message(
             user_id,
-            f'🔔 <b>Оплаченный VPN закончится {date} по МСК</b>\n\n<a href="t.me/rtxdiv_vpn_bot/app">Купить заранее</a>',
-            parse_mode=ParseMode.HTML
+            f'🔔 ── <b>Напоминание</b> ────\n\nПоследний оплаченный период закончится <b>{format_date(ends, time=True)} (МСК)</b>\n\n<i>Подписка, купленная сейчас, автоматически активируется после окончания текущей</i>',
+            parse_mode=ParseMode.HTML,
+            reply_markup=InlineKeyboardMarkup(inline_keyboard=[[
+                InlineKeyboardButton(text='Купить заранее', url='https://t.me/rtxdiv_vpn_bot/app')
+            ]])
         )
     except Exception as exc:
-        print(f'Ошибка отправки уведомления пользователю: {exc}')
         error_log.error(f'Ошибка отправки уведомления пользователю: {exc}')
 
 
@@ -84,3 +79,4 @@ async def callback_process(callback: types.CallbackQuery):
 
     except Exception as exc:
         await callback.answer(f'❌ {exc}')
+        error_log.error(f'Ошибка подтверждения платежа: {exc}')

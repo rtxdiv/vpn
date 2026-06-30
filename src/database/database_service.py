@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import and_, func, not_, over, select, desc
-from sqlalchemy.orm import aliased, joinedload
+from sqlalchemy import Result, and_, func, not_, select, desc, update
+from sqlalchemy.orm import aliased
 from src.utils.periods_info import PeriodsInfo
 from .database_server import database_session
 from .models import *
@@ -175,7 +175,7 @@ async def process_buy(session: AsyncSession, payment: Payments):
     try:
         data = BuyDto.model_validate(payment.data)
     except:
-        raise ForeseenException('Целостность данных повреждена')
+        raise ForeseenException('Данные повреждены')
     
     tariff = await session.scalar(select(Tariffs).where(Tariffs.uname == data.to_tariff))
     if not tariff: raise ForeseenException('Тариф не найден')
@@ -205,10 +205,8 @@ async def process_buy(session: AsyncSession, payment: Payments):
             days=data.months * 30
         )
 
-    try:
-        await send_processed_payment(user_id=payment.user_id, payment_id=payment.payment_id, title=payment.title)
-    except:
-        pass
+    try: await send_processed_payment(user_id=payment.user_id, payment_id=payment.payment_id, title=payment.title)
+    except: pass
 
 process_types = {
     'Buy': process_buy
@@ -244,15 +242,14 @@ async def process_compensation(session: AsyncSession, user_id: str, days: int, t
 
 
 @database_session
-async def get_not_renewed(session: AsyncSession):
+async def get_not_extended(session: AsyncSession):
+    now = datetime.now()
+    next_24h = now + timedelta(hours=24)
     NextPeriod = aliased(UserPeriods)
     periods: list[UserPeriods] = (await session.scalars(
         select(UserPeriods)
         .where(
-            UserPeriods.ends.between(
-                text("NOW()"),
-                text("NOW() + INTERVAL 24 HOUR")
-            )
+            UserPeriods.ends.between(now, next_24h)
         )
         .where(
             not_(
@@ -267,16 +264,17 @@ async def get_not_renewed(session: AsyncSession):
 
 @database_session
 async def get_new_periods(session: AsyncSession):
-    periods: list[UserPeriods] = (await session.scalars(
-        select(UserPeriods)
+    result: Result[tuple[UserPeriods, int]] = (await session.execute(
+        select(UserPeriods, Tariffs.devices)
         .where(
             and_(
-                UserPeriods.starts < func.now(),
+                UserPeriods.starts <= datetime.now(),
                 UserPeriods.used == False
             )
         )
-    )).all()
-    return periods
+        .join(Tariffs, UserPeriods.tariff_uname == Tariffs.uname)
+    ))
+    return result.all()
 
 @database_session
 async def get_last_active_periods(session: AsyncSession):
@@ -307,3 +305,12 @@ async def get_last_active_period(session: AsyncSession, user_id: str):
         .order_by(desc(UserPeriods.ends))
         .limit(1)
     )
+
+@database_session
+async def use_period(session: AsyncSession, period: UserPeriods, devices: int):
+    await session.execute(
+        update(UserPeriods)
+        .where(UserPeriods.id == period.id)
+        .values(used = True)
+    )
+    await xui.limit_client(user_id=period.user_id, limit_ip=devices)

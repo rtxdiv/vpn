@@ -51,9 +51,8 @@ async def cmd_compensation(ctx: Message, command: CommandObject):
                     errors.append(period)
                     error_log.error(str(e))
             if errors:
-                print(f'Ошибки начисления компенсаций: {errors}', flush=True)
                 error_log.error(f'Ошибки начисления компенсаций: {errors}')
-            await ctx.answer(f'Компенсация начислена\nОшибок: {len(errors)} из {len(periods)}')
+            await ctx.answer(f'➕ <b>Компенсация начислена</b>\nВсего: {len(periods)}\nОшибок: {len(errors)}')
 
         else:
             period: UserPeriods = await get_last_active_period(user_id=user_id)
@@ -64,7 +63,7 @@ async def cmd_compensation(ctx: Message, command: CommandObject):
                 starts=period.ends,
                 message=message
             )
-            await ctx.answer('Компенсация начислена')
+            await ctx.answer('➕ Компенсация начислена')
 
     except ForeseenException as e:
         await ctx.answer(str(e))
@@ -77,8 +76,7 @@ async def cmd_compensation(ctx: Message, command: CommandObject):
 async def cmd_notify(ctx: Message):
     if str(ctx.from_user.id) != ADMIN_ID: return
     try:
-        periods = await get_not_renewed()
-        print(str(periods), flush=True)
+        periods: list[UserPeriods] = await get_not_extended()
         await ctx.answer(str(periods))
         
     except ForeseenException as e:
@@ -88,9 +86,8 @@ async def cmd_notify(ctx: Message):
 async def cmd_notify(ctx: Message):
     if str(ctx.from_user.id) != ADMIN_ID: return
     try:
-        periods = await get_new_periods()
-        print(str(periods), flush=True)
+        periods: list[tuple[UserPeriods, int]] = await get_new_periods()
         await ctx.answer(str(periods))
         
     except ForeseenException as e:
-        periods = await ctx.answer(str(e))
+        await ctx.answer(str(e))

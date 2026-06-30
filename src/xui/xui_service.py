@@ -30,7 +30,7 @@ class XUIClient:
         if not matched_inbounds:
             raise InboundNotFoundException
         return matched_inbounds[0]
-    
+
 
     async def get_working_inbounds(self) -> list[py3xui.Inbound]:
         try:
@@ -101,6 +101,14 @@ class XUIClient:
         await self.update_client(client.uuid, client)
 
 
+    async def limit_client(self, user_id: str, limit_ip: int):
+        client = await self.get_by_tgid(user_id)
+        if not client:
+            raise ClientNotFoundException
+        client.enable = True
+        client.limit_ip = limit_ip
+        await self.update_client(client.uuid, client)
+        
 
     async def reset_sub_id(self, user_id: str):
         if not user_id: raise GetTgIdException

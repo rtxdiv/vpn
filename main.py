@@ -5,7 +5,8 @@ import uvicorn
 from src.server.fastapi_server import app
 from src.xui.xui_client import xui
 from src.bot.bot_server import bot, dp, register_routers
-from src.bot.bot_service import send_start
+from src.bot.bot_service import send_system_message
+from src.cron import notify, limit
 import os
 
 
@@ -15,7 +16,7 @@ async def main():
     await xui.login()
     await bot.delete_webhook(drop_pending_updates=True)
     register_routers()
-    await send_start()
+    await send_system_message('▶️ App started')
 
     await asyncio.gather(
         server.serve(),
