@@ -6,7 +6,7 @@ from src.database.models import UserPeriods
 from src.utils.logger_client import error_log
 
 
-@aiocron.crontab('0 0 * * *')
+@aiocron.crontab('0 1 * * *')
 async def limit():
     periods: list[tuple[UserPeriods, int]] = await get_new_periods()
     errors = []
