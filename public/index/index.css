@@ -89,10 +89,10 @@ body {
                 color: #a0acb6;
             }
             .devices, .date {
-                margin: 6px 0;
+                margin: 8px 0;
             }
             .periods {
-                margin: -1px 0 5px 0;
+                margin: -3px 0 5px 0;
                 text-decoration: underline;
                 color: var(--header-text-color);
             }

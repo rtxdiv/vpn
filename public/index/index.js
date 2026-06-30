@@ -212,7 +212,7 @@ function displayClient({ client = false, error = false }) {
         clientInfoName.innerHTML = `${ client.tariff }`
         clientInfoDevices.innerHTML = `Устройства: ${ client.limitIp == 0? 'бесконечно' : client.limitIp }`
         if (client.featureCount != 0) {
-            clientInfoPeriods.innerHTML = `+${client.featureCount} куплено`
+            clientInfoPeriods.innerHTML = `Будущие периоды: ${client.featureCount}`
             addLink(clientInfoPeriods, settings.periods_url)
         }
 
