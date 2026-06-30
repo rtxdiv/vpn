@@ -48,7 +48,7 @@ async def send_processed_compensation(user_id: str, days: int, starts: str, mess
 
 async def send_system_message(message: str):
     try:
-        await bot.send_message(GROUP_ID, message)
+        await bot.send_message(GROUP_ID, message, parse_mode=ParseMode.HTML)
     except Exception as exc:
         error_log.error(f'Ошибка отправки системного уведомления: {exc}')
         raise
