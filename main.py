@@ -21,7 +21,7 @@ async def main():
 
     await asyncio.gather(
         server.serve(),
-        asyncio.create_task(dp.start_polling(bot)),
+        asyncio.create_task(dp.start_polling(bot, timeout=60, relax=5, fast=True)),
         return_exceptions=True
     )
 
