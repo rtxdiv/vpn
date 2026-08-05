@@ -11,7 +11,7 @@ async def notify():
     errors = []
     for period in periods:
         try:
-            send_not_extended(user_id=period.user_id, ends=period.ends)
+            await send_not_extended(user_id=period.user_id, ends=period.ends)
         except Exception as e:
             errors.append(period)
             error_log.error(str(e))
