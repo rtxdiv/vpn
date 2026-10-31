@@ -103,23 +103,9 @@ async def cmd_newporiods(ctx: Message):
 @commands_router.message(Command('notify_now'))
 async def cmd_notify_now(ctx: Message):
     if str(ctx.from_user.id) != ADMIN_ID: return
-    try:
-        notify.notify_not_extended()
-
-    except ForeseenException as e:
-        await ctx.answer(str(e))
-    except Exception as e:
-        await ctx.answer('Ошибка сервера')
-        error_log.error(str(e))
+    notify.notify_not_extended()
 
 @commands_router.message(Command('newperiods_now'))
 async def cmd_newporiods_now(ctx: Message):
     if str(ctx.from_user.id) != ADMIN_ID: return
-    try:
-        periods.activate_new_periods()
-        
-    except ForeseenException as e:
-        await ctx.answer(str(e))
-    except Exception as e:
-        await ctx.answer('Ошибка сервера')
-        error_log.error(str(e))
+    periods.activate_new_periods()

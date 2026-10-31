@@ -5,14 +5,20 @@ from src.database.models import UserPeriods
 from src.utils.logger_client import error_log
 
 
-@aiocron.crontab('0 0 * * *')
 async def activate_new_periods():
-    periods: list[tuple[UserPeriods, int]] = await get_new_periods()
-    errors = []
-    for period, devices in periods:
-        try:
-            await use_period(period=period, devices=devices)
-        except Exception as e:
-            errors.append(period)
-            error_log.error(str(e))
-    await send_system_message(f'⌛ <b>Активация новых периодов</b>\nВсего: {len(periods)}\nОшибок: {len(errors)}')
+    try:
+        periods: list[tuple[UserPeriods, int]] = await get_new_periods()
+        errors = []
+        for period, devices in periods:
+            try:
+                await use_period(period=period, devices=devices)
+            except Exception as e:
+                errors.append(period)
+                error_log.error(str(e))
+        await send_system_message(f'⌛ <b>Активация новых периодов</b>\nВсего: {len(periods)}\nОшибок: {len(errors)}')
+
+    except Exception as e:
+        await send_system_message(f'❗ <b>Активация новых периодов</b>\nОшибка сервера: {e}')
+
+
+aiocron.crontab('0 0 * * *')(activate_new_periods)
