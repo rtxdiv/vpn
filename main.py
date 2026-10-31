@@ -16,7 +16,7 @@ async def main():
     await bot.delete_webhook(drop_pending_updates=True)
     register_routers()
 
-    from src.cron import notify, limit
+    from src.cron import notify, periods
     await send_system_message('▶️ App started')
 
     await asyncio.gather(

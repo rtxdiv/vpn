@@ -6,7 +6,7 @@ from src.utils.logger_client import error_log
 
 
 @aiocron.crontab('10 0 * * *')
-async def notify():
+async def notify_not_extended():
     periods: list[UserPeriods] = await get_not_extended()
     errors = []
     for period in periods:

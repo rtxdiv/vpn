@@ -6,6 +6,7 @@ from src.utils.logger_client import error_log
 from .bot_server import ADMIN_ID
 from src.database.database_service import *
 import shlex
+from src.cron import periods, notify
 
 
 commands_router = Router()
@@ -16,7 +17,7 @@ async def cmd_process(ctx: Message, command: CommandObject):
     try:
         await process_payment(payment_id=command.args)
         await ctx.answer('Платёж обработан')
-        
+
     except ForeseenException as e:
         await ctx.answer(str(e))
     except Exception as e:
@@ -52,7 +53,7 @@ async def cmd_compensation(ctx: Message, command: CommandObject):
                     error_log.error(str(e))
             if errors:
                 error_log.error(f'Ошибки начисления компенсаций: {errors}')
-            await ctx.answer(f'➕ <b>Компенсация начислена</b>\nВсего: {len(periods)}\nОшибок: {len(errors)}')
+            await ctx.answer(f'➕ <b>Компенсация начислена</b>\nВсего: {len(periods)}\nОшибок: {len(errors)}', parse_mode=ParseMode.HTML)
 
         else:
             period: UserPeriods = await get_last_active_period(user_id=user_id)
@@ -78,16 +79,47 @@ async def cmd_notify(ctx: Message):
     try:
         periods: list[UserPeriods] = await get_not_extended()
         await ctx.answer(str(periods))
-        
+
     except ForeseenException as e:
         await ctx.answer(str(e))
+    except Exception as e:
+        await ctx.answer('Ошибка сервера')
+        error_log.error(str(e))
 
 @commands_router.message(Command('newperiods'))
-async def cmd_notify(ctx: Message):
+async def cmd_newporiods(ctx: Message):
     if str(ctx.from_user.id) != ADMIN_ID: return
     try:
         periods: list[tuple[UserPeriods, int]] = await get_new_periods()
         await ctx.answer(str(periods))
+
+    except ForeseenException as e:
+        await ctx.answer(str(e))
+    except Exception as e:
+        await ctx.answer('Ошибка сервера')
+        error_log.error(str(e))
+
+
+@commands_router.message(Command('notify_now'))
+async def cmd_notify_now(ctx: Message):
+    if str(ctx.from_user.id) != ADMIN_ID: return
+    try:
+        notify.notify_not_extended()
+
+    except ForeseenException as e:
+        await ctx.answer(str(e))
+    except Exception as e:
+        await ctx.answer('Ошибка сервера')
+        error_log.error(str(e))
+
+@commands_router.message(Command('newperiods_now'))
+async def cmd_newporiods_now(ctx: Message):
+    if str(ctx.from_user.id) != ADMIN_ID: return
+    try:
+        periods.activate_new_periods()
         
     except ForeseenException as e:
         await ctx.answer(str(e))
+    except Exception as e:
+        await ctx.answer('Ошибка сервера')
+        error_log.error(str(e))

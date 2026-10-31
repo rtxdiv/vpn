@@ -63,9 +63,9 @@ async def get_user_payment(session: AsyncSession, user_id: str, payment_id: str)
 async def get_payment_settings(session: AsyncSession) -> dict:
     settings = (await session.scalars(select(Settings).where(
         Settings.key.in_([
-            'payment_details', 
-            'payment_comment', 
-            'payment_id_prefix', 
+            'payment_details',
+            'payment_comment',
+            'payment_id_prefix',
             'payment_message'
         ])
     ))).all()
@@ -73,7 +73,7 @@ async def get_payment_settings(session: AsyncSession) -> dict:
 
 @database_session
 async def create_payment(session: AsyncSession, user_id: str, type: str, title: str, amount: float, data: dict, currency: str | None = None) -> str:
-    payment: Payments = await session.scalar(select(Payments).where(
+    payment: Payments | None = await session.scalar(select(Payments).where(
         Payments.user_id==user_id,
         Payments.type==type,
         Payments.amount==amount,
@@ -176,7 +176,7 @@ async def process_buy(session: AsyncSession, payment: Payments):
         data = BuyDto.model_validate(payment.data)
     except:
         raise ForeseenException('Данные повреждены')
-    
+
     tariff = await session.scalar(select(Tariffs).where(Tariffs.uname == data.to_tariff))
     if not tariff: raise ForeseenException('Тариф не найден')
 
@@ -290,7 +290,7 @@ async def get_last_active_periods(session: AsyncSession):
                 UserPeriods.ends == subq.c.max_ends
             )
         )
-    )).all() 
+    )).all()
 
 @database_session
 async def get_last_active_period(session: AsyncSession, user_id: str):
