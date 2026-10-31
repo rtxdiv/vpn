@@ -73,6 +73,17 @@ async def cmd_compensation(ctx: Message, command: CommandObject):
         error_log.error(str(e))
 
 
+@commands_router.message(Command('notify_now'))
+async def cmd_notify_now(ctx: Message):
+    if str(ctx.from_user.id) != ADMIN_ID: return
+    await notify.notify_not_extended()
+
+@commands_router.message(Command('newperiods_now'))
+async def cmd_newporiods_now(ctx: Message):
+    if str(ctx.from_user.id) != ADMIN_ID: return
+    await periods.activate_new_periods()
+
+
 @commands_router.message(Command('notify'))
 async def cmd_notify(ctx: Message):
     if str(ctx.from_user.id) != ADMIN_ID: return
@@ -98,14 +109,3 @@ async def cmd_newporiods(ctx: Message):
     except Exception as e:
         await ctx.answer('Ошибка сервера')
         error_log.error(str(e))
-
-
-@commands_router.message(Command('notify_now'))
-async def cmd_notify_now(ctx: Message):
-    if str(ctx.from_user.id) != ADMIN_ID: return
-    await notify.notify_not_extended()
-
-@commands_router.message(Command('newperiods_now'))
-async def cmd_newporiods_now(ctx: Message):
-    if str(ctx.from_user.id) != ADMIN_ID: return
-    await periods.activate_new_periods()
