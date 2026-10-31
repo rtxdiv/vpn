@@ -103,9 +103,9 @@ async def cmd_newporiods(ctx: Message):
 @commands_router.message(Command('notify_now'))
 async def cmd_notify_now(ctx: Message):
     if str(ctx.from_user.id) != ADMIN_ID: return
-    notify.notify_not_extended()
+    await notify.notify_not_extended()
 
 @commands_router.message(Command('newperiods_now'))
 async def cmd_newporiods_now(ctx: Message):
     if str(ctx.from_user.id) != ADMIN_ID: return
-    periods.activate_new_periods()
+    await periods.activate_new_periods()
