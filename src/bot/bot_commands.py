@@ -109,3 +109,17 @@ async def cmd_newporiods(ctx: Message):
     except Exception as e:
         await ctx.answer('Ошибка сервера')
         error_log.error(str(e))
+
+@commands_router.message(Command('message'))
+async def cmd_message(ctx: Message, command: CommandObject):
+    if str(ctx.from_user.id) != ADMIN_ID: return
+    try:
+        args = command.args.split(' ', maxsplit=1) if command.args else []
+        if len(args) < 2: raise 'Неверный формат команды'
+        await ctx.bot.send_message(chat_id=args[0], text=args[1])
+
+    except ForeseenException as e:
+        await ctx.answer(str(e))
+    except Exception as e:
+        await ctx.answer('Ошибка сервера')
+        error_log.error(str(e))
