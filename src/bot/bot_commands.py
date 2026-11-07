@@ -1,6 +1,7 @@
 from aiogram import Router
 from aiogram.filters import Command, CommandObject
 from aiogram.types import Message
+from aiogram.enums import ParseMode
 from src.utils.exceptions import *
 from src.utils.logger_client import error_log
 from .bot_server import ADMIN_ID
@@ -27,15 +28,16 @@ async def cmd_process(ctx: Message, command: CommandObject):
 @commands_router.message(Command('compensation'))
 async def cmd_compensation(ctx: Message, command: CommandObject):
     if str(ctx.from_user.id) != ADMIN_ID: return
-    args = shlex.split(command.args)
+
     try:
+        args = shlex.split(command.args)
+        if len(args) < 4: raise ForeseenException('Неверный формат команды')
+
         user_id = args[0] # user_id | all
         days = int(args[1])
         tariff_uname = args[2] # uname | aslast
         message = args[3]
-    except: return ctx.answer('Неправильный формат команды')
 
-    try:
         if user_id == 'all':
             periods: list[UserPeriods] = await get_last_active_periods()
             errors = []
@@ -110,13 +112,14 @@ async def cmd_newporiods(ctx: Message):
         await ctx.answer('Ошибка сервера')
         error_log.error(str(e))
 
+
 @commands_router.message(Command('message'))
 async def cmd_message(ctx: Message, command: CommandObject):
     if str(ctx.from_user.id) != ADMIN_ID: return
     try:
-        args = command.args.split(' ', maxsplit=1) if command.args else []
-        if len(args) < 2: raise 'Неверный формат команды'
-        await ctx.bot.send_message(chat_id=args[0], text=args[1])
+        args = shlex.split(command.args)
+        if len(args) < 2: raise ForeseenException('Неверный формат команды')
+        await ctx.bot.send_message(chat_id=args[0], text=args[1], parse_mode=ParseMode.HTML)
 
     except ForeseenException as e:
         await ctx.answer(str(e))
